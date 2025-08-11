@@ -26,4 +26,9 @@
     width: 30%;
     height: 80%;
     background-color: #eeeaea;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
 }
