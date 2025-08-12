@@ -9,14 +9,14 @@ export const Login=()=>{
    </header>
    <div className={style.divFundo}>
     <div className={style.Login}>
-        <h2>login</h2>
+        <h2>Login</h2>
         <div className={style.formulario}>
 <div className={style.inputs}>
-        <p>email</p>
+        <p>Email</p>
         <input type="text" placeholder="digite seu email..." />
         </div>
         <div className={style.inputs}>
-        <p>senha</p>
+        <p>Senha</p>
         <input type="text" placeholder="digite sua senha..." />
         </div>
         </div>
