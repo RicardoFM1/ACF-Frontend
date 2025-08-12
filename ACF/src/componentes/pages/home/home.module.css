@@ -1,0 +1,22 @@
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 32px;
+}
+.linkCadastro{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.linkLogin{
+    color: white;
+    text-decoration: none;
+    background-color: black;
+    padding: 8PX;
+    border-radius: 6px;
+}
+.btns{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
