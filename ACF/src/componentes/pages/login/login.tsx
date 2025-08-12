@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import style from "./login.module.css"
 
 export const Login=()=>{ 
@@ -5,7 +6,9 @@ export const Login=()=>{
   return  <>
    <header className={style.header}>
     <h1>ACF</h1>
-    <div className={style.btnCadastro}>Cadastro</div>
+    <div className={style.btnCadastro}>
+       <Link to={"/cadastro"} className={style.link}>Cadastro</Link> 
+        </div>
    </header>
    <div className={style.divFundo}>
     <div className={style.Login}>

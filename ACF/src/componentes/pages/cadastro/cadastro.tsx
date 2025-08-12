@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import style from "./cadastro.module.css"
 
 export const Cadastro=()=>{ 
@@ -5,7 +6,9 @@ export const Cadastro=()=>{
   return  <>
    <header className={style.header}>
     <h1>ACF</h1>
-    <div className={style.btnCadastro}>Cadastro</div>
+    <div className={style.btnCadastro}>
+        <Link to={"/login"} className={style.link}>Login</Link>
+        </div>
    </header>
    <div className={style.divFundo}>
     <div className={style.Login}>
@@ -21,7 +24,7 @@ export const Cadastro=()=>{
         </div>
         </div>
         
-        <button className={style.butnLogin}>Fazer Cadastro</button>
+        <button className={style.butnLogin}>Fazer login</button>
 
     </div>
    </div>
