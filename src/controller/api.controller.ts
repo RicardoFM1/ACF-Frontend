@@ -35,8 +35,8 @@ export const apiController ={
     },
     async post(url:string,body:any){
          try {
-            const res = await a.post(url,{
-                headers:this.getHeaders(),body
+            const res = await a.post(url,body,{
+                headers:this.getHeaders()
             })
             if(res.data){
                 return res.data

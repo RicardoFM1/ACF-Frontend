@@ -1,8 +1,9 @@
-import z, { email } from "zod"
+import z from "zod"
 
 export const createUsuarioSchema = z.object({
     email: z.email("Email inválido"),
     password: z.string()
+    
 })
 
 export const returnUsuarioSchema = createUsuarioSchema.extend({

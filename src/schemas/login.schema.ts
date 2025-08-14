@@ -2,7 +2,8 @@ import z from "zod"
 
 export const createLoginSchema = z.object({
     email: z.email("Email inválido"),
-    password: z.string("Senha inválida")
+    password: z.string("Senha inválida"),
+
 })
 
 export const returnLoginSchema = createLoginSchema.extend({
