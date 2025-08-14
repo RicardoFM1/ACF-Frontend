@@ -15,6 +15,7 @@
     background-color: black;
     border-radius: 8px;
     padding: 12px;
+    
 }
 .divFundo{
     width: 100%;
@@ -37,6 +38,10 @@
         width: 70%;
     }
 }
+
+button{
+    cursor: pointer;
+}
 .formulario{
     width: 100%;
     display: flex;
@@ -58,7 +63,7 @@ input:focus{
     border-bottom: 2px solid black;
 }
 input::placeholder{
-    padding-left:12px ;
+    padding-left:2px ;
     color: black;
 }
 p{
