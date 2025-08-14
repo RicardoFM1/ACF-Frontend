@@ -22,20 +22,17 @@ const navigate = useNavigate();
 
   const fazerLogin = async (loginData: iCreateLogin) => {
     
-    try {
+   
       const res = await apiController.post("/login", loginData);
       console.log(res, "res do axios");
-      if (res.data.token) {
+      if (res.token) {
         toast.success("Login realizado com sucesso!");
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.token);
         setTimeout(() => {
           navigate("/");
         }, 3000);
-      }
-    } catch (error: any) {
-      console.log(error, "error");
-      toast.error(error.response.data.message);
-    }
+      
+    } 
   };
   return  <>
       <header className={style.header}>

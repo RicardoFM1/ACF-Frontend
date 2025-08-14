@@ -21,20 +21,17 @@ formState:{
     })
 
     const Cadastrar = async (userData: iCreateUsuario) => {
-        try{
+        
             const res = await apiController.post("/usuarios", userData)
             console.log(res)
-            if(res.data){
+            if(res){
                 toast.success("Cadastro realizado com sucesso! Redirecionando para o login")
                 setTimeout(() => {
                     navigate("/login")
                 }, 3000);
             }
 
-        }catch(error:any){
-            console.log(errors)
-            toast.error(error.response.data.message)
-        }
+        
     }
   return  <>
    <header className={style.header}>
