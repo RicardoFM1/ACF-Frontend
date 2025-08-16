@@ -9,7 +9,7 @@ export const Home=()=>{
         <header className={style.header}>
  <h1>ACF</h1>
  <div className={style.btns}> 
-    <Link to={"/agendar"} className={style.linkCadastro}>agendar</Link>
+    <Link to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
     <Link to={"/cadastro"} className={style.linkCadastro}>Cadastro</Link> 
     <Link to={"/login"} className={style.linkLogin}>Login</Link>
  </div>
