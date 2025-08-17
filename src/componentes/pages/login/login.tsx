@@ -25,12 +25,23 @@ const navigate = useNavigate();
    
       const res = await apiController.post("/login", loginData);
       console.log(res, "res do axios");
-      if (res.token) {
+      if (res) {
         toast.success("Login realizado com sucesso!");
         localStorage.setItem("token", res.token);
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+        const token = localStorage.getItem("token")
+        if(token){
+        const retrieve = await apiController.get("usuarios/retrieve")
+        if(retrieve.admin === true){
+          setTimeout(() => {
+            navigate("/admin");
+          }, 3000);
+        }
+        else{
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+        }
+        }
       
     } 
   };
@@ -53,21 +64,23 @@ const navigate = useNavigate();
                 <div className={style.inputs}>
                   <label>Email</label>
                   <input {...register("email")} type="text" placeholder="digite seu email..." />
-                </div>
-                {errors.email && errors.email && (
+                  {errors.email && errors.email && (
               <span className={style.errorMsg}>
                 {errors.email?.message}
               </span>
             )}
+                </div>
+                
                 <div className={style.inputs}>
                   <label>Senha</label>
                   <input {...register("password")}type="text" placeholder="digite sua senha..." />
-                </div>
-                {errors.password && errors.password && (
+                  {errors.password && errors.password && (
               <span className={style.errorMsg}>
                 {errors.password?.message}
               </span>
             )}
+                </div>
+                
             <button type="submit" className={style.butnLogin}>Fazer login</button>
         </form>
               </div>

@@ -1,20 +1,59 @@
-
+import { useEffect, useState } from "react"
+import style from "./admin.module.css"
+import { apiController } from "../../../controller/api.controller"
 import { Link } from "react-router-dom"
-import style from "./home.module.css"
-
-export const Home=()=>{ 
 
 
 
-  return  <>
-  <div className={style.fundoHome}>
+export const Admin = () => {
+
+    interface iUser {
+        id: number,
+        email: string,
+        admin: boolean
+    }
+
+    const [admin, setAdmin] = useState(false)
+    const [retrieve, setRetrieve] = useState<iUser|null>()
+    
+    const getRetrieve = async() => {
+        try{
+            const retrieve = await apiController.get("usuarios/retrieve")
+            setRetrieve(retrieve)
+            if(retrieve.admin === true){
+                setAdmin(true)
+            }else{
+                setAdmin(false)
+            }
+
+        }catch(error){
+            console.log("Erro ao buscar o usuario:", error)
+        }
+    }
+    
+    
+    useEffect(() =>{
+        getRetrieve()
+    }, [])
+
+      useEffect(() => {
+    console.log("retrieve atualizado:", retrieve)
+  }, [retrieve])
+
+  useEffect(() => {
+    console.log("admin atualizado:", admin)
+  }, [admin])
+    
+    if(admin){
+
+        return <>
+    <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
- <div className={style.btns}> 
-    <Link to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
-    <Link to={"/cadastro"} className={style.linkCadastro}>Cadastro</Link> 
-    <Link to={"/login"} className={style.linkLogin}>Login</Link>
- </div>
+ {/* <div className={style.btns}> 
+    <Link to={"/agendar"} className={style.linkCadastro}>Controle</Link>
+    
+ </div> */}
         </header>
 
         <div className={style.conteudoPrinHome}>
@@ -48,17 +87,23 @@ export const Home=()=>{
                 </div>
                 <div className={style.footerDiv2}>
                     <div className={style.footerDiv3}>
-                        <h4>paginas</h4>
+                        <h4>Paginas</h4>
                         <p>Home</p>
                         <p>Agenda</p>
                         <p>Cadastro</p>
                         <p>Login</p>
                     </div>
-                    <h4>introdução</h4>
+                    <h4>Introdução</h4>
                     <h4>Amostra</h4>
                     <h4>Etapas</h4>
                 </div>
             </footer>
         </div>
     </>
+    }
+    else{
+        return <>
+        <h1>Seu níveis de acesso não lhe permitem acessar esta página!</h1>
+        </>
+    }
 }

@@ -36,12 +36,12 @@ formState:{
   return  <>
    <header className={style.header}>
     <h1>ACF</h1>
-    <div className={style.btnCadastro}>
+    <div className={style.btnLogin}>
         <Link to={"/login"} className={style.link}>Login</Link>
         </div>
    </header>
    <div className={style.divFundo}>
-    <div className={style.Login}>
+    <div className={style.Cadastro}>
         <h2>Cadastro</h2>
         
     <form className={style.formulario} onSubmit={handleSubmit(Cadastrar)}>
@@ -50,16 +50,16 @@ formState:{
 
         <label>Email</label>
         <input {...register("email")} type="text" placeholder="digite seu email..." />
+        {errors.email&& <span className={style.errorMsg}>{errors.email.message}</span> }
         </div>
         
-        {errors.email&& <span className={style.error}>{errors.email.message}</span> }
         <div className={style.inputs}>
         <label>Senha</label>
         <input {...register("password")}type="text" placeholder="digite sua senha..." />
+        {errors.password&& <span className={style.errorMsg}>{errors.password.message}</span> }
         </div>
-        {errors.password&& <span className={style.error}>{errors.password.message}</span> }
         
-        <button type="submit" className={style.butnLogin}>Cadastrar</button>
+        <button type="submit" className={style.btnCadastro}>Cadastrar</button>
     </form>
         </div>
 

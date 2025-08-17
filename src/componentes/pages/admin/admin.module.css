@@ -1,0 +1,103 @@
+.header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 32px;
+}
+.linkCadastro{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+.linkLogin{
+    color: white;
+    text-decoration: none;
+    background-color: black;
+    padding: 8PX;
+    border-radius: 6px;
+}
+.btns{
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+.fundoHome{
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+    gap: 100px;
+    margin-bottom: 60px;
+}
+.conteudoPrinHome{
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    gap: 30px;
+}
+.h1contP{
+    font-size: 44px;
+}
+.imgCampos{
+    border-radius: 4px;
+}
+.imgCamposHome{
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+@media(max-width-1000px){
+        .imgCamposHome{
+           flex-wrap: wrap;
+           width: 100%;
+        }
+        .imgCampos{
+            width: 100%;
+        }
+}
+.imgCampos2{
+    border-radius: 4px;
+}
+.conteudoSecunHome{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+@media(max-width:600px){
+    .conteudoSecunHome{
+        flex-wrap: wrap;
+    }
+}
+.txtContSec{
+    width: 40%;
+    gap: 40px;
+    display: flex;
+    flex-direction: column;
+    text-align: justify;
+}
+.imgCampo{
+    height: 400px;
+    width: 30%;
+    border-radius: 4px;
+}
+.footerDiv2{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+}
+.footerDiv3{
+    display: flex;
+    flex-direction: column;
+}
+.footerHome{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    border-top: 1px solid rgba(194, 194, 194, 0.751);
+    padding-top: 20px;
+}

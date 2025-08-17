@@ -5,7 +5,7 @@ export const Agendar=()=>{
     return <>
     <header className={style.headerAgendar}>
     <div className={style.divBtnVoltar}>
-        <Link to={"/"} className={style.btnVoltar}>voltar</Link>
+        <Link to={"/"} className={style.btnVoltar}>Voltar</Link>
         </div>
             <h1 className={style.h1Agendar}>Agendamentos</h1>
     </header>
