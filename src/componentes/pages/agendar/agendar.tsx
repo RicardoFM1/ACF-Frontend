@@ -12,7 +12,7 @@ export const Agendar=()=>{
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
 
     <div className={style.divPrincipalAgendamento}>
-        <div className={style.divOne}>
+        <div className={style.divOne}> 
         <div className={style.div1}>
       <h3>Escolha o campo disponivel</h3>
         <button className={style.btnEscolhaDoCampo}>Escolha um campo</button>
