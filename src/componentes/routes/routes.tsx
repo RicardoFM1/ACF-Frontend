@@ -9,4 +9,4 @@ export const Rotas = () => {
          <Route path="/cadastro" element={<Cadastro/>} />
           <Route path="/" element={<Home/>} />
     </Routes>
-}
+} 

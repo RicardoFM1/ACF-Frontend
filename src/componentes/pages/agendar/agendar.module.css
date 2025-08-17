@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+.btnVoltar{
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 12px;
+    border-radius: 6px; 
+} 
+.divBtnVoltar{
+    margin: 18px;
+}   
+body{
+    height: 100vh;
+}
+.headerAgendar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 12px;
+}
+.h1Agendar{
+    font-weight: 400;
+}
+.divPrincipalAgendamento{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+}
+.btnEscolhaDoCampo{
+    background-color: #ece6f0;
+    border: none;
+    height: 30px;
+    border-radius: 15px;
+    width: 80%;
+}
+.inputAgendar{
+        width: 30%;
+}
+.divOne{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.h2Agendamento{
+  margin: 90px 0 90px 65px;
+}
+h3{
+    font-weight: 500;
+}
+.div1{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.div2{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.selectInput{
+    border: none;
+    color: #0088ff;
+    width:65px;
+}
+.btnVizualizar{
+    background-color: #0088ff;
+    height: 40px;
+    border: none;
+    width: 30%;
+    border-radius: 20px;
+    color: white;
+}
+.div3{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+button{
+    cursor: pointer;
+}
