@@ -8,6 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiController } from "../../../controller/api.controller";
 import { toast } from "react-toastify";
+import { getLocalStorageItem, setLocalStorageItem } from "../../utility/tokenUtility";
 
 export const Login = () => {
 const navigate = useNavigate();
@@ -22,38 +23,44 @@ const navigate = useNavigate();
 
   const fazerLogin = async (loginData: iCreateLogin) => {
     
-   
-      const res = await apiController.post("/login", loginData);
-      console.log(res, "res do axios");
-      if (res) {
-        toast.success("Login realizado com sucesso!");
-        localStorage.setItem("token", res.token);
-        const token = localStorage.getItem("token")
-        if(token){
-        const retrieve = await apiController.get("usuarios/retrieve")
-        if(retrieve.admin === true){
-          setTimeout(() => {
-            navigate("/admin");
-          }, 3000);
-        }
-        else{
-          setTimeout(() => {
-            navigate("/");
-          }, 3000);
-        }
-        }
-      
-    } 
-  };
+   try {
+
+     const res = await apiController.post("/login", loginData);
+     console.log(res, "res do axios");
+     if (res) {
+       toast.success("Login realizado com sucesso!");
+       setLocalStorageItem("token", res.token)
+       const token = getLocalStorageItem("token")
+       if(token){
+         const retrieve = await apiController.get("usuarios/retrieve")
+         if(retrieve.admin === true){
+           setTimeout(() => {
+             navigate("/admin");
+            }, 3000);
+          }
+          else{
+            setTimeout(() => {
+              navigate("/");
+            }, 3000);
+          }
+        } 
+      }
+    }catch(error:any){
+        console.log(error, "erro")
+        toast.error(error.response.data.message)
+      }
+  }
   return  <>
       <header className={style.header}>
         <h1>ACF</h1>
-
-        <div className={style.btnCadastro}>
+      <div className={style.divLinks}>
+        <Link to={"/"} className={style.link}>
+            Voltar à página inicial
+          </Link>
           <Link to={"/cadastro"} className={style.link}>
             Cadastro
           </Link>
-        </div>
+       </div>
       </header>
       
           <div className={style.divFundo}>

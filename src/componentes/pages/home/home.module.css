@@ -15,6 +15,14 @@
     padding: 8PX;
     border-radius: 6px;
 }
+.btnSair{
+    color: white;
+    text-decoration: none;
+    background-color: rgb(230, 62, 62);
+    padding: 8PX;
+    border-radius: 6px;
+    border: none;
+}
 .btns{
     display: flex;
     align-items: center;
@@ -100,4 +108,78 @@
     width: 90%;
     border-top: 1px solid rgba(194, 194, 194, 0.751);
     padding-top: 20px;
+}
+.divModalFundo{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(243, 243, 243, 0.685);
+    backdrop-filter: blur(5px);
+}
+.Modal{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 30%;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: #d4d4dc;
+    text-align: center;
+}
+.divBtnModal{
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin: 10px 0 0 0
+}
+
+.btnNao{
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    background-color: #A02525;
+    color: white
+}
+.btnSim{
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    background-color: #6EBD40;
+}
+.btnFazerLoginModal{
+    border: none;
+    color: white;
+    border-radius: 6px;
+    padding: 6px;
+    background-color: #101010;
+}
+.btnOk{
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    background-color: white
+}
+
+.divIconAlerta{
+    display: flex;
+    justify-content: center;
+}
+.btnDisabledAgendar{
+    background-color: white;
+    border: none;
+}
+@media(max-width: 580px){
+   .Modal{
+    height: 40vh;
+   } 
+}
+@media(max-width: 230px){
+    .Modal{
+        height: 60vh
+    }
 }

@@ -1,9 +1,8 @@
 import { Link, useNavigate } from "react-router-dom"
 import style from "./cadastro.module.css"
 import { useForm } from "react-hook-form"
-import type { iCreateUsuario } from "../../../schemas/usuario.schema"
+import { createUsuarioSchema, type iCreateUsuario } from "../../../schemas/usuario.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { createLoginSchema } from "../../../schemas/login.schema"
 import { apiController } from "../../../controller/api.controller"
 import { toast } from "react-toastify"
 
@@ -16,12 +15,13 @@ formState:{
     errors
 }
     } = useForm<iCreateUsuario>({
-        resolver: zodResolver(createLoginSchema),
+        resolver: zodResolver(createUsuarioSchema),
         mode: "onBlur"
     })
 
     const Cadastrar = async (userData: iCreateUsuario) => {
-        
+        try{
+
             const res = await apiController.post("/usuarios", userData)
             console.log(res)
             if(res){
@@ -30,15 +30,24 @@ formState:{
                     navigate("/login")
                 }, 3000);
             }
-
+        }catch(error:any){
+        console.log(error, "erro")
+        toast.error(error.response.data.message)
+      }
+            
         
     }
   return  <>
    <header className={style.header}>
     <h1>ACF</h1>
-    <div className={style.btnLogin}>
+    <div className={style.divLinks}>
+        <Link to={"/"} className={style.link}>
+            Voltar à página inicial
+          </Link>
         <Link to={"/login"} className={style.link}>Login</Link>
+
         </div>
+        
    </header>
    <div className={style.divFundo}>
     <div className={style.Cadastro}>
@@ -49,15 +58,15 @@ formState:{
     
 
         <label>Email</label>
-        <input {...register("email")} type="text" placeholder="digite seu email..." />
+        <input {...register("email")} type="text" placeholder="digite um email..." />
         {errors.email&& <span className={style.errorMsg}>{errors.email.message}</span> }
         </div>
         
         <div className={style.inputs}>
         <label>Senha</label>
-        <input {...register("password")}type="text" placeholder="digite sua senha..." />
-        {errors.password&& <span className={style.errorMsg}>{errors.password.message}</span> }
+        <input {...register("password")}type="text" placeholder="digite uma senha..." />
         </div>
+        {errors.password && <span className={style.errorMsg}>{errors.password.message}</span> }
         
         <button type="submit" className={style.btnCadastro}>Cadastrar</button>
     </form>

@@ -2,7 +2,7 @@ import z from "zod"
 
 export const createUsuarioSchema = z.object({
     email: z.email("Email inválido"),
-    password: z.string()
+    password: z.string("Necessário preencher").min(8, "Minimo 8 caractéres")
     
 })
 
