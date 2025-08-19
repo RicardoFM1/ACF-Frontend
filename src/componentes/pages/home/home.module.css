@@ -183,3 +183,15 @@
         height: 60vh
     }
 }
+.load{
+    animation: loading 1s ease ;
+}
+@keyframes loading {
+    0%{
+            opacity: 0;
+    }
+    100%{
+            opacity: 1;
+        
+    }
+}

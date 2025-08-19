@@ -92,7 +92,7 @@ const ModalAviso = () => {
     const token = getLocalStorageItem("token")
     if(token){
 
-        return  <>
+        return  <div className={style.load}>
   <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
@@ -145,11 +145,11 @@ const ModalAviso = () => {
                 </div>
             </footer>
         </div>
-    </>
+    </div>
 }else{
      const token = getLocalStorageItem("token")
         
-    return  <>
+    return  <div className={style.load}>
   <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
@@ -207,6 +207,6 @@ const ModalAviso = () => {
                 </div>
             </footer>
         </div>
-    </>
+    </div>
 }
 }
