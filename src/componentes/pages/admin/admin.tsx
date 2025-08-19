@@ -25,10 +25,12 @@ export const Admin = () => {
         try{
             const retrieve = await apiController.get("usuarios/retrieve")
             setRetrieve(retrieve)
+            console.log(retrieve,"retrieve")
             if(retrieve.admin === true){
                 setAdmin(true)
             }else{
-                setAdmin(false)
+                navigate("/")
+        
             }
 
         }catch(error){

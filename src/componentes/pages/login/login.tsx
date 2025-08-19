@@ -7,8 +7,7 @@ import {
 } from "../../../schemas/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiController } from "../../../controller/api.controller";
-import { toast } from "react-toastify";
-import { getLocalStorageItem, setLocalStorageItem } from "../../utility/tokenUtility";
+import { getLocalStorageItem, setLocalStorageToken, toastbar } from "../../utility/tokenUtility";
 
 export const Login = () => {
 const navigate = useNavigate();
@@ -28,8 +27,9 @@ const navigate = useNavigate();
      const res = await apiController.post("/login", loginData);
      console.log(res, "res do axios");
      if (res) {
-       toast.success("Login realizado com sucesso!");
-       setLocalStorageItem("token", res.token)
+       toastbar.success("Login realizado com sucesso!");
+       setLocalStorageToken(res.token)
+       
        const token = getLocalStorageItem("token")
        if(token){
          const retrieve = await apiController.get("usuarios/retrieve")
@@ -47,7 +47,7 @@ const navigate = useNavigate();
       }
     }catch(error:any){
         console.log(error, "erro")
-        toast.error(error.response.data.message)
+        toastbar.error(error.response.data.message)
       }
   }
   return  <>

@@ -97,7 +97,7 @@ const ModalAviso = () => {
         <header className={style.header}>
  <h1>ACF</h1>
  <div className={style.btns}> 
-    <Link to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
+    <Link viewTransition to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
     <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
  </div>
         </header>

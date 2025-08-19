@@ -1,8 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import style from "./agendar.module.css"
+import { useEffect } from "react"
 
 export const Agendar=()=>{
-    return <>
+
+    const navigate = useNavigate()
+    useEffect(() =>{
+    const token = localStorage.getItem("token")
+    if(!token){
+        navigate("/login")
+    }
+    }, [])
+   return  <div className={style.load}>
     <header className={style.headerAgendar}>
     <div className={style.divBtnVoltar}>
         <Link to={"/"} className={style.btnVoltar}>Voltar</Link>
@@ -30,5 +39,9 @@ export const Agendar=()=>{
             <input type="date" className={style.inputAgendar}/>
     
     </div>
-    </>
+    </div>
+
+
+
+    
 }

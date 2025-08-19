@@ -1,12 +1,22 @@
+import { toast } from "react-toastify";
 export const getLocalStorageItem = (itemName:string) => {
-    const token = localStorage.getItem(`${itemName}`)
-    return token
+    const item = localStorage.getItem(`${itemName}`)
+    return item
 }
 
-export const setLocalStorageItem = (itemName:string, itemData:any) => {
-    localStorage.setItem(`${itemName}`, itemData)
+export const setLocalStorageToken = ( itemData:any) => {
+    localStorage.setItem(`token`, itemData)
 }
 
 export const removeLocalStorageItem = (itemName:any) => {
     localStorage.removeItem(`${itemName}`)
+}
+
+export const toastbar={
+    success:(message:string)=>{
+        toast.success(message)
+    },
+    error:(message:string)=>{
+        toast.error(message)
+    }
 }
