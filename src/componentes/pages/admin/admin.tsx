@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import style from "./admin.module.css"
 import { apiController } from "../../../controller/api.controller"
 import { Link, useNavigate } from "react-router-dom"
@@ -39,8 +39,13 @@ export const Admin = () => {
     }
     
     
+    
     useEffect(() =>{
         getRetrieve()
+        const token = localStorage.getItem("token")
+        if(!token){
+            navigate("/login")
+        }
     }, [])
 
       useEffect(() => {
@@ -132,7 +137,7 @@ const ModalAviso = () => {
         <header className={style.header}>
  <h1>ACF</h1>
  <div className={style.btns}> 
-    <Link to={"/agendar"} className={style.linkControle}>Controle</Link>
+    <Link to={"/controle"} className={style.linkControle}>Controle</Link>
     <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
     
  </div>

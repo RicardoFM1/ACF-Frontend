@@ -88,7 +88,7 @@ const navigate = useNavigate();
             )}
                 </div>
                 
-            <button type="submit" className={style.butnLogin}>Fazer login</button>
+            <button type="submit" className={style.btnLogin}>Fazer login</button>
         </form>
               </div>
         </div>

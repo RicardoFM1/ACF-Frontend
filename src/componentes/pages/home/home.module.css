@@ -1,19 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+  scroll-behavior: smooth;  
+}
 .header{
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 32px;
 }
-.linkCadastro{
+.linkCadastro, .linkAgenda{
     color: rgb(0, 0, 0);
     text-decoration: none;
+    transition: all 0.2s ease;
+}
+.linkCadastro:hover, .linkAgenda:hover{
+    transform: translateY(-2px);
 }
 .linkLogin{
     color: white;
     text-decoration: none;
     background-color: black;
-    padding: 8PX;
+    padding: 8px;
     border-radius: 6px;
+    transition: all 0.2s ease;
+}
+.linkLogin:hover, .btnSair:hover{
+    transform: translateY(-2px);
 }
 .btnSair{
     color: white;
@@ -22,6 +38,10 @@
     padding: 8PX;
     border-radius: 6px;
     border: none;
+    transition: all 0.2s ease;
+}
+.btnSair:hover{
+    transform: translateY(-2px);
 }
 .btns{
     display: flex;
@@ -145,11 +165,17 @@
     background-color: #A02525;
     color: white
 }
+.btnNao:hover{
+    background-color: #a02525d2;
+}
 .btnSim{
     border: none;
     border-radius: 6px;
     padding: 6px;
     background-color: #6EBD40;
+}
+.btnSim:hover{
+    background-color: #6ebd40d5;
 }
 .btnFazerLoginModal{
     border: none;
@@ -158,13 +184,18 @@
     padding: 6px;
     background-color: #101010;
 }
+.btnFazerLoginModal:hover{
+    background-color: #1010109f;
+}
 .btnOk{
     border: none;
     border-radius: 6px;
     padding: 6px;
     background-color: white
 }
-
+.btnOk:hover{
+    background-color: rgb(240, 239, 239);
+}
 .divIconAlerta{
     display: flex;
     justify-content: center;

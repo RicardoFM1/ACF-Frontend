@@ -4,6 +4,7 @@ import { Cadastro } from "../pages/cadastro/cadastro";
 import { Home } from "../pages/home/home"
 import { Agendar } from "../pages/agendar/agendar";
 import { Admin } from "../pages/admin/admin";
+import { Controle } from "../pages/controle/controle";
 
 export const Rotas = () => {
     return <Routes>
@@ -12,5 +13,6 @@ export const Rotas = () => {
           <Route path="/" element={<Home/>} />
           <Route path="/admin" element={<Admin/>}/>
           <Route path="/agendar" element={<Agendar/>}/>
+          <Route path="/controle" element={<Controle/>} />
     </Routes>
 } 

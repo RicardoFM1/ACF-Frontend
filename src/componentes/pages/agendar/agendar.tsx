@@ -1,20 +1,59 @@
 import { Link, useNavigate } from "react-router-dom"
 import style from "./agendar.module.css"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { apiController } from "../../../controller/api.controller"
+
 
 export const Agendar=()=>{
-
+    const [retrieve, setRetrieve] = useState<Retrieve|null>()
+    const [admin, setAdmin] = useState(false)
     const navigate = useNavigate()
+    interface Retrieve {
+        id: number,
+        email: string,
+        admin: boolean
+    }
+    const getRetrieve = async() => {
+        try{
+            const retrieve = await apiController.get("usuarios/retrieve")
+            setRetrieve(retrieve)
+            console.log(retrieve, "retrieve")
+            if(retrieve.admin === true){
+                setAdmin(true)
+            }else{
+                navigate("/")
+        
+            }
+
+        }catch(error){
+            console.log("Erro ao buscar o usuario:", error)
+        }
+    }
+    
     useEffect(() =>{
+        getRetrieve()
     const token = localStorage.getItem("token")
     if(!token){
         navigate("/login")
     }
     }, [])
+
+       
+      useEffect(() => {
+    console.log("retrieve atualizado:", retrieve)
+  }, [retrieve])
+
+  useEffect(() => {
+    console.log("admin atualizado:", admin)
+  }, [admin])
+
    return  <div className={style.load}>
     <header className={style.headerAgendar}>
     <div className={style.divBtnVoltar}>
-        <Link to={"/"} className={style.btnVoltar}>Voltar</Link>
+        
+<Link to={"/"} className={style.btnVoltar}>Voltar</Link>
+
+
         </div>
             <h1 className={style.h1Agendar}>Agendamentos</h1>
     </header>

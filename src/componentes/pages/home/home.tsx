@@ -96,8 +96,11 @@ const ModalAviso = () => {
   <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
- <div className={style.btns}> 
+ <div className={style.btns}>
+    {token ?
     <Link viewTransition to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
+    : <Link viewTransition to={""} className={style.linkCadastro}>Agendar</Link>
+}
     <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
  </div>
         </header>
@@ -155,8 +158,8 @@ const ModalAviso = () => {
  <h1>ACF</h1>
  <div className={style.btns}>
    {token ?
- <Link to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
-:  <Link onClick={() => setModalAvisoOpen(true)} to={""} className={style.linkCadastro}>Agendar</Link>
+ <Link to={"/agendar"} className={style.linkAgenda}>Agendar</Link>
+:  <Link onClick={() => setModalAvisoOpen(true)} to={""} className={style.linkAgenda}>Agendar</Link>
 }
 
     <Link to={"/cadastro"} className={style.linkCadastro}>Cadastro</Link> 
