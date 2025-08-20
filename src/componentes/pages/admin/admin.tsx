@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import style from "./admin.module.css"
 import { apiController } from "../../../controller/api.controller"
 import { Link, useNavigate } from "react-router-dom"
@@ -92,7 +92,7 @@ export const Admin = () => {
         </>
             
         }else{
-            return null
+            return <></>
         }
     }
 
