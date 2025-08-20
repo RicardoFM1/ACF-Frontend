@@ -193,7 +193,7 @@ body{
     background-color: white
 }
 .btnOk:hover{
-    background-color: wheat;
+    background-color: rgb(240, 239, 239);
 }
 .divIconAlerta{
     display: flex;
