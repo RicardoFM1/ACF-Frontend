@@ -304,8 +304,13 @@ useEffect(() => {
       <input {...register("camposId")} type="hidden" />
       <input {...register("usuariosId")} type="hidden" />
 
-        <button onClick={() => campos.length < 1 ? setModalAvisoOpen(true) : setModalCamposOpen(true)} 
+        <button type="button" onClick={() => campos.length < 1 ? setModalAvisoOpen(true) : setModalCamposOpen(true)} 
         className={style.btnEscolhaDoCampo}>Escolher um campo</button>
+        {errors.camposId && errors.camposId && (
+              <span className={style.errorMsg}>
+                {errors.camposId.message}
+              </span>
+            )}
         </div>
        
         <div className={style.divEscolhaHorario}>
@@ -314,7 +319,11 @@ useEffect(() => {
                 {horarios.map((horario:iHorario) => ( 
                     <option id="optionId" value={horario.id}>{horario.horario_inicial}</option>
                 ))}
-
+            {errors.horario && errors.horario && (
+              <span className={style.errorMsg}>
+                {errors.horario.message}
+              </span>
+            )}
             </select>
         </div>
         </div>
@@ -322,6 +331,12 @@ useEffect(() => {
         <div className={style.divEscolhaData}>
             <h3>Escolha a data do agendamento</h3>
             <input {...register("data")}type="date" className={style.inputAgendar}/>
+            {errors.data && errors.data && (
+              <span className={style.errorMsg}>
+                {errors.data.message}
+              </span>
+            )}
+
             </div>
             <div className={style.divBtnAgendar}>
             <button className={style.btnAgendar} type="submit">Agendar</button>
