@@ -40,13 +40,22 @@ body{
 }
 .inputAgendar{
    padding: 12px;
-   width: 100%;     
+   width: 80%;     
 }
 .divOne{
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 60px;
+}
+.formAgendamento{
+    display: flex;
+    flex-direction: column;
+}
+.divCampoForm, .divDataForm{
+    display: flex;
+    width: 100%;
+    margin: 24px;
 }
 .h2Agendamento{
   margin: 90px 0 90px 65px;
@@ -54,15 +63,23 @@ body{
 h3{
     font-weight: 500;
 }
-.divEscolhaCampo{
+.divEscolhaCampo {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 80%;
+}
+.divEscolhaData{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 80%;
 }
 .divEscolhaHorario{
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 20%;
 }
 .selectInput{
     border: none;
@@ -71,22 +88,35 @@ h3{
 }
 .btnVisualizar{
     background-color: #0088ff;
-    height: 40px;
+    padding: 12px;
     border: none;
     width: 30%;
     border-radius: 20px;
     color: white;
 }
+.divBtnAgendar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 20%;
+}
+.btnAgendar{
+    background-color: #0088ff;
+    height: 38px;
+    border: none;
+    width: 80%;
+    border-radius: 20px;
+    color: white;
+}
+
 .divVisualizar{
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-.divEscolhaData{
-    display: flex;
-    flex-direction: column;
-    gap: 12px
-}
+
+
+
 button{
     cursor: pointer;
 }
@@ -122,6 +152,8 @@ button{
     overflow: auto  ;
     gap: 24px;
     width: 75%;
+    max-width: 75%;
+    max-height: 60vh;
     border-radius: 0 0 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     background-color: #d4d4dc;
@@ -130,8 +162,7 @@ button{
 .modalInfo{
     padding: 12px;
     display: flex;
-    overflow: auto ;
-    gap: 32px;
+    overflow: auto;
     width: 75%;
     border-radius: 0 0 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -201,13 +232,19 @@ button{
 }
 .fundoCampo{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    background: url("../../images/imageCampoFutebol.png");
+    background: url("/images/imageCampoFutebol.png");
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center center;
     padding: 12px;
     text-align: center;
+    gap: 12px;
+}
+.divCimaModal{
+    display: flex;
+    justify-content: space-between;
 }
 .divNomeCampo{
     background-color: #333333; 
@@ -221,11 +258,7 @@ button{
 .divNomeCampo p{
     color: #348648;
 }
-.ladoDireitoCampos{
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
+
 .divPrecoCampo{
     background-color: #333333;
     border-radius: 10px;
@@ -234,7 +267,12 @@ button{
 .divPrecoCampo p{
     color: #348648
 }
-.maisInformacoes{
+.divBtnsModalCampo{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.maisInformacoes, .selecionar{
     border: none;
     background-color: #0088ff;
     color: white;
@@ -286,7 +324,7 @@ button{
     overflow: auto;
 }
 .contatoCampo{
-    width: 70%;
+    width: 50%;
 }
 .infoDireita{
     display: flex;

@@ -2,8 +2,13 @@ import { Link, useNavigate } from "react-router-dom"
 import style from "./agendar.module.css"
 import { useEffect, useState } from "react"
 import { apiController } from "../../../controller/api.controller"
-import {} from "../../images/imageCampoFutebol.png"
 import { Iconify } from "../../iconify/iconify"
+import { useForm } from "react-hook-form"
+import { createAgendamentoSchema, type iCreateAgendamento } from "../../../schemas/agendamento.schema"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "react-toastify"
+import { toastbar } from "../../utility/tokenUtility"
+
 
 
 export const Agendar=()=>{
@@ -18,17 +23,54 @@ export const Agendar=()=>{
     imagem: string,
     }
 
-   
-    const [campos, setCampos] = useState([] as iCampos[])
+    interface iUser {
+        id: number,
+        email: string,
+        admin: boolean
+    }
+
+   interface iHorario {
+    id: number,
+    dia_da_semana: string,
+    horario_inicial: string,
+    horario_final: string,
+    campos: {
+        id: number,
+        nome: string,
+        endereco: string,
+        descricao: string,
+        valor: number,
+        imagem: string,
+    }
+   }
+
+   const [campos, setCampos] = useState([] as iCampos[])
+   const [horarios, setHorarios] = useState([] as iHorario[])
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
     const [modalInfoOpen, setModalInfoOpen] = useState(false)
-    const [campoId, setCampoId] = useState<number | null>()
+    const [campoId, setCampoId] = useState<number | null>(null)
     const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
+    const [retrieve, setRetrieve] = useState<iUser|null>()
+
+    const getRetrieve = async() => {
+        const retrieve = await apiController.get("/usuarios/retrieve")
+        setRetrieve(retrieve)
+    } 
 
     const getCampos = async() => {
         const campos = await apiController.get("/campos")
         setCampos(campos)
+    }
+
+    const fecharModalAviso = () => {
+        setModalAvisoOpen(false)
+        getCampos()
+    }
+
+    const fecharModal = () => {
+        setModalCamposOpen(false)
+        getCampos()
     }
  
     const getCamposInfo = async() => {
@@ -49,24 +91,29 @@ export const Agendar=()=>{
         setCampoId(id)
     }
 
+    const clickSelecionar = (id:number) => {
+        setModalCamposOpen(false)
+        setCampoId(id)
+    }
     useEffect(() => {
         console.log(campoId)
         getCamposInfo()
     }, [campoId])
-
-   
-        
+    
     useEffect(() =>{
-    getCampos()
+        getRetrieve()   
+        getCampos()
+        const interval = setInterval(() => {
+            getCampos()
+        }, 15000);
     const token = localStorage.getItem("token")
     if(!token){
         navigate("/login")
     }
-    }, [])
 
-    useEffect(() => {
-        getCampos()
-    }, [campos])
+    return () => clearInterval(interval)
+    }, [])
+    
      useEffect(() => {
         console.log(infoCampo)
     }, [infoCampo])
@@ -81,7 +128,7 @@ export const Agendar=()=>{
                 <div className={style.tituloModalCampos}>
                     <h2>Campos disponíveis</h2>
                     <div className={style.divBtnFecharModal}>
-                    <button className={style.btnFecharModal} onClick={() => setModalCamposOpen(false)}>X</button>
+                    <button className={style.btnFecharModal} onClick={fecharModal}>X</button>
                     </div>
                 </div>
                 <div className={style.modal}>
@@ -89,19 +136,21 @@ export const Agendar=()=>{
                 <input className={style.inputSearch} type="search" placeholder="Pesquise um campo" />
                 <button className={style.btnPesquisar}>Pesquisar</button>
                 </div>
-                {campos.map((campos:iCampos) => (
+                {campos.map((campo:iCampos) => (
                     
-                    <div key={campos.id} className={style.fundoCampo}>
+                    <div key={campo.id} className={style.fundoCampo}>
+                    <div className={style.divCimaModal}>
                     <div className={style.divNomeCampo}>
-                        <p><strong>{campos.nome}</strong></p>
+                        <p><strong>{campo.nome}</strong></p>
                     </div>
-                    <div className={style.ladoDireitoCampos}>
                     <div className={style.divPrecoCampo}>
-                        <p><strong>R${campos.valor}</strong> </p>
+                        <p><strong>R${campo.valor}</strong> </p>
+                    
                     </div>
-                    <div className={style.divBtnInformacoes}>
-                        <button onClick={() => clickInformacoes(campos.id)}  className={style.maisInformacoes}>Mais informações</button>
                     </div>
+                    <div className={style.divBtnsModalCampo}>
+                        <button onClick={() => clickSelecionar(campo.id)}  className={style.selecionar}>Selecionar</button>
+                        <button onClick={() => clickInformacoes(campo.id)}  className={style.maisInformacoes}>Mais informações</button>
                     </div>
                 </div>
             ))}
@@ -135,7 +184,7 @@ const ModalAviso = () => {
                 <p>Não há nenhum campo registrado ainda.</p>
                 <div className={style.divBtnModal}>
                    
-                    <button className={style.btnOk} onClick={() => setModalAvisoOpen(false)}>Ok</button>
+                    <button className={style.btnOk} onClick={fecharModalAviso}>Ok</button>
                    
                 </div>
             </div>
@@ -179,8 +228,8 @@ const ModalAviso = () => {
                     </div>
                     <div className={style.divImagensCampo}>
                         <h2>Fotos do campo</h2>
-                        <img src="src/componentes/images/imageCampoFutebol.png" alt="imagem do campo"/>
-                        <img src="src/componentes/images/imageCampoFutebol.png" alt={infoCampo.imagem} />
+                        <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo"/>
+                        <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo" />
                     </div>
                     
                 </div>
@@ -188,6 +237,41 @@ const ModalAviso = () => {
             </>
         }
     }
+
+const { register, handleSubmit, setValue, formState: { errors } } = useForm<iCreateAgendamento>({
+    resolver: zodResolver(createAgendamentoSchema),
+    mode: "onBlur"
+});
+
+const getHorarios = async() => {
+const horarios = await apiController.get("/horarios")
+setHorarios(horarios)
+}
+
+useEffect(() => {
+getHorarios()
+}, [])
+useEffect(() => {
+    if(infoCampo.id) setValue("camposId", infoCampo.id);
+}, [infoCampo, setValue]);
+
+useEffect(() => {
+    if(retrieve?.id) setValue("usuariosId", retrieve.id);
+}, [retrieve, setValue]);
+
+    const Agendar = async(agendamentoData:iCreateAgendamento) => {
+        try{
+            const res = await apiController.post("/agendamentos", agendamentoData)
+            console.log(res)
+            if(res){
+                toastbar.success("Campo agendado com sucesso!")
+            }
+        }catch(error:any){
+            console.log(error, "erro agendar")
+            toast.error(error.response.data.message)
+        }
+    }
+
 
    return  <div className={style.load}>
     <header className={style.headerAgendar}>
@@ -197,36 +281,61 @@ const ModalAviso = () => {
 
 
         </div>
+            <div>
             <h1 className={style.h1Agendar}>Agendamentos</h1>
+ <div className={style.divVisualizar}>
+            
+            <button className={style.btnVisualizar}>Ver meus Agendamentos</button>
+        </div>
+            </div>
     </header>
 
     {modalCamposOpen && <OpenModalCampos />}
     {modalInfoOpen && <OpenModalInfo />}
     {modalAvisoOpen && <ModalAviso />}
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
-
     <div className={style.divPrincipalAgendamento}>
         <div className={style.divOne}> 
+    <form className={style.formAgendamento} onSubmit={handleSubmit(Agendar)}>
+        <div className={style.divCampoForm}>
         <div className={style.divEscolhaCampo}>
-      <h3>Escolha o campo disponivel</h3>
-        <button onClick={() => campos.length >= 1 ? setModalCamposOpen(true) : setModalAvisoOpen(true) } 
-        className={style.btnEscolhaDoCampo}>Escolha um campo</button>
+      <h3>Escolha o campo disponível</h3>
+      <input type="text" className={style.inputCampoNome} value={infoCampo.nome} readOnly placeholder="Clique em 'Escolha um campo'"/>
+      <input {...register("camposId")} type="hidden" />
+      <input {...register("usuariosId")} type="hidden" />
+
+        <button onClick={() => campos.length < 1 ? setModalAvisoOpen(true) : setModalCamposOpen(true)} 
+        className={style.btnEscolhaDoCampo}>Escolher um campo</button>
         </div>
+       
         <div className={style.divEscolhaHorario}>
             <h3>Escolha o horario disponivel</h3>
-            <select className={style.selectInput} name="" id=""><option value="">Horario</option></select>
+            <select {...register("horario")} className={style.selectInput} name="select" id="selectId">
+                {horarios.map((horario:iHorario) => ( 
+                    <option id="optionId" value={horario.id}>{horario.horario_inicial}</option>
+                ))}
+
+            </select>
         </div>
-        <div className={style.divVisualizar}>
-            <h3>Ver meus Agendamentos</h3>
-            <button className={style.btnVisualizar}>Visualizar</button>
         </div>
-</div>
-            <div className={style.divEscolhaData}>
+        <div className={style.divDataForm}>
+        <div className={style.divEscolhaData}>
             <h3>Escolha a data do agendamento</h3>
-            <input type="date" className={style.inputAgendar}/>
+            <input {...register("data")}type="date" className={style.inputAgendar}/>
             </div>
+            <div className={style.divBtnAgendar}>
+            <button className={style.btnAgendar} type="submit">Agendar</button>
+            </div>
+        </div>
+        
+        </form>
+
+       
+</div>
+            
     
     </div>
+    
     </div>
 
 
