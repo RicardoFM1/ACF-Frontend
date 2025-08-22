@@ -4,9 +4,8 @@ import { useEffect, useState } from "react"
 import { apiController } from "../../../controller/api.controller"
 import { Iconify } from "../../iconify/iconify"
 import { useForm } from "react-hook-form"
-import { createAgendamentoSchema, type iCreateAgendamento } from "../../../schemas/agendamento.schema"
+import { createAgendamentoSchema, type iAgendamento, type iReturnAgendamento } from "../../../schemas/agendamento.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { toast } from "react-toastify"
 import { toastbar } from "../../utility/tokenUtility"
 
 
@@ -46,12 +45,14 @@ export const Agendar=()=>{
 
    const [campos, setCampos] = useState([] as iCampos[])
    const [horarios, setHorarios] = useState([] as iHorario[])
+   const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
     const [modalInfoOpen, setModalInfoOpen] = useState(false)
     const [campoId, setCampoId] = useState<number | null>(null)
     const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
     const [retrieve, setRetrieve] = useState<iUser|null>()
+    const [modalVisualizarOpen, setmodalVisualizarOpen] = useState(false)
 
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
@@ -63,9 +64,19 @@ export const Agendar=()=>{
         setCampos(campos)
     }
 
+    const getAgendamentos = async() => {
+        const retrieveId = retrieve?.id
+        const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
+        setAgendamentos(agendamentos)
+    }
+
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
         getCampos()
+    }
+
+    const fecharModalVisualizar = () => {
+        setmodalVisualizarOpen(false)
     }
 
     const fecharModal = () => {
@@ -105,6 +116,7 @@ export const Agendar=()=>{
         getCampos()
         const interval = setInterval(() => {
             getCampos()
+            getRetrieve()  
         }, 15000);
     const token = localStorage.getItem("token")
     if(!token){
@@ -117,6 +129,16 @@ export const Agendar=()=>{
      useEffect(() => {
         console.log(infoCampo)
     }, [infoCampo])
+
+    useEffect(() => {
+        if(retrieve?.id){
+            getAgendamentos()
+        }
+    }, [retrieve])
+    
+    useEffect(() => {
+       console.log(agendamentos)
+    }, [agendamentos])
 
      const OpenModalCampos = () => {
         if(modalCamposOpen){
@@ -193,8 +215,60 @@ const ModalAviso = () => {
         </>
             
         }else{
-            return null
+            return <></>
         }
+    }
+
+    const OpenModalVisualizar = () => {
+        if(modalVisualizarOpen){
+    return <>
+        <div className={style.fundoModal}> 
+                <div className={style.tituloModalVisualizar}>
+                    <h2>Meus agendamentos</h2>
+                    <div className={style.divBtnFecharModal}>
+                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>X</button>
+                    </div>
+                </div>
+                <div className={style.modal}>
+                <div className={style.divPesquisa}>
+                <input className={style.inputSearch} type="search" placeholder="Pesquise um agendamento" />
+                <button className={style.btnPesquisar}>Pesquisar</button>
+                </div>
+                {agendamentos.map((agendamento:iReturnAgendamento) => (
+                    
+                    <div key={agendamento.campos.id} className={style.fundoAgendamento}>
+                    <div className={style.divCimaModal}>
+                    <div className={style.divNomeCampo}>
+                        <p ><strong>{agendamento.campos.nome}</strong></p>
+                    </div>
+                    
+                    <div className={style.divDateTimeAgendamento}>
+                        
+                    <div className={style.agendamentoData}>
+                    <p><strong>{agendamento.data}</strong></p>
+                    </div>
+                    <div className={style.agendamentoHorario}>
+                    <p><strong>{agendamento.horario ? agendamento.horario : "N/A"}</strong></p>
+                    </div>
+                    </div>
+                    </div>
+                    <div className={style.divBtnsModalCampo}>
+                        <button onClick={() => clickInformacoes(agendamento.campos.id)}  className={style.maisInformacoes}>Mais informações</button>
+                        <div className={style.divPrecoCampo}>
+                        <p ><strong>R${agendamento.campos.valor}</strong></p>
+                    </div>
+                    </div>
+                </div>
+            ))}
+                </div>
+
+            </div>
+            </>
+        
+    
+    }else{
+        return <></>
+    }
     }
 
     const OpenModalInfo = () => {
@@ -238,7 +312,7 @@ const ModalAviso = () => {
         }
     }
 
-const { register, handleSubmit, setValue, formState: { errors } } = useForm<iCreateAgendamento>({
+const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAgendamento>({
     resolver: zodResolver(createAgendamentoSchema),
     mode: "onBlur"
 });
@@ -259,17 +333,19 @@ useEffect(() => {
     if(retrieve?.id) setValue("usuariosId", retrieve.id);
 }, [retrieve, setValue]);
 
-    const Agendar = async(agendamentoData:iCreateAgendamento) => {
+    const Agendar = async(agendamentoData:iAgendamento) => {
         try{
-            const res = await apiController.post("/agendamentos", agendamentoData)
+            const dataFormatada = agendamentoData.data.split("-").reverse().join("/")
+            const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada}
+            const res = await apiController.post("/agendamentos", agendamentoDataNovo)
             console.log(res)
             if(res){
                 toastbar.success("Campo agendado com sucesso!")
             }
         }catch(error:any){
-            console.log(error, "erro agendar")
-            toast.error(error.response.data.message)
-        }
+        console.log(error, "erro")
+        toastbar.error(error.response.data.message)
+      }
     }
 
 
@@ -281,18 +357,22 @@ useEffect(() => {
 
 
         </div>
-            <div>
-            <h1 className={style.h1Agendar}>Agendamentos</h1>
- <div className={style.divVisualizar}>
+
+            <div className={style.divHeaderDireita}>
+                 <div className={style.divVisualizar}>
             
-            <button className={style.btnVisualizar}>Ver meus Agendamentos</button>
+            <button onClick={() => setmodalVisualizarOpen(true)} className={style.btnVisualizar}>Ver meus Agendamentos</button>
         </div>
+            <h1 className={style.h1Agendar}>Agendamentos</h1>
+
             </div>
     </header>
 
     {modalCamposOpen && <OpenModalCampos />}
+    {modalVisualizarOpen && <OpenModalVisualizar />}
     {modalInfoOpen && <OpenModalInfo />}
     {modalAvisoOpen && <ModalAviso />}
+
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
     <div className={style.divPrincipalAgendamento}>
         <div className={style.divOne}> 
@@ -315,15 +395,19 @@ useEffect(() => {
        
         <div className={style.divEscolhaHorario}>
             <h3>Escolha o horario disponivel</h3>
-            <select {...register("horario")} className={style.selectInput} name="select" id="selectId">
-                {horarios.map((horario:iHorario) => ( 
-                    <option id="optionId" value={horario.id}>{horario.horario_inicial}</option>
-                ))}
-            {errors.horario && errors.horario && (
-              <span className={style.errorMsg}>
-                {errors.horario.message}
-              </span>
-            )}
+            <select {...register("horario")} className={style.selectInput}>
+  <option value="">-</option>
+  {horarios.map((horario: iHorario) => ( 
+    <option key={horario.id} value={horario.horario_inicial}>
+      {horario.horario_inicial}
+    </option>
+  ))}
+
+            {errors.horario && (
+  <span className={style.errorMsg}>
+    {errors.horario.message}
+  </span>
+)}
             </select>
         </div>
         </div>
@@ -338,11 +422,11 @@ useEffect(() => {
             )}
 
             </div>
-            <div className={style.divBtnAgendar}>
+            
+        </div>
+        <div className={style.divBtnAgendar}>
             <button className={style.btnAgendar} type="submit">Agendar</button>
             </div>
-        </div>
-        
         </form>
 
        
