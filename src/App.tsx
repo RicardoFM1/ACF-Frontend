@@ -1,6 +1,5 @@
 
-import './App.css'
-import { Rotas } from './componentes/Routes/Routes'
+import { Rotas } from "./componentes/routes/routes"
 
 function App() {
   return (

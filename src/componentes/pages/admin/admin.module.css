@@ -1,47 +1,32 @@
-<<<<<<< HEAD
-=======
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 body{
   scroll-behavior: smooth;  
 }
->>>>>>> Ricardo
 .header{
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 32px;
 }
-<<<<<<< HEAD
 .linkCadastro{
     color: rgb(0, 0, 0);
     text-decoration: none;
-=======
-.linkCadastro, .linkAgenda{
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-.linkCadastro:hover, .linkAgenda:hover{
-    transform: translateY(-2px);
->>>>>>> Ricardo
 }
 .linkLogin{
     color: white;
     text-decoration: none;
     background-color: black;
-<<<<<<< HEAD
     padding: 8PX;
     border-radius: 6px;
-=======
-    padding: 8px;
+}
+.linkControle{
+    color: white;
+    text-decoration: none;
+    background-color: black;
+    padding: 8PX;
     border-radius: 6px;
     transition: all 0.2s ease;
 }
-.linkLogin:hover, .btnSair:hover{
+.linkControle:hover{
     transform: translateY(-2px);
 }
 .btnSair{
@@ -55,14 +40,11 @@ body{
 }
 .btnSair:hover{
     transform: translateY(-2px);
->>>>>>> Ricardo
 }
 .btns{
     display: flex;
     align-items: center;
     gap: 24px;
-<<<<<<< HEAD
-=======
 }
 .fundoHome{
     display: flex;
@@ -147,6 +129,7 @@ body{
 }
 .divModalFundo{
     position: fixed;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -216,10 +199,7 @@ body{
     display: flex;
     justify-content: center;
 }
-.btnDisabledAgendar{
-    background-color: white;
-    border: none;
-}
+
 @media(max-width: 580px){
    .Modal{
     height: 40vh;
@@ -229,17 +209,4 @@ body{
     .Modal{
         height: 60vh
     }
-}
-.load{
-    animation: loading 1s ease ;
-}
-@keyframes loading {
-    0%{
-            opacity: 0;
-    }
-    100%{
-            opacity: 1;
-        
-    }
->>>>>>> Ricardo
 }

@@ -1,45 +1,71 @@
-
-<<<<<<< HEAD
-import { Link } from "react-router-dom"
-import style from "./home.module.css"
-
-export const Home=()=>{ 
-
-  return  <>
-        <header className={style.header}>
- <h1>ACF</h1>
- <div className={style.btns}> 
-    <Link to={"/agendar"} className={style.linkCadastro}>agendar</Link>
-    <Link to={"/cadastro"} className={style.linkCadastro}>Cadastro</Link> 
-    <Link to={"/login"} className={style.linkLogin}>Login</Link>
- </div>
-
-        </header>
-    </>
-=======
+import { useEffect, useState } from "react"
+import style from "./admin.module.css"
+import { apiController } from "../../../controller/api.controller"
 import { Link, useNavigate } from "react-router-dom"
-import style from "./home.module.css"
-import { useState } from "react"
-import { toast } from "react-toastify"
 import { Iconify } from "../../iconify/iconify"
 import { getLocalStorageItem, removeLocalStorageItem } from "../../utility/tokenUtility"
+import { toast } from "react-toastify"
 
-export const Home=()=>{ 
+
+
+export const Admin = () => {
+
+    interface iUser {
+        id: number,
+        email: string,
+        admin: boolean
+    }
+
+    const [admin, setAdmin] = useState(false)
+    const [retrieve, setRetrieve] = useState<iUser|null>()
     const [modalOpen, setModalOpen] = useState(false)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
     const navigate = useNavigate()
+    const getRetrieve = async() => {
+        try{
+            const retrieve = await apiController.get("usuarios/retrieve")
+            setRetrieve(retrieve)
+            console.log(retrieve,"retrieve")
+            if(retrieve.admin === true){
+                setAdmin(true)
+            }else{
+                navigate("/")
+        
+            }
 
-    const logout = () => {
-            removeLocalStorageItem("token")
-            toast.success("Conta deslogada com sucesso!")
-            setTimeout(() =>{
-                navigate("/login")
-            }, 2000)
-            setModalOpen(false)
+        }catch(error){
+            console.log("Erro ao buscar o usuario:", error)
         }
+    }
     
+    
+    
+    useEffect(() =>{
+        getRetrieve()
+        const token = localStorage.getItem("token")
+        if(!token){
+            navigate("/login")
+        }
+    }, [])
 
-    const ModalSair = () => {
+      useEffect(() => {
+    console.log("retrieve atualizado:", retrieve)
+  }, [retrieve])
+
+  useEffect(() => {
+    console.log("admin atualizado:", admin)
+  }, [admin])
+
+   const logout = () => {
+              removeLocalStorageItem("token")
+              toast.success("Conta deslogada com sucesso!")
+              setTimeout(() =>{
+                  navigate("/login")
+              }, 2000)
+              setModalOpen(false)
+          }
+
+  const ModalSair = () => {
         if(modalOpen){
     return <>
         <div className={style.divModalFundo}>
@@ -66,7 +92,7 @@ export const Home=()=>{
         </>
             
         }else{
-            return null
+            return <></>
         }
     }
 
@@ -103,23 +129,17 @@ const ModalAviso = () => {
         }
     }
 
-
-
-
-    
     const token = getLocalStorageItem("token")
-    if(token){
+    if(admin && token){
 
-        return  <div className={style.load}>
-  <div className={style.fundoHome}>
+        return <>
+    <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
- <div className={style.btns}>
-    {token ?
-    <Link viewTransition to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
-    : <Link viewTransition to={""} className={style.linkCadastro}>Agendar</Link>
-}
+ <div className={style.btns}> 
+    <Link to={"/controle"} className={style.linkControle}>Controle</Link>
     <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
+    
  </div>
         </header>
         {modalOpen && <ModalSair />}
@@ -160,28 +180,27 @@ const ModalAviso = () => {
                         <p>Cadastro</p>
                         <p>Login</p>
                     </div>
-                    <h4>introdução</h4>
+                    <h4>Introdução</h4>
                     <h4>Amostra</h4>
                     <h4>Etapas</h4>
                 </div>
             </footer>
         </div>
-    </div>
-}else{
-     const token = getLocalStorageItem("token")
-        
-    return  <div className={style.load}>
-  <div className={style.fundoHome}>
+    </>
+    }
+    else{
+        const token = getLocalStorageItem("token")
+        return <>
+        <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
  <div className={style.btns}>
-   {token ?
- <Link to={"/agendar"} className={style.linkAgenda}>Agendar</Link>
-:  <Link onClick={() => setModalAvisoOpen(true)} to={""} className={style.linkAgenda}>Agendar</Link>
-}
-
-    <Link to={"/cadastro"} className={style.linkCadastro}>Cadastro</Link> 
-    <Link to={"/login"} className={style.linkLogin}>Login</Link>
+    {token ?
+    <Link to={"/agendar"} className={style.linkControle}>Controle</Link>
+     : <Link onClick={() => setModalAvisoOpen(true)} to={""} className={style.linkControle}>Controle</Link>
+    } 
+    <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
+    
  </div>
         </header>
         {modalAvisoOpen && <ModalAviso />}
@@ -222,13 +241,13 @@ const ModalAviso = () => {
                         <p>Cadastro</p>
                         <p>Login</p>
                     </div>
-                    <h4>introdução</h4>
+                    <h4>Introdução</h4>
                     <h4>Amostra</h4>
                     <h4>Etapas</h4>
                 </div>
             </footer>
         </div>
-    </div>
-}
->>>>>>> Ricardo
+    </>
+     
+    }
 }

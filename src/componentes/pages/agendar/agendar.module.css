@@ -1,0 +1,363 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 0;
+}
+.btnVoltar{
+    text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 12px;
+    border-radius: 6px; 
+} 
+.divBtnVoltar{
+    margin: 18px;
+}   
+body{
+    height: 100vh;
+}
+.headerAgendar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 12px;
+}
+.h1Agendar{
+    font-weight: 400;
+}
+.divPrincipalAgendamento{
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-around;
+}
+.btnEscolhaDoCampo{
+    background-color: #ece6f0;
+    border: none;
+    height: 30px;
+    border-radius: 15px;
+    width: 80%;
+}
+.inputAgendar{
+   padding: 12px;
+   width: 80%;     
+}
+.divOne{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+.formAgendamento{
+    display: flex;
+    flex-direction: column;
+}
+.divCampoForm, .divDataForm{
+    display: flex;
+    width: 100%;
+    margin: 24px;
+}
+.h2Agendamento{
+  margin: 90px 0 90px 65px;
+}
+h3{
+    font-weight: 500;
+}
+.divEscolhaCampo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 80%;
+}
+.divEscolhaData{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 80%;
+}
+.divEscolhaHorario{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 20%;
+}
+.selectInput{
+    border: none;
+    color: #0088ff;
+    width:65px;
+}
+.btnVisualizar{
+    background-color: #0088ff;
+    padding: 12px;
+    border: none;
+    width: 30%;
+    border-radius: 20px;
+    color: white;
+}
+.divBtnAgendar{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 20%;
+}
+.btnAgendar{
+    background-color: #0088ff;
+    height: 38px;
+    border: none;
+    width: 80%;
+    border-radius: 20px;
+    color: white;
+}
+
+.divVisualizar{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+
+button{
+    cursor: pointer;
+}
+.load {
+
+    animation: load 1s ease ;
+}
+@keyframes load {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.fundoModal{
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(243, 243, 243, 0.685);
+    backdrop-filter: blur(5px);  
+}
+.modal{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto  ;
+    gap: 24px;
+    width: 75%;
+    max-width: 75%;
+    max-height: 60vh;
+    border-radius: 0 0 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: #d4d4dc;
+    text-align: center;
+}
+.modalInfo{
+    padding: 12px;
+    display: flex;
+    overflow: auto;
+    width: 75%;
+    border-radius: 0 0 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: #d4d4dc;
+    text-align: center;
+}
+.modalAviso{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: 35%;
+    border-radius: 0 0 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: #d4d4dc;
+    text-align: center;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+.tituloModalCampos, .tituloModalInfoCampos{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    gap: 34%;
+    background-color: #d1cfcf;
+    border-radius: 10px 10px 0 0;
+    width: 75%;
+    padding: 6px;
+    z-index: 3;
+    text-align: center;
+}
+.btnFecharModal{
+    display: flex;
+    border: none;
+    background-color: #d1cfcf;
+    padding: 12px;
+    color: red
+}
+.btnPesquisar{
+    color: white;
+    border-radius: 10px;
+    background-color: #0088ff;
+    border: none;
+    padding: 14px;
+    width: 25%;
+}
+.inputSearch{
+    width: 75%;
+    border-radius: 10px;
+}
+.divPesquisa{
+    display: flex;
+    gap: 20px;
+}
+.fundoCampo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: url("/images/imageCampoFutebol.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    padding: 12px;
+    text-align: center;
+    gap: 12px;
+}
+.divCimaModal{
+    display: flex;
+    justify-content: space-between;
+}
+.divNomeCampo{
+    background-color: #333333; 
+    border-radius: 10px;
+    padding: 4px 4px 0 4px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 30px;
+}
+.divNomeCampo p{
+    color: #348648;
+}
+
+.divPrecoCampo{
+    background-color: #333333;
+    border-radius: 10px;
+    padding: 8px;
+}
+.divPrecoCampo p{
+    color: #348648
+}
+.divBtnsModalCampo{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.maisInformacoes, .selecionar{
+    border: none;
+    background-color: #0088ff;
+    color: white;
+    border-radius: 10px;    
+    padding: 8px;
+}
+.infoEsquerda{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+    text-align: center;
+    align-items: center;
+}
+.divImagensCampo{
+    display: flex;
+    flex-direction: column;
+}
+.divImagensCampo{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 20px 20px 0;
+}
+.divImagensCampo img{
+    border-radius: 10px;
+}
+.divEnderecoCampo, .divDescricaoCampo{
+    width: 50%;
+    min-height: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.divEnderecoCampo h2, .divDescricaoCampo h2{
+    text-align: left;
+}
+
+
+
+.descricaoCampo, .enderecoCampo{
+    background-color: #333333;
+    color: #348648;
+    height: 100%;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    overflow: auto;
+}
+.contatoCampo{
+    width: 50%;
+}
+.infoDireita{
+    display: flex;
+    flex-direction: column;
+}
+.btnOk{
+    border: none;
+    border-radius: 6px;
+    padding: 6px;
+    background-color: white
+}
+.btnOk:hover{
+    background-color: rgb(240, 239, 239);
+}
+.divIconAlerta{
+    display: flex;
+    justify-content: center;
+}
+.divBtnModal{
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin: 10px 0 0 0
+}
+@media(max-width: 580px){
+   .modal, .modalAviso, .modalInfo{
+    height: 50%;
+    width: 70%;
+   } 
+}
+@media(max-width: 230px){
+    .modal, .modalAviso, .modalInfo{
+        height: 50%;
+    width: 70%;
+    }
+}
