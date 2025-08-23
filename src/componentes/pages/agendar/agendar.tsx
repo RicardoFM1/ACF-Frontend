@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form"
 import { createAgendamentoSchema, type iAgendamento, type iReturnAgendamento } from "../../../schemas/agendamento.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toastbar } from "../../utility/tokenUtility"
+import { toast } from "react-toastify"
+
 
 
 
@@ -43,9 +45,6 @@ export const Agendar=()=>{
     }
    }
 
-   interface diaDaSemana {
-    
-   }
 
    const [campos, setCampos] = useState([] as iCampos[])
    const [horarios, setHorarios] = useState([] as iHorario[])
@@ -58,6 +57,10 @@ export const Agendar=()=>{
     const [retrieve, setRetrieve] = useState<iUser|null>()
     const [modalVisualizarOpen, setmodalVisualizarOpen] = useState(false)
     const [diaDaSemana, setDiaDaSemana] = useState("")
+    const [horarioInicial, setHorarioInicial] = useState<number | null>()
+    const [horarioFinal, setHorarioFinal] = useState<number | null>()
+    const [listaHorarios, setListaHorarios] = useState<string[]>([])
+    const [loadingHorarios, setLoadingHorarios] = useState(false)
 
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
@@ -242,7 +245,7 @@ const ModalAviso = () => {
                 </div>
                 {agendamentos.map((agendamento:iReturnAgendamento) => (
                     
-                    <div key={agendamento.campos.id} className={style.fundoAgendamento}>
+                    <div className={style.fundoAgendamento}>
                     <div className={style.divCimaModal}>
                     <div className={style.divNomeCampo}>
                         <p ><strong>{agendamento.campos.nome}</strong></p>
@@ -315,6 +318,8 @@ const ModalAviso = () => {
                 </div>
                 </div>
             </>
+        }else{
+            return <></>
         }
     }
 
@@ -323,37 +328,108 @@ const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAge
     mode: "onBlur"
 });
 
-const getHorarios = async() => {
-const horarios = await apiController.get("/horarios")
-setHorarios(horarios)
+const getHorarios = async () => {
+  if (campoId && diaDaSemana) {
+    let toastId: string | number | undefined
+    try {
+      toastId = toast.loading("Consultando horários...")
+      setLoadingHorarios(true)
+
+      const horarios = await apiController.get(
+        `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
+      )
+      setHorarios(horarios)
+
+      toast.update(toastId, {
+        render: "Consultado com sucesso!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000
+      })
+    } catch (error) {
+      toast.update(toastId!, {
+        render: "Erro ao consultar horários",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000
+      })
+    } finally {
+      setLoadingHorarios(false)
+    }
+  }
 }
+
+// useEffect(() => {
+//     if(campoId && diaDaSemana){
+//         let toastId: string | number | undefined
+//         if(loadingHorarios === true){
+//             toastId = toast.loading("Consultando horários...")
+//         }
+//         else{
+//             toast.success("Consultado com sucesso!")
+//         }
+//         if (toastId) toast.dismiss(toastId)
+//     }
+// }, [loadingHorarios])
+
 const diaDaSemanaFormatada=(dia:string)=>{
     const date = new Date(dia)
     
-    const days = ["Domingo","Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sabado"]
+    const days = ["domingo","segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sabado"]
+    setDiaDaSemana(days[date.getDay()])
 
     console.log(days[date.getDay()], date,new Intl.DateTimeFormat("pt-BR",{
         timeZone:"America/Sao_Paulo",
         weekday:"long"
     }).format(date))
 }
+
 useEffect(() => {
 getHorarios()
-    // const list = []
-    // for(let i = horario_inicial; i< horario_final;i++){
-    //     list.push(String(i)+":00")
-    // }
-    // ["13:00","14"]
-
 }, [])
+
 useEffect(() => {
-    if(infoCampo.id) setValue("camposId", infoCampo.id);
+  if (horarios.length > 0) {
+    const list: string[] = []
+
+    horarios.forEach((horario) => {
+      const inicio = parseInt(horario.horario_inicial)
+      setHorarioInicial(inicio)
+      const fim = parseInt(horario.horario_final)
+      setHorarioFinal(fim)
+      for (let i = inicio; i < fim; i++) {
+          list.push(`${i}:00`)
+        }
+    })
+    setListaHorarios(list)
+    
+  } else {
+    setListaHorarios([]) 
+  }
+}, [horarios])
+useEffect(() => {
+    console.log(horarioInicial)
+    console.log(horarioFinal)
+  
+}, [horarioInicial, horarioFinal])
+
+useEffect(() => {
+    if(infoCampo){
+        if(infoCampo.id) setValue("camposId", infoCampo.id);
+    }
 
 }, [infoCampo, setValue]);
 
 useEffect(() => {
     if(retrieve?.id) setValue("usuariosId", retrieve.id);
 }, [retrieve, setValue]);
+
+useEffect(() => {
+  if (campoId && diaDaSemana) {
+    getHorarios()
+  }
+}, [campoId, diaDaSemana])
+
 
     const Agendar = async(agendamentoData:iAgendamento) => {
         try{
@@ -419,18 +495,18 @@ useEffect(() => {
             <h3>Escolha o horario disponivel</h3>
             <select {...register("horario")} className={style.selectInput}>
   <option value="">-</option>
-  {horarios.map((horario: iHorario) => ( 
-    <option key={horario.id} value={horario.horario_inicial}>
-      {horario.horario_inicial}
+  {listaHorarios.map((listaHorario: string) => ( 
+    <option value={listaHorario}>
+      {listaHorario}
     </option>
   ))}
 
+            </select>
             {errors.horario && (
   <span className={style.errorMsg}>
     {errors.horario.message}
   </span>
 )}
-            </select>
         </div>
         </div>
         <div className={style.divDataForm}>
