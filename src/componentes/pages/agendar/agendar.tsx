@@ -43,6 +43,10 @@ export const Agendar=()=>{
     }
    }
 
+   interface diaDaSemana {
+    
+   }
+
    const [campos, setCampos] = useState([] as iCampos[])
    const [horarios, setHorarios] = useState([] as iHorario[])
    const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
@@ -53,6 +57,7 @@ export const Agendar=()=>{
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
     const [retrieve, setRetrieve] = useState<iUser|null>()
     const [modalVisualizarOpen, setmodalVisualizarOpen] = useState(false)
+    const [diaDaSemana, setDiaDaSemana] = useState("")
 
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
@@ -91,6 +96,7 @@ export const Agendar=()=>{
             if(campo){
                 setInfoCampo(campo)
                 console.log(campo)
+                setValue("camposId",campoId)
             }
            
             
@@ -321,12 +327,28 @@ const getHorarios = async() => {
 const horarios = await apiController.get("/horarios")
 setHorarios(horarios)
 }
+const diaDaSemanaFormatada=(dia:string)=>{
+    const date = new Date(dia)
+    
+    const days = ["Domingo","Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sabado"]
 
+    console.log(days[date.getDay()], date,new Intl.DateTimeFormat("pt-BR",{
+        timeZone:"America/Sao_Paulo",
+        weekday:"long"
+    }).format(date))
+}
 useEffect(() => {
 getHorarios()
+    // const list = []
+    // for(let i = horario_inicial; i< horario_final;i++){
+    //     list.push(String(i)+":00")
+    // }
+    // ["13:00","14"]
+
 }, [])
 useEffect(() => {
     if(infoCampo.id) setValue("camposId", infoCampo.id);
+
 }, [infoCampo, setValue]);
 
 useEffect(() => {
@@ -414,7 +436,7 @@ useEffect(() => {
         <div className={style.divDataForm}>
         <div className={style.divEscolhaData}>
             <h3>Escolha a data do agendamento</h3>
-            <input {...register("data")}type="date" className={style.inputAgendar}/>
+            <input {...register("data")} onChange={(e)=>diaDaSemanaFormatada(e.target.value)} type="date" className={style.inputAgendar}/>
             {errors.data && errors.data && (
               <span className={style.errorMsg}>
                 {errors.data.message}
