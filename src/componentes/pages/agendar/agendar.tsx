@@ -46,9 +46,11 @@ export const Agendar=()=>{
    }
 
 
-   const [campos, setCampos] = useState([] as iCampos[])
-   const [horarios, setHorarios] = useState([] as iHorario[])
-   const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
+    const [campos, setCampos] = useState([] as iCampos[])
+    const [horarios, setHorarios] = useState([] as iHorario[])
+    const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
+    const [searchAgendamento, setSearchAgendamento] = useState("")
+    const [searchCampo, setSearchCampo] = useState("")
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
     const [modalInfoOpen, setModalInfoOpen] = useState(false)
     const [campoId, setCampoId] = useState<number | null>(null)
@@ -72,12 +74,19 @@ export const Agendar=()=>{
         setCampos(campos)
     }
 
+    const camposFiltrados = campos.filter(c =>
+        c.nome.toLowerCase().includes(searchCampo.toLowerCase())
+    )
+
     const getAgendamentos = async() => {
         const retrieveId = retrieve?.id
         const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
         setAgendamentos(agendamentos)
     }
 
+    const agendamentosFiltrados = agendamentos.filter(a =>
+        a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
+    )
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
         getCampos()
@@ -151,6 +160,9 @@ export const Agendar=()=>{
     //    console.log(agendamentos)
     // }, [agendamentos])
 
+    useEffect(() =>{
+        console.log(searchAgendamento, "renderizou search")
+    }, [searchAgendamento])
      const OpenModalCampos = () => {
         if(modalCamposOpen){
            
@@ -166,10 +178,24 @@ export const Agendar=()=>{
                 </div>
                 <div className={style.modal}>
                 <div className={style.divPesquisa}>
-                <input className={style.inputSearch} type="search" placeholder="Pesquise um campo" />
-                <button className={style.btnPesquisar}>Pesquisar</button>
+                <input 
+                id="idPesquisaCampo" 
+                value={searchCampo} 
+                onChange={(e) =>setSearchCampo(e.target.value)}
+                className={style.inputSearch} 
+                type="search" 
+                placeholder="Pesquise um campo" />
+                <div className={style.divFiltro}>
+                <p>Filtrar</p>
+                <select className={style.selectFiltro} name="filtroCampoName" id="filtroCampo">
+                    
+                    <option value="">Data</option>
+                    <option value="">Horario</option>
+                    <option value="">Preço</option>
+                </select>
                 </div>
-                {campos.map((campo:iCampos) => (
+                </div>
+                {camposFiltrados.map((campo:iCampos) => (
                     
                     <div key={campo.id} className={style.fundoCampo}>
                     <div className={style.divCimaModal}>
@@ -242,10 +268,24 @@ const ModalAviso = () => {
                 </div>
                 <div className={style.modal}>
                 <div className={style.divPesquisa}>
-                <input className={style.inputSearch} type="search" placeholder="Pesquise um agendamento" />
-                <button className={style.btnPesquisar}>Pesquisar</button>
+                <input 
+                id="idPesquisaAgendamento" 
+                value={searchAgendamento} 
+                onChange={(e) =>setSearchAgendamento(e.target.value)}
+                className={style.inputSearch} 
+                type="search" 
+                placeholder="Pesquise um agendamento" />
+                <div className={style.divFiltro}>
+                <p>Filtrar</p>
+                <select className={style.selectFiltro} name="filtroAgendamentoName" id="filtroAgendamento">
+                    
+                    <option value="">Data</option>
+                    <option value="">Horario</option>
+                    <option value="">Preço</option>
+                </select>
                 </div>
-                {agendamentos.map((agendamento:iReturnAgendamento) => (
+                </div>
+                {agendamentosFiltrados.map((agendamento:iReturnAgendamento) => (
                     
                     <div className={style.fundoAgendamento}>
                     <div className={style.divCimaModal}>
@@ -457,8 +497,10 @@ useEffect(() => {
    return  <div className={style.load}>
     <header className={style.headerAgendar}>
     <div className={style.divBtnVoltar}>
-        
-<Link to={"/"} className={style.btnVoltar}>Voltar</Link>
+        {retrieve?.admin === true ?
+            <Link to={"/admin"} className={style.btnVoltar}>Voltar</Link>
+        : <Link to={"/"} className={style.btnVoltar}>Voltar</Link>}
+
 
 
         </div>

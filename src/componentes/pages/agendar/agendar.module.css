@@ -374,3 +374,16 @@ button{
     display: flex;
     gap: 20px;
 }
+.selectFiltro{
+    border-radius: 10px;
+    height: 25px;
+}
+.divFiltro{
+    gap: 12px;
+   
+    text-align: center;
+    justify-content: center;
+}
+.divFiltro p {
+    text-align: center;
+}

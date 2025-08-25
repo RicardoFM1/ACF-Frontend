@@ -1,15 +1,28 @@
 
 import { Link, useNavigate } from "react-router-dom"
 import style from "./home.module.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import { Iconify } from "../../iconify/iconify"
 import { getLocalStorageItem, removeLocalStorageItem } from "../../utility/tokenUtility"
+import { apiController } from "../../../controller/api.controller"
 
 export const Home=()=>{ 
+    interface iUser {
+        id: number,
+        email: string,
+        admin: boolean
+    }
+
     const [modalOpen, setModalOpen] = useState(false)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
+    const [retrieve, setRetrieve] = useState<iUser | null>()
     const navigate = useNavigate()
+
+    const getRetrieve = async() => {
+        const retrieveUser = await apiController.get("/usuarios/retrieve")
+        setRetrieve(retrieveUser)
+    }
 
     const logout = () => {
             removeLocalStorageItem("token")
@@ -20,6 +33,9 @@ export const Home=()=>{
             setModalOpen(false)
         }
     
+        useEffect(() => {
+            getRetrieve()
+        }, [])
 
     const ModalSair = () => {
         if(modalOpen){
@@ -101,6 +117,9 @@ const ModalAviso = () => {
     <Link viewTransition to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
     : <Link viewTransition to={""} className={style.linkCadastro}>Agendar</Link>
 }
+    {retrieve?.admin == true ?
+    <Link to={"/admin"} className={style.linkAdmin}>Admin</Link>
+    : <></>}
     <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
  </div>
         </header>
