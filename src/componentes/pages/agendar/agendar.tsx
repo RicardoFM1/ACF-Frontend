@@ -60,7 +60,7 @@ export const Agendar=()=>{
     const [horarioInicial, setHorarioInicial] = useState<number | null>()
     const [horarioFinal, setHorarioFinal] = useState<number | null>()
     const [listaHorarios, setListaHorarios] = useState<string[]>([])
-    const [loadingHorarios, setLoadingHorarios] = useState(false)
+    // const [loadingHorarios, setLoadingHorarios] = useState(false)
 
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
@@ -141,13 +141,15 @@ export const Agendar=()=>{
 
     useEffect(() => {
         if(retrieve?.id){
-            getAgendamentos()
+        
+                getAgendamentos()
         }
+        
     }, [retrieve])
     
-    useEffect(() => {
-       console.log(agendamentos)
-    }, [agendamentos])
+    // useEffect(() => {
+    //    console.log(agendamentos)
+    // }, [agendamentos])
 
      const OpenModalCampos = () => {
         if(modalCamposOpen){
@@ -330,31 +332,36 @@ const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAge
 
 const getHorarios = async () => {
   if (campoId && diaDaSemana) {
-    let toastId: string | number | undefined
+    // let toastId: string | number | undefined
     try {
-      toastId = toast.loading("Consultando horários...")
-      setLoadingHorarios(true)
+    //   toastId = toast.loading("Consultando horários...")
+    //   setLoadingHorarios(true)
 
       const horarios = await apiController.get(
         `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
       )
       setHorarios(horarios)
-
-      toast.update(toastId, {
-        render: "Consultado com sucesso!",
-        type: "success",
-        isLoading: false,
-        autoClose: 3000
-      })
+      if(horarios.length > 0){
+        toastbar.success("Horários disponíveis nesse dia e nesse campo!")
+    }else{
+        toastbar.error("Nenhum horário disponível neste dia e neste campo!") 
+      }
+    //   toast.update(toastId, {
+    //     render: "Consultado com sucesso!",
+    //     type: "success",
+    //     isLoading: false,
+    //     autoClose: 3000
+    //   })
     } catch (error) {
-      toast.update(toastId!, {
-        render: "Erro ao consultar horários",
-        type: "error",
-        isLoading: false,
-        autoClose: 3000
-      })
-    } finally {
-      setLoadingHorarios(false)
+        toastbar.error("Erro ao consultar os horarios!")
+    //   toast.update(toastId!, {
+    //     render: "Erro ao consultar horários",
+    //     type: "error",
+    //     isLoading: false,
+    //     autoClose: 3000
+    //   })
+    // } finally {
+    //   setLoadingHorarios(false)
     }
   }
 }
@@ -478,7 +485,7 @@ useEffect(() => {
         <div className={style.divCampoForm}>
         <div className={style.divEscolhaCampo}>
       <h3>Escolha o campo disponível</h3>
-      <input type="text" className={style.inputCampoNome} value={infoCampo.nome} readOnly placeholder="Clique em 'Escolha um campo'"/>
+      <input type="text" className={style.inputCampoNome} value={infoCampo.nome} readOnly placeholder="Clique em 'Escolher um campo'"/>
       <input {...register("camposId")} type="hidden" />
       <input {...register("usuariosId")} type="hidden" />
 
@@ -491,7 +498,20 @@ useEffect(() => {
             )}
         </div>
        
-        <div className={style.divEscolhaHorario}>
+        
+        </div>
+        <div className={style.divDataForm}>
+        <div className={style.divEscolhaData}>
+            <h3>Escolha a data do agendamento</h3>
+            <input {...register("data")} onChange={(e)=>diaDaSemanaFormatada(e.target.value)} type="date" className={style.inputAgendar}/>
+            {errors.data && errors.data && (
+              <span className={style.errorMsg}>
+                {errors.data.message}
+              </span>
+            )}
+
+            </div>
+            <div className={style.divEscolhaHorario}>
             <h3>Escolha o horario disponivel</h3>
             <select {...register("horario")} className={style.selectInput}>
   <option value="">-</option>
@@ -508,19 +528,6 @@ useEffect(() => {
   </span>
 )}
         </div>
-        </div>
-        <div className={style.divDataForm}>
-        <div className={style.divEscolhaData}>
-            <h3>Escolha a data do agendamento</h3>
-            <input {...register("data")} onChange={(e)=>diaDaSemanaFormatada(e.target.value)} type="date" className={style.inputAgendar}/>
-            {errors.data && errors.data && (
-              <span className={style.errorMsg}>
-                {errors.data.message}
-              </span>
-            )}
-
-            </div>
-            
         </div>
         <div className={style.divBtnAgendar}>
             <button className={style.btnAgendar} type="submit">Agendar</button>
