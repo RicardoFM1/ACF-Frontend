@@ -87,6 +87,7 @@ export const Agendar=()=>{
     const agendamentosFiltrados = agendamentos.filter(a =>
         a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
     )
+    setAgendamentos(agendamentosFiltrados)
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
         getCampos()
@@ -421,7 +422,9 @@ const getHorarios = async () => {
 
 const diaDaSemanaFormatada=(dia:string)=>{
     const date = new Date(dia)
-    
+    console.log(date.getHours(),"date")
+    date.setHours(date.getHours()+3);
+     console.log(date.getHours(),"date 2")
     const days = ["domingo","segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sabado"]
     setDiaDaSemana(days[date.getDay()])
 
