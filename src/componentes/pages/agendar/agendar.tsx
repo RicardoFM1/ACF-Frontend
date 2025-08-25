@@ -4,10 +4,11 @@ import { useEffect, useState } from "react"
 import { apiController } from "../../../controller/api.controller"
 import { Iconify } from "../../iconify/iconify"
 import { useForm } from "react-hook-form"
-import { createAgendamentoSchema, type iCreateAgendamento } from "../../../schemas/agendamento.schema"
+import { createAgendamentoSchema, type iAgendamento, type iReturnAgendamento } from "../../../schemas/agendamento.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { toast } from "react-toastify"
 import { toastbar } from "../../utility/tokenUtility"
+import { toast } from "react-toastify"
+
 
 
 
@@ -44,14 +45,22 @@ export const Agendar=()=>{
     }
    }
 
+
    const [campos, setCampos] = useState([] as iCampos[])
    const [horarios, setHorarios] = useState([] as iHorario[])
+   const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
     const [modalInfoOpen, setModalInfoOpen] = useState(false)
     const [campoId, setCampoId] = useState<number | null>(null)
     const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
     const [retrieve, setRetrieve] = useState<iUser|null>()
+    const [modalVisualizarOpen, setmodalVisualizarOpen] = useState(false)
+    const [diaDaSemana, setDiaDaSemana] = useState("")
+    const [horarioInicial, setHorarioInicial] = useState<number | null>()
+    const [horarioFinal, setHorarioFinal] = useState<number | null>()
+    const [listaHorarios, setListaHorarios] = useState<string[]>([])
+    // const [loadingHorarios, setLoadingHorarios] = useState(false)
 
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
@@ -63,9 +72,19 @@ export const Agendar=()=>{
         setCampos(campos)
     }
 
+    const getAgendamentos = async() => {
+        const retrieveId = retrieve?.id
+        const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
+        setAgendamentos(agendamentos)
+    }
+
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
         getCampos()
+    }
+
+    const fecharModalVisualizar = () => {
+        setmodalVisualizarOpen(false)
     }
 
     const fecharModal = () => {
@@ -80,6 +99,7 @@ export const Agendar=()=>{
             if(campo){
                 setInfoCampo(campo)
                 console.log(campo)
+                setValue("camposId",campoId)
             }
            
             
@@ -105,6 +125,7 @@ export const Agendar=()=>{
         getCampos()
         const interval = setInterval(() => {
             getCampos()
+            getRetrieve()  
         }, 15000);
     const token = localStorage.getItem("token")
     if(!token){
@@ -117,6 +138,18 @@ export const Agendar=()=>{
      useEffect(() => {
         console.log(infoCampo)
     }, [infoCampo])
+
+    useEffect(() => {
+        if(retrieve?.id){
+        
+                getAgendamentos()
+        }
+        
+    }, [retrieve])
+    
+    // useEffect(() => {
+    //    console.log(agendamentos)
+    // }, [agendamentos])
 
      const OpenModalCampos = () => {
         if(modalCamposOpen){
@@ -193,8 +226,60 @@ const ModalAviso = () => {
         </>
             
         }else{
-            return null
+            return <></>
         }
+    }
+
+    const OpenModalVisualizar = () => {
+        if(modalVisualizarOpen){
+    return <>
+        <div className={style.fundoModal}> 
+                <div className={style.tituloModalVisualizar}>
+                    <h2>Meus agendamentos</h2>
+                    <div className={style.divBtnFecharModal}>
+                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>X</button>
+                    </div>
+                </div>
+                <div className={style.modal}>
+                <div className={style.divPesquisa}>
+                <input className={style.inputSearch} type="search" placeholder="Pesquise um agendamento" />
+                <button className={style.btnPesquisar}>Pesquisar</button>
+                </div>
+                {agendamentos.map((agendamento:iReturnAgendamento) => (
+                    
+                    <div className={style.fundoAgendamento}>
+                    <div className={style.divCimaModal}>
+                    <div className={style.divNomeCampo}>
+                        <p ><strong>{agendamento.campos.nome}</strong></p>
+                    </div>
+                    
+                    <div className={style.divDateTimeAgendamento}>
+                        
+                    <div className={style.agendamentoData}>
+                    <p><strong>{agendamento.data}</strong></p>
+                    </div>
+                    <div className={style.agendamentoHorario}>
+                    <p><strong>{agendamento.horario ? agendamento.horario : "N/A"}</strong></p>
+                    </div>
+                    </div>
+                    </div>
+                    <div className={style.divBtnsModalCampo}>
+                        <button onClick={() => clickInformacoes(agendamento.campos.id)}  className={style.maisInformacoes}>Mais informações</button>
+                        <div className={style.divPrecoCampo}>
+                        <p ><strong>R${agendamento.campos.valor}</strong></p>
+                    </div>
+                    </div>
+                </div>
+            ))}
+                </div>
+
+            </div>
+            </>
+        
+    
+    }else{
+        return <></>
+    }
     }
 
     const OpenModalInfo = () => {
@@ -235,41 +320,137 @@ const ModalAviso = () => {
                 </div>
                 </div>
             </>
+        }else{
+            return <></>
         }
     }
 
-const { register, handleSubmit, setValue, formState: { errors } } = useForm<iCreateAgendamento>({
+const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAgendamento>({
     resolver: zodResolver(createAgendamentoSchema),
     mode: "onBlur"
 });
 
-const getHorarios = async() => {
-const horarios = await apiController.get("/horarios")
-setHorarios(horarios)
+const getHorarios = async () => {
+  if (campoId && diaDaSemana) {
+    // let toastId: string | number | undefined
+    try {
+    //   toastId = toast.loading("Consultando horários...")
+    //   setLoadingHorarios(true)
+
+      const horarios = await apiController.get(
+        `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
+      )
+      setHorarios(horarios)
+      if(horarios.length > 0){
+        toastbar.success("Horários disponíveis nesse dia e nesse campo!")
+    }else{
+        toastbar.error("Nenhum horário disponível neste dia e neste campo!") 
+      }
+    //   toast.update(toastId, {
+    //     render: "Consultado com sucesso!",
+    //     type: "success",
+    //     isLoading: false,
+    //     autoClose: 3000
+    //   })
+    } catch (error) {
+        toastbar.error("Erro ao consultar os horarios!")
+    //   toast.update(toastId!, {
+    //     render: "Erro ao consultar horários",
+    //     type: "error",
+    //     isLoading: false,
+    //     autoClose: 3000
+    //   })
+    // } finally {
+    //   setLoadingHorarios(false)
+    }
+  }
+}
+
+// useEffect(() => {
+//     if(campoId && diaDaSemana){
+//         let toastId: string | number | undefined
+//         if(loadingHorarios === true){
+//             toastId = toast.loading("Consultando horários...")
+//         }
+//         else{
+//             toast.success("Consultado com sucesso!")
+//         }
+//         if (toastId) toast.dismiss(toastId)
+//     }
+// }, [loadingHorarios])
+
+const diaDaSemanaFormatada=(dia:string)=>{
+    const date = new Date(dia)
+    
+    const days = ["domingo","segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sabado"]
+    setDiaDaSemana(days[date.getDay()])
+
+    console.log(days[date.getDay()], date,new Intl.DateTimeFormat("pt-BR",{
+        timeZone:"America/Sao_Paulo",
+        weekday:"long"
+    }).format(date))
 }
 
 useEffect(() => {
 getHorarios()
 }, [])
+
 useEffect(() => {
-    if(infoCampo.id) setValue("camposId", infoCampo.id);
+  if (horarios.length > 0) {
+    const list: string[] = []
+
+    horarios.forEach((horario) => {
+      const inicio = parseInt(horario.horario_inicial)
+      setHorarioInicial(inicio)
+      const fim = parseInt(horario.horario_final)
+      setHorarioFinal(fim)
+      for (let i = inicio; i < fim; i++) {
+          list.push(`${i}:00`)
+        }
+    })
+    setListaHorarios(list)
+    
+  } else {
+    setListaHorarios([]) 
+  }
+}, [horarios])
+useEffect(() => {
+    console.log(horarioInicial)
+    console.log(horarioFinal)
+  
+}, [horarioInicial, horarioFinal])
+
+useEffect(() => {
+    if(infoCampo){
+        if(infoCampo.id) setValue("camposId", infoCampo.id);
+    }
+
 }, [infoCampo, setValue]);
 
 useEffect(() => {
     if(retrieve?.id) setValue("usuariosId", retrieve.id);
 }, [retrieve, setValue]);
 
-    const Agendar = async(agendamentoData:iCreateAgendamento) => {
+useEffect(() => {
+  if (campoId && diaDaSemana) {
+    getHorarios()
+  }
+}, [campoId, diaDaSemana])
+
+
+    const Agendar = async(agendamentoData:iAgendamento) => {
         try{
-            const res = await apiController.post("/agendamentos", agendamentoData)
+            const dataFormatada = agendamentoData.data.split("-").reverse().join("/")
+            const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada}
+            const res = await apiController.post("/agendamentos", agendamentoDataNovo)
             console.log(res)
             if(res){
                 toastbar.success("Campo agendado com sucesso!")
             }
         }catch(error:any){
-            console.log(error, "erro agendar")
-            toast.error(error.response.data.message)
-        }
+        console.log(error, "erro")
+        toastbar.error(error.response.data.message)
+      }
     }
 
 
@@ -281,18 +462,22 @@ useEffect(() => {
 
 
         </div>
-            <div>
-            <h1 className={style.h1Agendar}>Agendamentos</h1>
- <div className={style.divVisualizar}>
+
+            <div className={style.divHeaderDireita}>
+                 <div className={style.divVisualizar}>
             
-            <button className={style.btnVisualizar}>Ver meus Agendamentos</button>
+            <button onClick={() => setmodalVisualizarOpen(true)} className={style.btnVisualizar}>Ver meus Agendamentos</button>
         </div>
+            <h1 className={style.h1Agendar}>Agendamentos</h1>
+
             </div>
     </header>
 
     {modalCamposOpen && <OpenModalCampos />}
+    {modalVisualizarOpen && <OpenModalVisualizar />}
     {modalInfoOpen && <OpenModalInfo />}
     {modalAvisoOpen && <ModalAviso />}
+
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
     <div className={style.divPrincipalAgendamento}>
         <div className={style.divOne}> 
@@ -300,7 +485,7 @@ useEffect(() => {
         <div className={style.divCampoForm}>
         <div className={style.divEscolhaCampo}>
       <h3>Escolha o campo disponível</h3>
-      <input type="text" className={style.inputCampoNome} value={infoCampo.nome} readOnly placeholder="Clique em 'Escolha um campo'"/>
+      <input type="text" className={style.inputCampoNome} value={infoCampo.nome} readOnly placeholder="Clique em 'Escolher um campo'"/>
       <input {...register("camposId")} type="hidden" />
       <input {...register("usuariosId")} type="hidden" />
 
@@ -313,24 +498,12 @@ useEffect(() => {
             )}
         </div>
        
-        <div className={style.divEscolhaHorario}>
-            <h3>Escolha o horario disponivel</h3>
-            <select {...register("horario")} className={style.selectInput} name="select" id="selectId">
-                {horarios.map((horario:iHorario) => ( 
-                    <option id="optionId" value={horario.id}>{horario.horario_inicial}</option>
-                ))}
-            {errors.horario && errors.horario && (
-              <span className={style.errorMsg}>
-                {errors.horario.message}
-              </span>
-            )}
-            </select>
-        </div>
+        
         </div>
         <div className={style.divDataForm}>
         <div className={style.divEscolhaData}>
             <h3>Escolha a data do agendamento</h3>
-            <input {...register("data")}type="date" className={style.inputAgendar}/>
+            <input {...register("data")} onChange={(e)=>diaDaSemanaFormatada(e.target.value)} type="date" className={style.inputAgendar}/>
             {errors.data && errors.data && (
               <span className={style.errorMsg}>
                 {errors.data.message}
@@ -338,11 +511,27 @@ useEffect(() => {
             )}
 
             </div>
-            <div className={style.divBtnAgendar}>
+            <div className={style.divEscolhaHorario}>
+            <h3>Escolha o horario disponivel</h3>
+            <select {...register("horario")} className={style.selectInput}>
+  <option value="">-</option>
+  {listaHorarios.map((listaHorario: string) => ( 
+    <option value={listaHorario}>
+      {listaHorario}
+    </option>
+  ))}
+
+            </select>
+            {errors.horario && (
+  <span className={style.errorMsg}>
+    {errors.horario.message}
+  </span>
+)}
+        </div>
+        </div>
+        <div className={style.divBtnAgendar}>
             <button className={style.btnAgendar} type="submit">Agendar</button>
             </div>
-        </div>
-        
         </form>
 
        
