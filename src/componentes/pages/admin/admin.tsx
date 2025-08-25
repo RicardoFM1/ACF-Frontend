@@ -137,9 +137,13 @@ const ModalAviso = () => {
         <header className={style.header}>
  <h1>ACF</h1>
  <div className={style.btns}> 
-    <Link to={"/controle"} className={style.linkControle}>Controle</Link>
-    <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
+    <Link to={"/agendar"} className={style.linkAgendar}>Agendar</Link>
     
+    <Link to={"/controle"} className={style.linkControle}>Controle</Link>
+    
+    {token ?
+    <button onClick={() => setModalOpen(true)} className={style.btnSair}>Sair</button>
+    :  <Link className={style.linkLogin} to={"/login"}>Fazer login</Link>}
  </div>
         </header>
         {modalOpen && <ModalSair />}

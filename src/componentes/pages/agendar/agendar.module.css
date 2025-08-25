@@ -15,12 +15,18 @@
 }   
 body{
     height: 100vh;
+    overflow-x: hidden;
 }
 .headerAgendar{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin: 12px;
+}
+.divHeaderDireita{
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
 }
 .h1Agendar{
     font-weight: 400;
@@ -40,29 +46,46 @@ body{
 }
 .inputAgendar{
    padding: 12px;
-   width: 100%;     
+   width: 80%;     
 }
 .divOne{
-    width: 50%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 60px;
 }
+.formAgendamento{
+    display: flex;
+    flex-direction: column;
+}
+.divCampoForm, .divDataForm{
+    display: flex;
+    width: 100%;
+    margin: 24px;
+}
 .h2Agendamento{
-  margin: 90px 0 90px 65px;
+  margin: 90px 0 90px 25px;
 }
 h3{
     font-weight: 500;
 }
-.divEscolhaCampo{
+.divEscolhaCampo {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 80%;
+}
+.divEscolhaData{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 80%;
 }
 .divEscolhaHorario{
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 20%;
 }
 .selectInput{
     border: none;
@@ -71,22 +94,35 @@ h3{
 }
 .btnVisualizar{
     background-color: #0088ff;
-    height: 40px;
+    padding: 12px;
     border: none;
-    width: 30%;
     border-radius: 20px;
     color: white;
 }
+.divBtnAgendar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+}
+.btnAgendar{
+    background-color: #0088ff;
+    height: 38px;
+    border: none;
+    width: 40%;
+    border-radius: 20px;
+    color: white;
+}
+
 .divVisualizar{
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-.divEscolhaData{
-    display: flex;
-    flex-direction: column;
-    gap: 12px
-}
+
+
+
 button{
     cursor: pointer;
 }
@@ -122,6 +158,8 @@ button{
     overflow: auto  ;
     gap: 24px;
     width: 75%;
+    max-width: 75%;
+    max-height: 60vh;
     border-radius: 0 0 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
     background-color: #d4d4dc;
@@ -130,8 +168,7 @@ button{
 .modalInfo{
     padding: 12px;
     display: flex;
-    overflow: auto ;
-    gap: 32px;
+    overflow: auto;
     width: 75%;
     border-radius: 0 0 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -164,7 +201,7 @@ button{
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-.tituloModalCampos, .tituloModalInfoCampos{
+.tituloModalCampos, .tituloModalInfoCampos, .tituloModalVisualizar{
     position: relative;
     display: flex;
     justify-content: flex-end;
@@ -189,7 +226,7 @@ button{
     background-color: #0088ff;
     border: none;
     padding: 14px;
-    width: 20%;
+    width: 25%;
 }
 .inputSearch{
     width: 75%;
@@ -199,17 +236,23 @@ button{
     display: flex;
     gap: 20px;
 }
-.fundoCampo{
+.fundoCampo, .fundoAgendamento{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    background: url("../../images/imageCampoFutebol.png");
+    background: url("/images/imageCampoFutebol.png");
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: center center;
     padding: 12px;
     text-align: center;
+    gap: 12px;
 }
-.divNomeCampo{
+.divCimaModal{
+    display: flex;
+    justify-content: space-between;
+}
+.divNomeCampo, .agendamentoData, .agendamentoHorario{
     background-color: #333333; 
     border-radius: 10px;
     padding: 4px 4px 0 4px;
@@ -218,14 +261,10 @@ button{
     text-align: center;
     height: 30px;
 }
-.divNomeCampo p{
+.divNomeCampo p, .agendamentoData p, .agendamentoHorario p{
     color: #348648;
 }
-.ladoDireitoCampos{
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
+
 .divPrecoCampo{
     background-color: #333333;
     border-radius: 10px;
@@ -234,7 +273,12 @@ button{
 .divPrecoCampo p{
     color: #348648
 }
-.maisInformacoes{
+.divBtnsModalCampo{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.maisInformacoes, .selecionar{
     border: none;
     background-color: #0088ff;
     color: white;
@@ -286,7 +330,7 @@ button{
     overflow: auto;
 }
 .contatoCampo{
-    width: 70%;
+    width: 50%;
 }
 .infoDireita{
     display: flex;
@@ -322,4 +366,24 @@ button{
         height: 50%;
     width: 70%;
     }
+}
+.errorMsg{
+    color: rgb(247, 74, 74)
+}
+.divDateTimeAgendamento{
+    display: flex;
+    gap: 20px;
+}
+.selectFiltro{
+    border-radius: 10px;
+    height: 25px;
+}
+.divFiltro{
+    gap: 12px;
+   
+    text-align: center;
+    justify-content: center;
+}
+.divFiltro p {
+    text-align: center;
 }
