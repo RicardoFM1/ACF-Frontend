@@ -24,7 +24,7 @@
 .ola{
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 30px;
 }
 .p{
     background-color: #222;
@@ -88,4 +88,115 @@
     display: flex;
     justify-content: center;
     margin-top:50% ;
+}
+.headerControle{
+    display: flex;
+    justify-content: space-between;
+    margin: 30px;
+    font-size: 32px;
+    font-weight: 500;
+}
+.Linkvoltar{
+        text-decoration: none;
+    background-color: black;
+    color: white;
+    padding: 12px;
+    border-radius: 6px; 
+}
+.caixaCampo{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.icons{
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.editarCampos{
+    width: 50%;
+    height: 200px;
+    background-color: #ffffff;
+    border: 1px solid black;
+}
+.headerEditarCampos{
+    background-color: #d9d9d9;
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+}
+.divPrincipal{
+    display: flex;
+    flex-direction: row;
+}
+.inputPreco{
+    background-color:#222222;
+    color: #4caf50;
+    width: 50%;
+    border-radius: 6px;
+}
+.preco{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    padding: 20px;
+    align-items: center;
+}
+.horario{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    padding: 20px;
+    align-items: center;
+}
+.modificarHorarios{
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 6px;
+}
+.horarios{
+    width: 60%;
+    height: 500px;
+    background-color: #efefef;
+}
+.inputHorario{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    gap: 12px;
+}
+.selectHorario{
+    border: 1px solid rgb(206, 206, 206);
+    padding: 6px;
+    border-radius: 6px;
+    color: #1e1e1e;
+}
+.inputsHorarios{
+    display: flex;
+    flex-direction: column;
+    gap: 12PX;
+    color: #1e1e1e;
+    width: 100%;
+}
+.h3Horarios{
+    color: #1e1e1e;
+    font-weight: 700;
+    font-size:24px ;
+}
+.horariosInputs{
+    margin: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.divDias{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
 }
