@@ -151,31 +151,14 @@ export const Agendar=()=>{
             }
         getRetrieve()   
         console.log("testeInicio")
-       // getCampos()
-        // const interval = setInterval(() => {
-        //     getCampos()
-        //     getRetrieve()  
-        // }, 15000);
-
-
-    // return () => clearInterval(interval)
+     
     }, [])
     
      useEffect(() => {
         console.log(infoCampo)
     }, [infoCampo])
 
-    // useEffect(() => {
-    //     if(retrieve?.id){
-        
-    //             getAgendamentos()
-    //     }
-        
-    // }, [])
-    
-    // useEffect(() => {
-    //    console.log(agendamentos)
-    // }, [agendamentos])
+  
 
 
    const filtrarAgendamentos = (search:string) => {
@@ -185,13 +168,7 @@ export const Agendar=()=>{
         )
         setAgendamentos(agendamentosFiltrados)
    }
-    //setsearch
-    //filtarragenda
-
-    // useEffect(() =>{
-    //     console.log(searchAgendamento, "renderizou search")
-    //     filtrarAgendamentos()
-    // }, [searchAgendamento])
+    
      const OpenModalCampos = () => {
         if(modalCamposOpen){
            
@@ -334,10 +311,7 @@ const ModalAviso = () => {
                             {option.name}
                     </option>
                    })} 
-                   {/* <option value="">-</option>
-                    <option value="Data">Data</option>
-                    <option value="Horario">Horario</option>
-                    <option value="Preco">Preço</option> */}
+                
                 </select>
 
                 </div>

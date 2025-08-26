@@ -6,7 +6,7 @@ export const a = axios.create({
     timeout: 2000
 })
 
-export const apiController ={
+export const apiController = {
     getHeaders(){
        let headers:any = {
             "Content-Type":"	application/json; charset=utf-8"
@@ -45,5 +45,19 @@ export const apiController ={
             console.log(error,"error")
             toast.error(error.response.data.message);
          }
+    },
+    async patch(url:string, body:any){
+        try{
+            const res = await a.patch(url,body,{
+                headers:this.getHeaders()
+            })
+            if(res.data){
+                return res.data
+            }
+
+        }catch(error:any){
+            console.log(error, "error")
+            toast.error(error.response.data.message)
+        }
     }
 }
