@@ -15,8 +15,17 @@ body{
     color: white;
     text-decoration: none;
     background-color: black;
-    padding: 8PX;
+    padding: 8px;
     border-radius: 6px;
+}
+.linkAgendar{
+    color: black;
+    text-decoration: none;
+    padding: 8px;
+    transition: all 0.2s ease; 
+}
+.linkAgendar:hover{
+   transform: translateY(-2px);
 }
 .linkControle{
     color: white;

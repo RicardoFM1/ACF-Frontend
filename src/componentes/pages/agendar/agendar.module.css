@@ -168,7 +168,6 @@ button{
 .modalInfo{
     padding: 12px;
     display: flex;
-    overflow: auto;
     width: 75%;
     border-radius: 0 0 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
@@ -296,8 +295,6 @@ button{
 .divImagensCampo{
     display: flex;
     flex-direction: column;
-}
-.divImagensCampo{
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -331,6 +328,7 @@ button{
 }
 .contatoCampo{
     width: 50%;
+    
 }
 .infoDireita{
     display: flex;
@@ -373,4 +371,17 @@ button{
 .divDateTimeAgendamento{
     display: flex;
     gap: 20px;
+}
+.selectFiltro{
+    border-radius: 10px;
+    height: 25px;
+}
+.divFiltro{
+    gap: 12px;
+   
+    text-align: center;
+    justify-content: center;
+}
+.divFiltro p {
+    text-align: center;
 }
