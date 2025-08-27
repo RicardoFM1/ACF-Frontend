@@ -59,5 +59,15 @@ export const apiController = {
             console.log(error, "error")
             toast.error(error.response.data.message)
         }
+    },
+    async delete(url:string){
+        try{
+            await a.delete(url, {
+                headers: this.getHeaders()
+            })
+        }catch(error:any){
+        console.log(error, "error")
+        toast.error(error.response.data.message)
+    }
     }
 }

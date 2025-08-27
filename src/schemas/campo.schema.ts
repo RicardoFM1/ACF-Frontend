@@ -11,7 +11,7 @@ export const createCamposSchema = z.object({
 
 export const returnCamposSchema = z.object({
         id: z.number(),
-        nome: z.string().min(1, "Necessário preencher"),
+        
         endereco: z.string().min(1, "Necessário preencher"),
         descricao: z.string().min(1, "Necessário preencher"),
         valor: z.number().min(1, "Necessário preencher"),
@@ -24,9 +24,15 @@ export const atualizarInfoCampoSchema = z.object({
 });
 // depois colocar a imagem junto
 
+export const atualizarNomePrecoSchema = z.object({
+  nome: z.string().min(1, "Necessário preencher"),
+   valor: z.number().min(1, "Necessário preencher")
+})
+
 export const returnAllCamposSchema = returnCamposSchema.array() 
 
 export type iCreateCampo = z.infer<typeof createCamposSchema>
 export type iReturnCampo = z.infer<typeof returnCamposSchema>
 export type iReturnAllCampos = z.infer<typeof returnAllCamposSchema>
 export type iAtualizarCampos = z.infer<typeof atualizarInfoCampoSchema>
+export type   iAtualizarNomePrecoCampos = z.infer<typeof atualizarNomePrecoSchema>

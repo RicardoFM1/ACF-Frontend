@@ -7,6 +7,7 @@ import { atualizarInfoCampoSchema, createCamposSchema, type iAtualizarCampos, ty
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toastbar } from "../../utility/tokenUtility";
+import { OpenModalEditarCampo } from "../../modals/modalControle/modalControle";
 
 export const Controle = () => {
   interface iCampos {
@@ -24,6 +25,7 @@ export const Controle = () => {
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
   const [isEditingEndereco, setIsEditingEndereco] = useState(false);
   const [isEditingDescricao, setIsEditingDescricao] = useState(false);
+  const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAtualizarCampos>({
     resolver: zodResolver(atualizarInfoCampoSchema),
@@ -87,6 +89,20 @@ const clickInformacoes = async (id: number) => {
     console.log("chamado")
   };
 
+  // const desativarCampo = async(id:number) => {
+  //   setCampoId(id)
+  //   const campo = await apiController.patch(`/campos/${id}`, )
+  // }
+  const clickEditarPencil = async(id:number) => {
+    setCampoId(id)
+    const campo = await apiController.get(`/campos/${id}`);
+  if (campo) {
+    setInfoCampo(campo);
+    setIsOpenEditarCampo(true)
+  }
+  }
+
+  
 
   interface ModalInfoProps {
     isOpen: boolean;
@@ -146,7 +162,7 @@ const clickInformacoes = async (id: number) => {
                     : <p className={style.enderecoCampo}>{infoCampo.endereco}</p>
                   }
                   <div className={style.divIcon}>
-                    <button type="button">
+                    <button className={style.btnEditarPencil}type="button">
                     <Iconify  onClick={() => setIsEditingEndereco(!isEditingEndereco)} height={24} width={24} className={style.iconLapis} icon="raphael:pensil" />
                     </button>
                   </div>
@@ -162,7 +178,7 @@ const clickInformacoes = async (id: number) => {
                     : <p className={style.descricaoCampo}>{infoCampo.descricao}</p>
                   }
                   <div className={style.divIcon}>
-                    <button type="button">
+                    <button className={style.btnEditarPencil} type="button">
                     <Iconify  onClick={() => setIsEditingDescricao(!isEditingDescricao)} height={24} width={24} className={style.iconLapis} icon="raphael:pensil" />
                     </button>
                   </div>
@@ -180,15 +196,15 @@ const clickInformacoes = async (id: number) => {
               <div className={style.caixaFoto1}>
                 <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo" />
                 <div className={style.divIcon}>
-                    <button type="button">
-                  <Iconify  height={24} width={24} className={style.iconLapis} icon="raphael:pensil" />
+                    <button className={style.btnEditarPencil} type="button">
+                  <Iconify height={24} width={24} className={style.iconLapis} icon="raphael:pensil" />
                     </button>
                 </div>
               </div>
               <div className={style.caixaFoto2}>
                 <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo" />
                 <div className={style.divIcon}>
-                    <button type="button">
+                    <button className={style.btnEditarPencil} type="button">
                   <Iconify height={24} width={24} className={style.iconLapis} icon="raphael:pensil" />
                     </button>
                 </div>
@@ -222,6 +238,11 @@ const clickInformacoes = async (id: number) => {
         errors={errors}
         setValue={setValue}
       />
+      {isOpenEditarCampo && <OpenModalEditarCampo 
+      onClose={() => setIsOpenEditarCampo(false)} 
+      isOpen={isOpenEditarCampo}
+      campoId={campoId}
+      />}
 
       <div className={style.divH1}>
         <h1>Controle seus campos de futebol</h1>
@@ -241,7 +262,7 @@ const clickInformacoes = async (id: number) => {
               </div>
               <div className={style.icons}>
                 <Iconify icon="fe:trash" />
-                <Iconify icon="raphael:pensil" />
+                <Iconify className={style.iconPencil} onClick={() => clickEditarPencil(campo.id)} icon="raphael:pensil" />
               </div>
             </div>
           ))}
@@ -252,20 +273,7 @@ const clickInformacoes = async (id: number) => {
                     <h3>Horários disponiveis na semana:</h3>
                     <button className={style.visualizar}>Visualizar</button>
                 </div>
-                <div className={style.editarCampos}>
-                    <header className={style.headerEditarCampos}>Editar campos</header>
-                    <div className={style.divPrincipal}>
-                        <div className={style.preco}>
-                    <h3 className={style.h3EditarCampos }>Preço:</h3>
-                    <input type="number" placeholder="R$" className={style.inputPreco}/>
-                    
-                        </div>
-                        <div className={style.horario}>
-                              <h3 className={style.h3EditarCampos }>Horários:</h3>
-                              <button className={style.modificarHorarios}>Modificar horários</button>
-                        </div>
-                    </div> 
-                </div>
+                
                     <div className={style.horarios}>
                          <header className={style.headerEditarCampos}>Horarios</header>
                          <div className={style.divDias}>
