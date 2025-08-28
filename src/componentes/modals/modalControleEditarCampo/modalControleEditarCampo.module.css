@@ -33,6 +33,7 @@
     padding: 12px;
     color: red
 }
+
 .divImagensCampo{
     display: flex;
     flex-direction: column;
@@ -73,9 +74,7 @@
     align-items: center;
     gap: 10px;
 }
-input[type="text"] {
-      word-wrap: break-word;
-    }
+
 .descricaoCampo, .enderecoCampo{
     background-color: #333333;
     color: #348648;
@@ -144,4 +143,20 @@ input[type="text"] {
     cursor: pointer;
     border-radius: 6px;
     padding: 6px;
+}
+.caixaEndereco, .caixaDescricao, .caixaFoto1, .caixaFoto2{
+    display: flex;
+}
+.fundoModal{
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(243, 243, 243, 0.685);
+    backdrop-filter: blur(5px);  
 }

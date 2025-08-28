@@ -43,6 +43,23 @@ export const Agendar=()=>{
         valor: number,
         imagem: string,
     }
+//    agendamentos: [
+// 		{
+// 			id: number,
+// 			campos: {
+// 				id: number,
+// 				nome: string,
+// 				endereco: string,
+// 				descricao: string,
+// 				valor: number,
+// 				imagem: string
+// 			},
+// 			horario: string,
+// 			data: string
+// 		}
+		
+// 	]
+    
    }
 
 
@@ -161,13 +178,13 @@ export const Agendar=()=>{
   
 
 
-   const filtrarAgendamentos = (search:string) => {
-    setSearchAgendamento(search)
-    const agendamentosFiltrados = agendamentos.filter(a =>
-            a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
-        )
-        setAgendamentos(agendamentosFiltrados)
-   }
+//    const filtrarAgendamentos = (search:string) => {
+//     setSearchAgendamento(search)
+//     const agendamentosFiltrados = agendamentos.filter(a =>
+//             a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
+//         )
+//         setAgendamentos(agendamentosFiltrados)
+//    }
     
      const OpenModalCampos = () => {
         if(modalCamposOpen){
@@ -300,7 +317,7 @@ const ModalAviso = () => {
                 <input 
                 id="idPesquisaAgendamento" 
                 value={searchAgendamento} 
-                onChange={(e:any) => filtrarAgendamentos(e.target.value)}
+                // onChange={(e:any) => filtrarAgendamentos(e.target.value)}
                 className={style.inputSearch} 
                 placeholder="Pesquise um agendamento" />
                 <div className={style.divFiltro}>
@@ -404,36 +421,22 @@ const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAge
 
 const getHorarios = async () => {
   if (campoId && diaDaSemana) {
-    // let toastId: string | number | undefined
+    
     try {
-    //   toastId = toast.loading("Consultando horários...")
-    //   setLoadingHorarios(true)
-
       const horarios = await apiController.get(
         `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
       )
+      
       setHorarios(horarios)
       if(horarios.length > 0){
         toastbar.success("Horários disponíveis nesse dia e nesse campo!")
     }else{
         toastbar.error("Nenhum horário disponível neste dia e neste campo!") 
       }
-    //   toast.update(toastId, {
-    //     render: "Consultado com sucesso!",
-    //     type: "success",
-    //     isLoading: false,
-    //     autoClose: 3000
-    //   })
+   
     } catch (error) {
         toastbar.error("Erro ao consultar os horarios!")
-    //   toast.update(toastId!, {
-    //     render: "Erro ao consultar horários",
-    //     type: "error",
-    //     isLoading: false,
-    //     autoClose: 3000
-    //   })
-    // } finally {
-    //   setLoadingHorarios(false)
+
     }
   }
 }

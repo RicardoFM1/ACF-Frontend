@@ -7,7 +7,8 @@ import { atualizarInfoCampoSchema, createCamposSchema, type iAtualizarCampos, ty
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toastbar } from "../../utility/tokenUtility";
-import { OpenModalEditarCampo } from "../../modals/modalControle/modalControle";
+import { OpenModalEditarCampo } from "../../modals/modalControleEditarCampo/modalControleEditarCampo";
+import { ModalEditarHorarios } from "../../modals/modalControleEditarHorarios/modalControleEditarHorarios";
 
 export const Controle = () => {
   interface iCampos {
@@ -26,6 +27,7 @@ export const Controle = () => {
   const [isEditingEndereco, setIsEditingEndereco] = useState(false);
   const [isEditingDescricao, setIsEditingDescricao] = useState(false);
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
+  const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false)
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAtualizarCampos>({
     resolver: zodResolver(atualizarInfoCampoSchema),
@@ -243,7 +245,7 @@ const clickInformacoes = async (id: number) => {
       isOpen={isOpenEditarCampo}
       campoId={campoId}
       />}
-
+      {isOpenEditarHorarios && <ModalEditarHorarios onClose={() => setIsOpenEditarHorarios(false)} isOpen={isOpenEditarHorarios}/>}
       <div className={style.divH1}>
         <h1>Controle seus campos de futebol</h1>
       </div>
@@ -269,108 +271,7 @@ const clickInformacoes = async (id: number) => {
         </div>
         <button className={style.adicionar}><Iconify icon="ic:sharp-add" />Adicionar</button>
       </div>   
-                <div className={style.divSecundaria}>
-                    <h3>Horários disponiveis na semana:</h3>
-                    <button className={style.visualizar}>Visualizar</button>
-                </div>
                 
-                    <div className={style.horarios}>
-                         <header className={style.headerEditarCampos}>Horarios</header>
-                         <div className={style.divDias}>
-                            <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Segunda-feira</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                            </div>
-                         <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Terça-feira</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                         </div>
-                         <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Quarta-feira</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                         </div>
-                         <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Quinta-feira</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                         </div>
-                         <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Sexta-feira</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                         </div>
-                         <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Sabado</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                         </div>
-                         <div className={style.horariosInputs}>
-                                <h3 className={style.h3Horarios}>Domingo</h3>
-                                <div className={style.inputsHorarios}>
-                                    <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
-                                    </div>
-                                   <div className={style.inputHorario}>
-                                           <label>Horário final</label>
-                                    <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
-                                    </div>
-                                </div>
-                         </div>
-                         </div>
-                      
-                    </div>
                 <div className={style.footer}>
                                  <footer className={style.footerHome}>
                 <div className={style.footerDiv1}>
@@ -390,9 +291,11 @@ const clickInformacoes = async (id: number) => {
                 </div>
             </footer>
                 </div>
-      
-    </>
-)}
+                
+                    
+</>
+  )
+}
 
 
 

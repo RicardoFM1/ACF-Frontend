@@ -1,14 +1,17 @@
 import { Controller, useForm } from "react-hook-form"
 import type { modalProps } from "../modalsInterface/modalInterface"
-import style from "./modalControle.module.css"
+import style from "./modalControleEditarCampo.module.css"
 import {atualizarNomePrecoSchema, type iAtualizarNomePrecoCampos } from "../../../schemas/campo.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { apiController } from "../../../controller/api.controller"
 import { toastbar } from "../../utility/tokenUtility"
 import CurrencyInput from "react-currency-input-field"
+import { ModalEditarHorarios } from "../modalControleEditarHorarios/modalControleEditarHorarios"
+import { useState } from "react"
 
 
 export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
+  const [showEditarHorarios,setShowEditarHorarios]= useState(false)
     const {
         control,
         register,
@@ -21,7 +24,9 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
         valor: 0
     },
     })
-
+    const openEditarHorarios=()=>{
+      setShowEditarHorarios(true)
+    }
     const atualizarNomePrecoCampo = async(campoData:iAtualizarNomePrecoCampos) => {
         try{
             const campoAtualizar = await apiController.patch(`/campos/${campoId}`, campoData)  
@@ -87,7 +92,9 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                         <div className={style.ladoDireitoEditarCampo}>
                         <div className={style.horario}>
                               <h3 className={style.h3EditarCampos }>Horários:</h3>
-                              <button type="button" className={style.modificarHorarios}>Modificar horários</button>
+                              <button type="button" onClick={openEditarHorarios} 
+                                className={style.modificarHorarios}>
+                                  Modificar horários</button>
                         </div>
                          <div className={style.footerDivEditarCampo}>
                             <button type="submit">Salvar</button>
@@ -97,9 +104,13 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                     
                 </form>
                 </div>
+                <ModalEditarHorarios onClose={()=>setShowEditarHorarios(false)} isOpen={showEditarHorarios}/>
       </div>
     
     }else{
         return <></>
     }
   }
+
+
+    
