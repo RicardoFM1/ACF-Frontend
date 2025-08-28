@@ -86,11 +86,11 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Segunda-feira</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                         <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                           <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
@@ -99,11 +99,11 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Terça-feira</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                         <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                             <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
@@ -112,11 +112,11 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Quarta-feira</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                           <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                         <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
@@ -125,11 +125,11 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Quinta-feira</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                            <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                           <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
@@ -138,11 +138,11 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Sexta-feira</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                           <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                           <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
@@ -151,11 +151,11 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Sabado</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                            <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                             <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
@@ -164,17 +164,34 @@ export const Controle = () => {
                                 <h3 className={style.h3Horarios}>Domingo</h3>
                                 <div className={style.inputsHorarios}>
                                     <div className={style.inputHorario}>
-                                           <label>Horário inicial</label>
+                                           <label className={style.labelHorario}>Horário inicial</label>
                                     <select name="" id="" className={style.selectHorario}><option value="" >00:00</option></select>
                                     </div>
                                    <div className={style.inputHorario}>
-                                           <label>Horário final</label>
+                                            <label className={style.labelHorario}>Horário final</label>
                                     <select name="" id="" className={style.selectHorario}><option value="">00:00</option></select>
                                     </div>
                                 </div>
                          </div>
                          </div>
-                      
+
+                         </div>
+                         <div className={style.modalMaisInformações}>
+                             <header className={style.headerEditarCampos}>Mais informações</header>
+                             <div className={style.divtotalMaisInformacoes}>
+                                  <div className={style.divPrincipalMaisInfo}>
+                                    <div className={style.endereço}>
+                                        <h2>endereço</h2>
+                                         <p className={style.p}>Rua Osvaldo carvalho, CEP 96810-500, Bairro Alegre</p>
+                                    </div>
+                                    <div className={style.endereço}>
+                                        <h2>descrição</h2>
+                                         <p className={style.p}>Um pouco de descrição sobre o campo. O campo é bem legal e pode ser uma diversão para toda a familia, varias partidas já jogadas nele</p>
+                                    </div>
+                            </div>
+                             </div>
+                          
+
                     </div>
                 <div className={style.footer}>
                                  <footer className={style.footerHome}>

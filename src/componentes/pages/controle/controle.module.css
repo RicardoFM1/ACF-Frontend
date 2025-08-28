@@ -161,8 +161,8 @@
 }
 .horarios{
     width: 60%;
-    height: 500px;
-    background-color: #efefef;
+    background-color: #ffffff;
+    border: 1px solid black;
 }
 .inputHorario{
     display: flex;
@@ -175,6 +175,7 @@
     padding: 6px;
     border-radius: 6px;
     color: #1e1e1e;
+    width: 100px;
 }
 .inputsHorarios{
     display: flex;
@@ -192,11 +193,30 @@
     margin: 24px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 20%;
 }
 .divDias{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     width: 100%;
+}
+.labelHorario{
+    width: 100px;
+}
+.modalMaisInformações{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: 1px solid black;
+}
+.endereço{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    gap: 15px;
+}
+.divtotalMaisInformacoes{
+    padding: 12px;
 }
