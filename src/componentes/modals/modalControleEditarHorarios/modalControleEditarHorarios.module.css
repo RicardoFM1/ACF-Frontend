@@ -1,0 +1,74 @@
+
+.fundoModal{
+    position: fixed;
+    top: 0;
+    display: flex;
+    z-index: 2;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(243, 243, 243, 0.685);
+    backdrop-filter: blur(5px);  
+}
+.horario{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    padding: 20px;
+    align-items: center;
+    gap: 10px;
+}
+.modificarHorarios{
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 6px;
+}
+.horarios{
+    width: 60%;
+    display: flex;
+    overflow: auto;
+    height: 500px;
+    background-color: #efefef;
+}
+.inputHorario{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    gap: 12px;
+}
+.selectHorario{
+    border: 1px solid rgb(206, 206, 206);
+    padding: 6px;
+    border-radius: 6px;
+    color: #1e1e1e;
+}
+.inputsHorarios{
+    display: flex;
+    flex-direction: column;
+    gap: 12PX;
+    color: #1e1e1e;
+    width: 100%;
+}
+.h3Horarios{
+    color: #1e1e1e;
+    font-weight: 700;
+    font-size:24px ;
+}
+.horariosInputs{
+    margin: 24px;
+    display: flex;
+    flex-direction: column;
+    width: 42%;
+}
+.divDias{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}

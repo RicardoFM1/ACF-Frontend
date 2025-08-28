@@ -1,7 +1,7 @@
 import z from "zod"
 
 export const createCamposSchema = z.object({
-    nome: z.string().min(1, "Necessário preencher"),
+    nome: z.string().min(1, "Necessário preencher").toLowerCase(),
     endereco: z.string().min(1, "Necessário preencher"),
     descricao: z.string().min(1, "Necessário preencher"),
     imagem: z.string(),
@@ -15,7 +15,18 @@ export const returnCamposSchema = z.object({
         endereco: z.string().min(1, "Necessário preencher"),
         descricao: z.string().min(1, "Necessário preencher"),
         valor: z.number().min(1, "Necessário preencher"),
-        imagem: z.string(),
+        imagem: z.string()
+})
+
+export const atualizarInfoCampoSchema = z.object({
+  endereco: z.string().min(1, "Necessário preencher"),
+  descricao: z.string().min(1, "Necessário preencher"),
+});
+// depois colocar a imagem junto
+
+export const atualizarNomePrecoSchema = z.object({
+  nome: z.string().min(1, "Necessário preencher"),
+   valor: z.number().min(1, "Necessário preencher")
 })
 
 export const returnAllCamposSchema = returnCamposSchema.array() 
@@ -23,3 +34,5 @@ export const returnAllCamposSchema = returnCamposSchema.array()
 export type iCreateCampo = z.infer<typeof createCamposSchema>
 export type iReturnCampo = z.infer<typeof returnCamposSchema>
 export type iReturnAllCampos = z.infer<typeof returnAllCamposSchema>
+export type iAtualizarCampos = z.infer<typeof atualizarInfoCampoSchema>
+export type   iAtualizarNomePrecoCampos = z.infer<typeof atualizarNomePrecoSchema>

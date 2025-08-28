@@ -1,6 +1,6 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useAsyncError, useNavigate } from "react-router-dom"
 import style from "./agendar.module.css"
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { apiController } from "../../../controller/api.controller"
 import { Iconify } from "../../iconify/iconify"
 import { useForm } from "react-hook-form"
@@ -43,6 +43,23 @@ export const Agendar=()=>{
         valor: number,
         imagem: string,
     }
+//    agendamentos: [
+// 		{
+// 			id: number,
+// 			campos: {
+// 				id: number,
+// 				nome: string,
+// 				endereco: string,
+// 				descricao: string,
+// 				valor: number,
+// 				imagem: string
+// 			},
+// 			horario: string,
+// 			data: string
+// 		}
+		
+// 	]
+    
    }
 
 
@@ -62,11 +79,21 @@ export const Agendar=()=>{
     const [horarioInicial, setHorarioInicial] = useState<number | null>()
     const [horarioFinal, setHorarioFinal] = useState<number | null>()
     const [listaHorarios, setListaHorarios] = useState<string[]>([])
+    const [openCalendar, setOpenCalendar] = useState(false)
+    const [openPreco, setOpenPreco] = useState(false)
     // const [loadingHorarios, setLoadingHorarios] = useState(false)
+    const options= [{
+        id:1,name:"Data"},
+        {
+        id:2,name:"Preço"
+    }]
 
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
+        console.log(retrieve,"retrive")
         setRetrieve(retrieve)
+        await getAgendamentos(retrieve.id)
+        await getCampos()
     } 
 
     const getCampos = async() => {
@@ -78,16 +105,20 @@ export const Agendar=()=>{
         c.nome.toLowerCase().includes(searchCampo.toLowerCase())
     )
 
-    const getAgendamentos = async() => {
-        const retrieveId = retrieve?.id
+    const getAgendamentos = async(id:string) => {
+        const retrieveId = id
         const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
         setAgendamentos(agendamentos)
     }
 
-    const agendamentosFiltrados = agendamentos.filter(a =>
-        a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
-    )
-    setAgendamentos(agendamentosFiltrados)
+    // const filtrarAgendamentos = () => {
+    //     const agendamentosFiltrados = agendamentos.filter(a =>
+    //         a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
+    //     )
+    //     setAgendamentos(agendamentosFiltrados)
+
+    // }
+    // setAgendamentos(agendamentosFiltrados)
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
         getCampos()
@@ -131,39 +162,30 @@ export const Agendar=()=>{
     }, [campoId])
     
     useEffect(() =>{
+            const token = localStorage.getItem("token")
+            if(!token){
+                navigate("/login")
+            }
         getRetrieve()   
-        getCampos()
-        const interval = setInterval(() => {
-            getCampos()
-            getRetrieve()  
-        }, 15000);
-    const token = localStorage.getItem("token")
-    if(!token){
-        navigate("/login")
-    }
-
-    return () => clearInterval(interval)
+        console.log("testeInicio")
+     
     }, [])
     
      useEffect(() => {
         console.log(infoCampo)
     }, [infoCampo])
 
-    useEffect(() => {
-        if(retrieve?.id){
-        
-                getAgendamentos()
-        }
-        
-    }, [retrieve])
-    
-    // useEffect(() => {
-    //    console.log(agendamentos)
-    // }, [agendamentos])
+  
 
-    useEffect(() =>{
-        console.log(searchAgendamento, "renderizou search")
-    }, [searchAgendamento])
+
+//    const filtrarAgendamentos = (search:string) => {
+//     setSearchAgendamento(search)
+//     const agendamentosFiltrados = agendamentos.filter(a =>
+//             a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
+//         )
+//         setAgendamentos(agendamentosFiltrados)
+//    }
+    
      const OpenModalCampos = () => {
         if(modalCamposOpen){
            
@@ -257,7 +279,30 @@ const ModalAviso = () => {
         }
     }
 
+
+    const getOptionChecked = (optionChecked:string) => {
+        console.log(optionChecked)
+        if(optionChecked==="1"){
+            setOpenCalendar(true)
+            setOpenPreco(false)
+        }else{
+            setOpenPreco(true)
+            setOpenCalendar(false)
+        }
+     
+    } 
+
+    const OpenCalendarModal = () => {
+        if(openCalendar){
+            return <>
+            <p>teste</p>
+            </>
+        }
+    }
+
+
     const OpenModalVisualizar = () => {
+        (openCalendar && <OpenCalendarModal />)
         if(modalVisualizarOpen){
     return <>
         <div className={style.fundoModal}> 
@@ -272,23 +317,25 @@ const ModalAviso = () => {
                 <input 
                 id="idPesquisaAgendamento" 
                 value={searchAgendamento} 
-                onChange={(e) =>setSearchAgendamento(e.target.value)}
+                // onChange={(e:any) => filtrarAgendamentos(e.target.value)}
                 className={style.inputSearch} 
-                type="search" 
                 placeholder="Pesquise um agendamento" />
                 <div className={style.divFiltro}>
                 <p>Filtrar</p>
-                <select className={style.selectFiltro} name="filtroAgendamentoName" id="filtroAgendamento">
-                    
-                    <option value="">Data</option>
-                    <option value="">Horario</option>
-                    <option value="">Preço</option>
+                <select  onChange={(e) => getOptionChecked(e.target.value) } className={style.selectFiltro} name="filtroAgendamentoName" id="filtroAgendamento">
+                   {options.map((option)=>{
+                    return <option id={String(option.id)} value={option.id}>
+                            {option.name}
+                    </option>
+                   })} 
+                
                 </select>
+
                 </div>
                 </div>
-                {agendamentosFiltrados.map((agendamento:iReturnAgendamento) => (
-                    
-                    <div className={style.fundoAgendamento}>
+                {agendamentos.map((agendamento:iReturnAgendamento) => (
+                    <div key={agendamento.id}>
+                    <div  className={style.fundoAgendamento}>
                     <div className={style.divCimaModal}>
                     <div className={style.divNomeCampo}>
                         <p ><strong>{agendamento.campos.nome}</strong></p>
@@ -311,6 +358,7 @@ const ModalAviso = () => {
                     </div>
                     </div>
                 </div>
+            </div>
             ))}
                 </div>
 
@@ -373,36 +421,22 @@ const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAge
 
 const getHorarios = async () => {
   if (campoId && diaDaSemana) {
-    // let toastId: string | number | undefined
+    
     try {
-    //   toastId = toast.loading("Consultando horários...")
-    //   setLoadingHorarios(true)
-
       const horarios = await apiController.get(
         `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
       )
+      
       setHorarios(horarios)
       if(horarios.length > 0){
         toastbar.success("Horários disponíveis nesse dia e nesse campo!")
     }else{
         toastbar.error("Nenhum horário disponível neste dia e neste campo!") 
       }
-    //   toast.update(toastId, {
-    //     render: "Consultado com sucesso!",
-    //     type: "success",
-    //     isLoading: false,
-    //     autoClose: 3000
-    //   })
+   
     } catch (error) {
         toastbar.error("Erro ao consultar os horarios!")
-    //   toast.update(toastId!, {
-    //     render: "Erro ao consultar horários",
-    //     type: "error",
-    //     isLoading: false,
-    //     autoClose: 3000
-    //   })
-    // } finally {
-    //   setLoadingHorarios(false)
+
     }
   }
 }
