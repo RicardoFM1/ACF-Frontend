@@ -1,131 +1,126 @@
-/* Fundo do modal */
 .fundoModal {
   position: fixed;
   top: 0;
   left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
-  z-index: 2;
   justify-content: center;
   align-items: center;
-  padding: 12px;
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(243, 243, 243, 0.685);
-  backdrop-filter: blur(5px);
+  z-index: 1000;
 }
 
-/* Caixa principal do modal */
 .editarCampos {
-  width: 420px;
-  background-color: #ffffff;
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease;
 }
 
-/* Header */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .headerEditarCampos {
-  background-color: #2c3e50;
-  color: white;
+  background: #243447;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 12px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 18px;
-  font-weight: bold;
-  font-size: 16px;
 }
 
-/* Botão fechar */
 .btnFecharModal {
-  border: none;
   background: transparent;
-  color: white;
-  font-size: 18px;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
   cursor: pointer;
-}
-.btnFecharModal:hover {
-  color: #ff6b6b;
+  transition: transform 0.2s;
 }
 
-/* Corpo do modal */
-.formCampo {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.btnFecharModal:hover {
+  color: red
+}
+
+.formEditarCampo {
   padding: 20px;
 }
 
-/* Labels */
-.formCampo label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 4px;
-  display: block;
+.divPrincipal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-/* Inputs */
-.formCampo input[type="text"],
-.formCampo input[type="number"],
-.formCampo select {
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 10px 12px;
-  font-size: 14px;
-  outline: none;
-  background: #fff;
+.h3EditarCampos {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.inputPreco,
+.inputNome {
   width: 100%;
-  box-sizing: border-box;
-}
-.formCampo input:focus,
-.formCampo select:focus {
-  border-color: #2196f3;
-  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
-}
-
-/* Botões */
-.modificarHorarios,
-.btnSalvar {
-  border: none;
-  cursor: pointer;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  width: 90%;
-  margin: 0 auto;
-  transition: background 0.2s ease-in-out;
+  outline: none;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
 }
 
-/* Botão azul */
+.inputPreco:focus,
+.inputNome:focus {
+  border-color: #0077ff;
+  box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.15);
+}
+
+.errorMsg {
+  font-size: 0.8rem;
+  color: #d9534f;
+  margin-top: 4px;
+}
+
 .modificarHorarios {
-  background-color: #2196f3;
-  color: white;
+  width: 100%;
+  padding: 12px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
 }
+
 .modificarHorarios:hover {
-  background-color: #1976d2;
+  background: #0069d9;
 }
 
-/* Botão verde */
+.divBtnSalvar {
+  margin-top: 10px;
+}
+
 .btnSalvar {
-  background: #4caf50;
-  color: white;
-}
-.btnSalvar:hover {
-  background: #43a047;
+  width: 100%;
+  padding: 12px;
+  background: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-/* Animação suave */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.btnSalvar:hover {
+  background: #218838;
 }

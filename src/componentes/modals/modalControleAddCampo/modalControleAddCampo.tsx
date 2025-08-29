@@ -44,7 +44,11 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
 
   const adicionarCampo = async (campoData: iCreateCampo) => {
     try {
-      const campoAdicionar = await apiController.post(`/campos`, campoData);
+       
+      const campoAdicionar = await apiController.post(`/campos`, {
+        ...campoData,
+        status: "Ativo"
+    });
       if (campoAdicionar) {
         toastbar.success("Campo adicionado com sucesso!");
       }

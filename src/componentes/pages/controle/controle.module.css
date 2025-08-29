@@ -250,12 +250,13 @@ body{
 .headerControle{
     display: flex;
     justify-content: space-between;
+
     font-size: 20px;
     padding: 25px;
     text-align: center;
     align-items: center;
     font-weight: 500;
-    background-color: #D9C4B0;
+    background-color: beige;
 }
 .Linkvoltar{
     text-decoration: none;

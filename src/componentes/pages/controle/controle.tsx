@@ -318,6 +318,7 @@ export const Controle = () => {
         <ModalEditarHorarios
           onClose={() => setIsOpenEditarHorarios(false)}
           isOpen={isOpenEditarHorarios}
+          campoId={campoId}
         />
       )}
       <div className={style.divH1}>

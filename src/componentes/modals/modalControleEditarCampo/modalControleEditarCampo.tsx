@@ -54,6 +54,11 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                     <form onSubmit={handleSubmit(atualizarNomePrecoCampo)} className={style.formEditarCampo}>
                     <div className={style.divPrincipal}>
                         <div className={style.ladoEsquerdoEditarCampo}>
+                          <div className={style.nomeCampoEditar}>
+                            <h3 className={style.h3EditarCampos }>Nome:</h3>
+                         <input {...register("nome")} type="text" className={style.inputNome}/>
+                        </div>
+                        <span className={style.errorMsg}>{errors.nome?.message}</span>
                         <div className={style.preco}>
                     <h3 className={style.h3EditarCampos }>Preço:</h3>
                     
@@ -83,11 +88,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                 {errors.valor?.message}
               </span>
                         </div>
-                       <div className={style.nomeCampoEditar}>
-                            <h3 className={style.h3EditarCampos }>Nome:</h3>
-                         <input {...register("nome")} type="text" className={style.inputNome}/>
-                        </div>
-                        <span className={style.errorMsg}>{errors.nome?.message}</span>
+                       
                         </div>  
                         <div className={style.ladoDireitoEditarCampo}>
                         <div className={style.horario}>
@@ -104,7 +105,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                     
                 </form>
                 </div>
-                <ModalEditarHorarios onClose={()=>setShowEditarHorarios(false)} isOpen={showEditarHorarios}/>
+                <ModalEditarHorarios campoId={campoId? campoId : null} onClose={()=>setShowEditarHorarios(false)} isOpen={showEditarHorarios}/>
       </div>
     
     }else{
