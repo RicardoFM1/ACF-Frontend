@@ -96,8 +96,8 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                                 className={style.modificarHorarios}>
                                   Modificar horários</button>
                         </div>
-                         <div className={style.footerDivEditarCampo}>
-                            <button type="submit">Salvar</button>
+                         <div className={style.divBtnSalvar}>
+                            <button className={style.btnSalvar} type="submit">Salvar</button>
                          </div>
                          </div>
                     </div> 
