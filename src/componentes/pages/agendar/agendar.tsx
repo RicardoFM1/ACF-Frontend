@@ -519,7 +519,7 @@ useEffect(() => {
         try{
             const dataFormatada = agendamentoData.data.split("-").reverse().join("/")
             const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada}
-            const res = await apiController.post("/agendamentos", agendamentoDataNovo)
+            const res = await apiController.post("/agendamentos", {...agendamentoDataNovo, status: "ativo"} )
             console.log(res)
             if(res){
                 toastbar.success("Campo agendado com sucesso!")
