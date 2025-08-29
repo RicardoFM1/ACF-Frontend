@@ -24,6 +24,7 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
     defaultValues: {
       valor: 0,
       imagem: "",
+      status: "ativo"
     },
   });
 
@@ -43,12 +44,10 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
   };
 
   const adicionarCampo = async (campoData: iCreateCampo) => {
+    console.log("submit")
     try {
        
-      const campoAdicionar = await apiController.post(`/campos`, {
-        ...campoData,
-        status: "Ativo"
-    });
+      const campoAdicionar = await apiController.post(`/campos`, campoData);
       if (campoAdicionar) {
         toastbar.success("Campo adicionado com sucesso!");
       }
@@ -80,6 +79,7 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
           className={style.formAddCampo}
         >
           <div className={style.divPrincipal}>
+  
             <div className={style.nomeCampoAdd}>
               <h3 className={style.nomeAdd}>Nome:</h3>
               <input {...register("nome")} type="text" className={style.input} />
