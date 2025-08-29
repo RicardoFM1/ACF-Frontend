@@ -8,6 +8,7 @@ interface iHorario {
   horario_inicial: string;
   horario_final: string;
   camposId: number;
+  status: "ativo" | "inativo"
 }
 
 interface ModalEditarHorariosProps {
@@ -24,25 +25,28 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
   // Buscar horários atuais do backend
   const getHorarios = async () => {
     if (!campoId) return;
+    console.log(horarios,"state")
     const novosHorarios: iHorario[] = [];
     for (const dia of diasSemana) {
-      const res = await apiController.get(`/horarios/${campoId}/diaSemana=${dia}`);
-      if (res) {
-        novosHorarios.push({
-          dia_da_semana: dia,
-          horario_inicial: res.horario_inicial,
-          horario_final: res.horario_final,
-          camposId: campoId
-        });
-      } else {
-        // caso não exista, criar horário default
-        novosHorarios.push({
-          dia_da_semana: dia,
-          horario_inicial: "00:00",
-          horario_final: "00:00",
-          camposId: campoId
-        });
-      }
+      //const res = await apiController.get(`/horarios/${campoId}/diaSemana=${dia}`);
+//       if (res) {
+//         novosHorarios.push({
+//           dia_da_semana: dia,
+//           horario_inicial: res.horario_inicial,
+//           horario_final: res.horario_final,
+//           camposId: campoId,
+//           status: "ativo"
+//         });
+//       } else {
+//         // caso não exista, criar horário default
+//        }
+       novosHorarios.push({
+         dia_da_semana: dia,
+         horario_inicial: "00:00",
+         horario_final: "00:00",
+         camposId: campoId,
+         status: "inativo"
+       });
     }
     setHorarios(novosHorarios);
   };
@@ -55,11 +59,17 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
     setHorarios(prev =>
       prev.map(h => (h.dia_da_semana === dia ? { ...h, [`horario_${tipo}`]: value } : h))
     );
+    console.log("horarios",horarios)
   };
 
   const salvarHorarios = async () => {
     if (!campoId) return;
     try {
+       horarios.forEach((horario)=>{
+              if(horario.horario_final!="00:00"||horario.horario_inicial!="00:00"){
+                     horario.status="ativo"
+              }
+       })
       await apiController.patch(`/horarios/${campoId}`, horarios);
       toastbar.success("Horários atualizados com sucesso!");
       onClose();
