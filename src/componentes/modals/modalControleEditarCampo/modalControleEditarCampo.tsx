@@ -1,14 +1,17 @@
 import { Controller, useForm } from "react-hook-form"
 import type { modalProps } from "../modalsInterface/modalInterface"
-import style from "./modalControle.module.css"
+import style from "./modalControleEditarCampo.module.css"
 import {atualizarNomePrecoSchema, type iAtualizarNomePrecoCampos } from "../../../schemas/campo.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { apiController } from "../../../controller/api.controller"
 import { toastbar } from "../../utility/tokenUtility"
 import CurrencyInput from "react-currency-input-field"
+import { ModalEditarHorarios } from "../modalControleEditarHorarios/modalControleEditarHorarios"
+import { useState } from "react"
 
 
 export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
+  const [showEditarHorarios,setShowEditarHorarios]= useState(false)
     const {
         control,
         register,
@@ -21,7 +24,9 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
         valor: 0
     },
     })
-
+    const openEditarHorarios=()=>{
+      setShowEditarHorarios(true)
+    }
     const atualizarNomePrecoCampo = async(campoData:iAtualizarNomePrecoCampos) => {
         try{
             const campoAtualizar = await apiController.patch(`/campos/${campoId}`, campoData)  
@@ -49,6 +54,11 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                     <form onSubmit={handleSubmit(atualizarNomePrecoCampo)} className={style.formEditarCampo}>
                     <div className={style.divPrincipal}>
                         <div className={style.ladoEsquerdoEditarCampo}>
+                          <div className={style.nomeCampoEditar}>
+                            <h3 className={style.h3EditarCampos }>Nome:</h3>
+                         <input {...register("nome")} type="text" className={style.inputNome}/>
+                        </div>
+                        <span className={style.errorMsg}>{errors.nome?.message}</span>
                         <div className={style.preco}>
                     <h3 className={style.h3EditarCampos }>Preço:</h3>
                     
@@ -78,28 +88,30 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
                 {errors.valor?.message}
               </span>
                         </div>
-                       <div className={style.nomeCampoEditar}>
-                            <h3 className={style.h3EditarCampos }>Nome:</h3>
-                         <input {...register("nome")} type="text" className={style.inputNome}/>
-                        </div>
-                        <span className={style.errorMsg}>{errors.nome?.message}</span>
+                       
                         </div>  
                         <div className={style.ladoDireitoEditarCampo}>
                         <div className={style.horario}>
                               <h3 className={style.h3EditarCampos }>Horários:</h3>
-                              <button type="button" className={style.modificarHorarios}>Modificar horários</button>
+                              <button type="button" onClick={openEditarHorarios} 
+                                className={style.modificarHorarios}>
+                                  Modificar horários</button>
                         </div>
-                         <div className={style.footerDivEditarCampo}>
-                            <button type="submit">Salvar</button>
+                         <div className={style.divBtnSalvar}>
+                            <button className={style.btnSalvar} type="submit">Salvar</button>
                          </div>
                          </div>
                     </div> 
                     
                 </form>
                 </div>
+                <ModalEditarHorarios campoId={campoId? campoId : null} onClose={()=>setShowEditarHorarios(false)} isOpen={showEditarHorarios}/>
       </div>
     
     }else{
         return <></>
     }
   }
+
+
+    

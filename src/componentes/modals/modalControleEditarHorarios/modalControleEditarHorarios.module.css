@@ -1,0 +1,75 @@
+.fundoModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.editarHorarios {
+  background-color: #fff;
+  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  border-radius: 10px;
+}
+
+.headerEditarCampos {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.btnFecharModal {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.bodyEditarHorarios {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colunas por linha */
+  gap: 20px;
+}
+
+.caixaDia {
+  display: flex;
+  flex-direction: column;
+}
+
+.caixaDia h3 {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.caixaDia label {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.caixaDia select {
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.btnSalvar {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  grid-column: span 4; /* botão ocupa a linha inteira */
+}

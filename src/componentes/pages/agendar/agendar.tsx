@@ -43,13 +43,30 @@ export const Agendar=()=>{
         valor: number,
         imagem: string,
     }
+   agendamentos: [
+		{
+			id: number,
+			campos: {
+				id: number,
+				nome: string,
+				endereco: string,
+				descricao: string,
+				valor: number,
+				imagem: string
+			},
+			horario: string,
+			data: string
+		}
+		
+	]
+    
    }
 
 
     const [campos, setCampos] = useState([] as iCampos[])
     const [horarios, setHorarios] = useState([] as iHorario[])
     const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
-    const [searchAgendamento, setSearchAgendamento] = useState("")
+    // const [searchAgendamento, setSearchAgendamento] = useState("")
     const [searchCampo, setSearchCampo] = useState("")
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
     const [modalInfoOpen, setModalInfoOpen] = useState(false)
@@ -63,7 +80,7 @@ export const Agendar=()=>{
     const [horarioFinal, setHorarioFinal] = useState<number | null>()
     const [listaHorarios, setListaHorarios] = useState<string[]>([])
     const [openCalendar, setOpenCalendar] = useState(false)
-    const [openPreco, setOpenPreco] = useState(false)
+    // const [openPreco, setOpenPreco] = useState(false)
     // const [loadingHorarios, setLoadingHorarios] = useState(false)
     const options= [{
         id:1,name:"Data"},
@@ -76,12 +93,18 @@ export const Agendar=()=>{
         console.log(retrieve,"retrive")
         setRetrieve(retrieve)
         await getAgendamentos(retrieve.id)
-        await getCampos()
+        await getCampos(retrieve)
     } 
 
-    const getCampos = async() => {
-        const campos = await apiController.get("/campos")
-        setCampos(campos)
+    const getCampos = async(retrieve:any) => {
+        if(retrieve?.admin === true){
+
+            const campos = await apiController.get("/campos")
+            setCampos(campos)
+        }else{
+            const campos = await apiController.get("/campos?status=ativo")
+            setCampos(campos)
+        }
     }
 
     const camposFiltrados = campos.filter(c =>
@@ -104,7 +127,7 @@ export const Agendar=()=>{
     // setAgendamentos(agendamentosFiltrados)
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
-        getCampos()
+        getCampos(retrieve)
     }
 
     const fecharModalVisualizar = () => {
@@ -113,7 +136,7 @@ export const Agendar=()=>{
 
     const fecharModal = () => {
         setModalCamposOpen(false)
-        getCampos()
+        getCampos(retrieve)
     }
  
     const getCamposInfo = async() => {
@@ -161,13 +184,13 @@ export const Agendar=()=>{
   
 
 
-   const filtrarAgendamentos = (search:string) => {
-    setSearchAgendamento(search)
-    const agendamentosFiltrados = agendamentos.filter(a =>
-            a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
-        )
-        setAgendamentos(agendamentosFiltrados)
-   }
+//    const filtrarAgendamentos = (search:string) => {
+//     setSearchAgendamento(search)
+//     const agendamentosFiltrados = agendamentos.filter(a =>
+//             a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
+//         )
+//         setAgendamentos(agendamentosFiltrados)
+//    }
     
      const OpenModalCampos = () => {
         if(modalCamposOpen){
@@ -267,9 +290,9 @@ const ModalAviso = () => {
         console.log(optionChecked)
         if(optionChecked==="1"){
             setOpenCalendar(true)
-            setOpenPreco(false)
+            // setOpenPreco(false)
         }else{
-            setOpenPreco(true)
+            // setOpenPreco(true)
             setOpenCalendar(false)
         }
      
@@ -299,8 +322,8 @@ const ModalAviso = () => {
                 <div className={style.divPesquisa}>
                 <input 
                 id="idPesquisaAgendamento" 
-                value={searchAgendamento} 
-                onChange={(e:any) => filtrarAgendamentos(e.target.value)}
+                // value={searchAgendamento} 
+                // onChange={(e:any) => filtrarAgendamentos(e.target.value)}
                 className={style.inputSearch} 
                 placeholder="Pesquise um agendamento" />
                 <div className={style.divFiltro}>
@@ -404,36 +427,22 @@ const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAge
 
 const getHorarios = async () => {
   if (campoId && diaDaSemana) {
-    // let toastId: string | number | undefined
+    
     try {
-    //   toastId = toast.loading("Consultando horários...")
-    //   setLoadingHorarios(true)
-
-      const horarios = await apiController.get(
-        `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
-      )
-      setHorarios(horarios)
-      if(horarios.length > 0){
+      const res = await apiController.get(
+        `/horarios/${campoId}/${diaDaSemana}`
+      ) 
+    console.log(res,"horarios api")
+    if(res && res.length){
+          setHorarios(res)
         toastbar.success("Horários disponíveis nesse dia e nesse campo!")
     }else{
         toastbar.error("Nenhum horário disponível neste dia e neste campo!") 
       }
-    //   toast.update(toastId, {
-    //     render: "Consultado com sucesso!",
-    //     type: "success",
-    //     isLoading: false,
-    //     autoClose: 3000
-    //   })
+   
     } catch (error) {
         toastbar.error("Erro ao consultar os horarios!")
-    //   toast.update(toastId!, {
-    //     render: "Erro ao consultar horários",
-    //     type: "error",
-    //     isLoading: false,
-    //     autoClose: 3000
-    //   })
-    // } finally {
-    //   setLoadingHorarios(false)
+
     }
   }
 }
@@ -475,11 +484,21 @@ useEffect(() => {
 
     horarios.forEach((horario) => {
       const inicio = parseInt(horario.horario_inicial)
+      
       setHorarioInicial(inicio)
       const fim = parseInt(horario.horario_final)
       setHorarioFinal(fim)
+      const agendamentos = horario.agendamentos.length ? horario.agendamentos.map((agendamento)=>agendamento.horario):[]
+      console.log(agendamentos,"agendamentos")
       for (let i = inicio; i < fim; i++) {
-          list.push(`${i}:00`)
+        console.log(horario.agendamentos,"agenda")
+        // if(horario.agendamentos.includes({campos: campoId}, diaDaSemana))
+        if(!agendamentos.includes(`${i}:00`)){
+
+            list.push(`${i}:00`)
+        }
+          //agendamentos.includes()
+
         }
     })
     setListaHorarios(list)
@@ -514,9 +533,10 @@ useEffect(() => {
 
     const Agendar = async(agendamentoData:iAgendamento) => {
         try{
+            // if(agendamentoData.camposId === campoId && )
             const dataFormatada = agendamentoData.data.split("-").reverse().join("/")
             const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada}
-            const res = await apiController.post("/agendamentos", agendamentoDataNovo)
+            const res = await apiController.post("/agendamentos", {...agendamentoDataNovo, status: "ativo"} )
             console.log(res)
             if(res){
                 toastbar.success("Campo agendado com sucesso!")
