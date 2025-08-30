@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
 import style from "./controle.module.css";
 import { Iconify } from "../../iconify/iconify";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiController } from "../../../controller/api.controller";
 import {
   atualizarInfoCampoSchema,
-  createCamposSchema,
   type iAtualizarCampos,
-  type iAtualizarStatus,
-  type iCreateCampo,
 } from "../../../schemas/campo.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -95,6 +92,10 @@ export const Controle = () => {
   useEffect(() => {
     getCampos();
   }, []);
+
+  useEffect(() => {
+    getCampos();
+  }, [campos]);
 
   useEffect(() => {
     if (campoId) getCampoInfo();

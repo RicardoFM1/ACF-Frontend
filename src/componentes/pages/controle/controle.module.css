@@ -177,7 +177,8 @@ html {
   gap: 50px;
 }
 .campos h3 {
-  color: #c8c8c5;
+  color: white;
+  font-size: 24px;
 }
 .controleDosCampos {
   display: flex;
@@ -192,6 +193,7 @@ html {
   border: none;
   padding: 12px;
   width: 50%;
+  font-size: 18px;
   border-radius: 15px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -203,7 +205,7 @@ html {
   padding: 24px;
   width: 50%;
   background-color: #0b0c21;
-  max-height: 150px;
+  max-height: 160px;
   gap: 24px;
   border-radius: 10px;
 }
@@ -265,6 +267,7 @@ html {
   gap: 12px;
   border: none;
   padding: 12px 22px;
+  font-size: 18px;
   border-radius: 18px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -341,7 +344,6 @@ a{
   justify-content: center;
 }
 .icons {
-  height: 120px;
   width: 40%;
   display: flex;
   justify-content: flex-end;
