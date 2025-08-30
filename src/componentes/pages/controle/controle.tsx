@@ -24,9 +24,10 @@ export const Controle = () => {
     descricao: string;
     valor: number;
     imagem: string;
+    status: "ativo" | "inativo";
   }
 
-  const [campos, setCampos] = useState<iCampos[]>([]);
+  const [campos, setCampos] = useState([] as iCampos[]);
   const [modalInfoOpen, setModalInfoOpen] = useState(false);
   const [campoId, setCampoId] = useState<number | null>(null);
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
@@ -334,6 +335,7 @@ export const Controle = () => {
       <div className={style.controleDosCampos}>
         <div className={style.campos}>
           <h3>O que deseja controlar?</h3>
+          {}
           {campos.map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
               <div className={style.campo}>
@@ -376,10 +378,10 @@ export const Controle = () => {
           <div className={style.footerDiv2}>
             <div className={style.footerDiv3}>
               <h4>Paginas</h4>
-              <p>Home</p>
-              <p>Agenda</p>
-              <p>Cadastro</p>
-              <p>Login</p>
+              <Link to={"/home"}>Home</Link>
+              <Link to={"/agendar"}>Agenda</Link>
+              <Link to={"/cadastro"}>Cadastro</Link>
+              <Link to={"/login"}>Login</Link>
             </div>
             <h4>introdução</h4>
             <h4>Amostra</h4>

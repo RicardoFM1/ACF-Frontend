@@ -93,12 +93,18 @@ export const Agendar=()=>{
         console.log(retrieve,"retrive")
         setRetrieve(retrieve)
         await getAgendamentos(retrieve.id)
-        await getCampos()
+        await getCampos(retrieve)
     } 
 
-    const getCampos = async() => {
-        const campos = await apiController.get("/campos")
-        setCampos(campos)
+    const getCampos = async(retrieve:any) => {
+        if(retrieve?.admin === true){
+
+            const campos = await apiController.get("/campos")
+            setCampos(campos)
+        }else{
+            const campos = await apiController.get("/campos?status=ativo")
+            setCampos(campos)
+        }
     }
 
     const camposFiltrados = campos.filter(c =>
@@ -121,7 +127,7 @@ export const Agendar=()=>{
     // setAgendamentos(agendamentosFiltrados)
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
-        getCampos()
+        getCampos(retrieve)
     }
 
     const fecharModalVisualizar = () => {
@@ -130,7 +136,7 @@ export const Agendar=()=>{
 
     const fecharModal = () => {
         setModalCamposOpen(false)
-        getCampos()
+        getCampos(retrieve)
     }
  
     const getCamposInfo = async() => {
@@ -524,9 +530,7 @@ useEffect(() => {
   }
 }, [campoId, diaDaSemana])
 
-const view =(agendamentoData:iAgendamento)=>{
-    console.log(agendamentoData)
-}
+
     const Agendar = async(agendamentoData:iAgendamento) => {
         try{
             // if(agendamentoData.camposId === campoId && )
@@ -622,7 +626,6 @@ const view =(agendamentoData:iAgendamento)=>{
         </div>
         </div>
         <div className={style.divBtnAgendar}>
-            <button className={style.btnAgendar} type="button">Agendar</button>
             <button className={style.btnAgendar} type="submit">Agendar</button>
             </div>
         </form>

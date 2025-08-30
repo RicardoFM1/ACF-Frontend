@@ -88,9 +88,10 @@ h3{
     width: 20%;
 }
 .selectInput{
-    border: none;
     color: #0088ff;
-    width:65px;
+    width: 65px;
+    border: 1px solid black;
+    width: 70%;
 }
 .btnVisualizar{
     background-color: #0088ff;
