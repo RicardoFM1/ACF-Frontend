@@ -316,7 +316,7 @@ export const Controle = () => {
   return (
     <div className={style.load}>
       
-      <header className={style.headerControle}>
+      <header id="introducao" className={style.headerControle}>
         <Link to="/admin" className={style.Linkvoltar}>
           Voltar
         </Link>
@@ -368,9 +368,12 @@ export const Controle = () => {
           {campos.map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
               <div className={style.campo}>
+                <div className={style.parteCimaCampo}>
                 <p className={style.campoNome}>{campo.nome}</p>
-                <div className={style.campoInformacoes}>
                   <p className={style.campoPreco}>R${campo.valor / 100}</p>
+                </div>
+                <div className={style.parteBaixoCampo}>
+                <div className={style.campoInformacoes}>
                   <button
                     onClick={() => clickInformacoes(campo.id)}
                     className={style.maisInformacoes}
@@ -378,14 +381,16 @@ export const Controle = () => {
                     Mais informações
                   </button>
                 </div>
-              </div>
               <div className={style.icons}>
-                <Iconify className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+                <Iconify color={"white"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
                 <Iconify
+                color={"white"}
                   className={style.iconPencil}
                   onClick={() => clickEditarPencil(campo.id)}
                   icon="raphael:pensil"
                 />
+              </div>
+              </div>
               </div>
             </div>
           ))}
@@ -412,9 +417,8 @@ export const Controle = () => {
               <Link to={"/cadastro"}>Cadastro</Link>
               <Link to={"/login"}>Login</Link>
             </div>
-            <h4>introdução</h4>
-            <h4>Amostra</h4>
-            <h4>Etapas</h4>
+            <a href="#introducao">Introdução</a>
+            
           </div>
         </footer>
       </div>

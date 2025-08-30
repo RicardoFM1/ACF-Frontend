@@ -1,5 +1,5 @@
-body{
-  scroll-behavior: smooth;  
+html {
+  scroll-behavior: smooth;
 }
 .header{
     width: 100%;
