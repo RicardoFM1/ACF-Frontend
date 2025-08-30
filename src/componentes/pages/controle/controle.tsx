@@ -37,6 +37,7 @@ export const Controle = () => {
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
+  const [status, setStatus] = useState("ativo")
 
   const {
     register,
@@ -58,11 +59,28 @@ export const Controle = () => {
   };
 
   const atualizarStatus = async(campoData:iCampos) => {
-    let status="ativo"
-    if(campoData.status==="ativo"){
-      status="inativo"
+    
+    if(status === "ativo"){
+      setStatus("inativo")
+    }else{
+      setStatus("ativo")
     }
-   await apiController.patch(`/campos/${campoData.id}`, {status})
+    console.log(status)
+    try{
+
+      const res = await apiController.patch(`/campos/${campoData.id}`, {status})
+      if(res){
+        if(status === "ativo")
+        toastbar.success("Campo ativado com sucesso!")
+      else{
+        toastbar.success("Campo desativado com sucesso!") 
+      }
+      }
+     
+    }catch(error:any){
+      console.log(error.response.data.message)
+      toastbar.error("Erro ao desativar o campo!")
+    }
   }
 
   const getCampoInfo = async () => {
@@ -162,7 +180,8 @@ export const Controle = () => {
 
     if (!isOpen) return null;
 
-    return (
+    return <div className={style.load}>
+      
       <div className={style.fundoModal}>
         <div className={style.tituloModalInfoCampos}>
           <h2>Informações do campo</h2>
@@ -291,11 +310,12 @@ export const Controle = () => {
           </form>
         </div>
       </div>
-    );
+    </div>
   };
 
   return (
-    <>
+    <div className={style.load}>
+      
       <header className={style.headerControle}>
         <Link to="/admin" className={style.Linkvoltar}>
           Voltar
@@ -360,7 +380,7 @@ export const Controle = () => {
                 </div>
               </div>
               <div className={style.icons}>
-                <Iconify onClick={() => atualizarStatus(campo )} icon="fe:trash" />
+                <Iconify className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
                 <Iconify
                   className={style.iconPencil}
                   onClick={() => clickEditarPencil(campo.id)}
@@ -398,6 +418,6 @@ export const Controle = () => {
           </div>
         </footer>
       </div>
-    </>
+    </div>
   );
 };

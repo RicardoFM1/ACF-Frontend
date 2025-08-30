@@ -7,7 +7,8 @@ import { Bounce, ToastContainer } from 'react-toastify'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ToastContainer
-      autoClose={3000}
+
+      autoClose={1500}
       position="top-center"
       hideProgressBar={false}
       newestOnTop={true}

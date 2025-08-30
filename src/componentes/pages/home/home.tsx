@@ -72,7 +72,8 @@ export const Home=()=>{
 
 const ModalAviso = () => {
         if(modalAvisoOpen){
-    return <>
+    return <div className={style.load}>
+        
         <div className={style.divModalFundo}>
             <div className={style.Modal}>
                 <div className={style.divIconAlerta}>
@@ -94,7 +95,7 @@ const ModalAviso = () => {
             </div>
 
         </div>
-        </>
+        </div>
             
         }else{
             return null
