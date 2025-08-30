@@ -18,7 +18,7 @@ interface ModalEditarHorariosProps {
 }
 
 export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHorariosProps) => {
-  const diasSemana = ["Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado", "Domingo"];
+  const diasSemana = ["segunda-feira", "terca-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sabado", "domingo"];
 
   const [horarios, setHorarios] = useState<iHorario[]>([]);
 
@@ -41,7 +41,7 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
 //         // caso não exista, criar horário default
 //        }
        novosHorarios.push({
-         dia_da_semana: dia,
+         dia_da_semana: dia.toLowerCase(),
          horario_inicial: "00:00",
          horario_final: "00:00",
          camposId: campoId,
