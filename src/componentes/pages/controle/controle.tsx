@@ -7,6 +7,7 @@ import {
   atualizarInfoCampoSchema,
   createCamposSchema,
   type iAtualizarCampos,
+  type iAtualizarStatus,
   type iCreateCampo,
 } from "../../../schemas/campo.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -55,6 +56,14 @@ export const Controle = () => {
     const campos = await apiController.get("/campos");
     setCampos(campos);
   };
+
+  const atualizarStatus = async(campoData:iCampos) => {
+    let status="ativo"
+    if(campoData.status==="ativo"){
+      status="inativo"
+    }
+   await apiController.patch(`/campos/${campoData.id}`, {status})
+  }
 
   const getCampoInfo = async () => {
     if (campoId) {
@@ -351,7 +360,7 @@ export const Controle = () => {
                 </div>
               </div>
               <div className={style.icons}>
-                <Iconify icon="fe:trash" />
+                <Iconify onClick={() => atualizarStatus(campo )} icon="fe:trash" />
                 <Iconify
                   className={style.iconPencil}
                   onClick={() => clickEditarPencil(campo.id)}
