@@ -59,7 +59,8 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
 
   if (!isOpen) return null;
 
-  return (
+  return <div className={style.load}>
+    
     <div className={style.fundoModal}>
       <div className={style.addCampos}>
         <header className={style.headerAddCampos}>
@@ -162,5 +163,5 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
         </form>
       </div>
     </div>
-  );
+  </div>
 };

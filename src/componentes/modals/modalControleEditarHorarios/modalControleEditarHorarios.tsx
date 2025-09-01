@@ -22,24 +22,13 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
 
   const [horarios, setHorarios] = useState<iHorario[]>([]);
 
-  // Buscar horários atuais do backend
+
   const getHorarios = async () => {
     if (!campoId) return;
     console.log(horarios,"state")
     const novosHorarios: iHorario[] = [];
     for (const dia of diasSemana) {
-      //const res = await apiController.get(`/horarios/${campoId}/diaSemana=${dia}`);
-//       if (res) {
-//         novosHorarios.push({
-//           dia_da_semana: dia,
-//           horario_inicial: res.horario_inicial,
-//           horario_final: res.horario_final,
-//           camposId: campoId,
-//           status: "ativo"
-//         });
-//       } else {
-//         // caso não exista, criar horário default
-//        }
+     
        novosHorarios.push({
          dia_da_semana: dia.toLowerCase(),
          horario_inicial: "00:00",
@@ -80,7 +69,8 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
 
   if (!isOpen) return null;
 
-  return (
+  return <div className={style.load}>
+    
     <div className={style.fundoModal}>
       <div className={style.editarHorarios}>
         <div className={style.headerEditarCampos}>
@@ -122,5 +112,5 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
         </div>
       </div>
     </div>
-  );
+  </div>
 };

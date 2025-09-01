@@ -37,7 +37,8 @@ formState:{
             
         
     }
-  return  <>
+  return  <div className={style.load}>
+    
    <header className={style.header}>
     <h1>ACF</h1>
     <div className={style.divLinks}>
@@ -74,5 +75,5 @@ formState:{
 
     </div>
   
-    </>
+    </div>
 }

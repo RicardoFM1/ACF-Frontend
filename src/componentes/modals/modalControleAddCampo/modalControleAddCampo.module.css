@@ -31,6 +31,18 @@
     font-weight: bold;
     transition: background 0.2s ease-in-out;
 }
+.load {
+
+    animation: load 1s ease ;
+}
+@keyframes load {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
 .formAddCampo{
     max-height: 600px;
     overflow: auto;

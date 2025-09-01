@@ -1,287 +1,351 @@
+body {
+  background-image: url("/images/dominik-hofbauer-1yLt0422fYQ-unsplash.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+html {
+  scroll-behavior: smooth;
+}
+.fundoModal {
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(243, 243, 243, 0.685);
+  backdrop-filter: blur(5px);
+}
+.tituloModalCampos,
+.tituloModalInfoCampos,
+.tituloModalVisualizar {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  gap: 34%;
+  background-color: #d1cfcf;
+  border-radius: 10px 10px 0 0;
+  width: 75%;
+  padding: 6px;
+  z-index: 3;
+  text-align: center;
 
-body{
-    scroll-behavior: smooth;
-}
-.fundoModal{
-    position: fixed;
-    top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 12px;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(243, 243, 243, 0.685);
-    backdrop-filter: blur(5px);  
-}
-.tituloModalCampos, .tituloModalInfoCampos, .tituloModalVisualizar{
-    position: relative;
-    display: flex;
-    justify-content: flex-end;
-    gap: 34%;
-    background-color: #d1cfcf;
-    border-radius: 10px 10px 0 0;
-    width: 75%;
-    padding: 6px;
-    z-index: 3;
-    text-align: center;
-}
-.formCampo{
-    display: flex;
-}
-.btnFecharModal{
-    display: flex;
-    border: none;
-    background-color: #d1cfcf;
-    padding: 12px;
-    color: red
-}
-
-.divImagensCampo{
-    display: flex;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    margin: 0 20px 20px 0;
-}
-.divImagensCampo img{
-    border-radius: 10px;
-}
-.divEnderecoCampo, .divDescricaoCampo{
-    width: 50%;
-    min-height: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.divEnderecoCampo h2, .divDescricaoCampo h2{
-    text-align: left;
-}
-.infoEsquerda{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 20px;
-    text-align: center;
-    align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-
-.horario{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    padding: 20px;
-    align-items: center;
-    gap: 10px;
+.formCampo {
+  display: flex;
+}
+.btnFecharModal {
+  display: flex;
+  border: none;
+  background-color: #d1cfcf;
+  padding: 12px;
+  color: red;
 }
 
-.descricaoCampo, .enderecoCampo{
-    background-color: #333333;
-    color: #348648;
-    min-height: 100%;
-    border-radius: 10px;
-    padding: 12px;
-    word-wrap: break-word;
-    text-align: center;
-    overflow: auto;
+.divImagensCampo {
+  display: flex;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 20px 20px 0;
 }
-.contatoCampo{
-    width: 70%;
+.divImagensCampo img {
+  border-radius: 10px;
 }
-.infoDireita{
-    display: flex;
-    flex-direction: column;
+.divEnderecoCampo,
+.divDescricaoCampo {
+  width: 50%;
+  min-height: 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.modalInfo{
-    padding: 12px;
-    display: flex;
-    overflow: auto;
-    width: 75%;
-    border-radius: 0 0 10px 10px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-    background-color: #d4d4dc;
-    text-align: center;
+.divEnderecoCampo h2,
+.divDescricaoCampo h2 {
+  text-align: left;
 }
-.btnSalvar{
-    background: #2196f3;
-    color: white;
-    border: none;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 50%;
-}
-.btnEditarPencil{
-    border: none;
-    background-color: #d4d4dc;
-}
-.editarCampos{
-    width: 50%;
-    background-color: #ffffff;
-    border: 1px solid black;
-}
-.headerEditarCampos{
-    background-color: #d1cfcf;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
+.infoEsquerda {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  text-align: center;
+  align-items: center;
 }
 
-.preco, .nomeCampoEditar{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    padding: 20px;
-    gap: 10px;
-    align-items: center;
+.horario {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  padding: 20px;
+  align-items: center;
+  gap: 10px;
 }
 
-.caixaEndereco, .caixaDescricao, .caixaFoto1, .caixaFoto2{
-    display: flex;
+.descricaoCampo,
+.enderecoCampo {
+  background-color: rgba(34, 34, 34, 0.9);
+  color: #348648;
+  min-height: 100%;
+  border-radius: 10px;
+  padding: 12px;
+  word-wrap: break-word;
+  text-align: center;
+  overflow: auto;
+}
+.adicionar:hover,
+.visualizar:hover,
+.maisInformacoes:hover {
+  background: #1976d2;
+  transform: translateY(-5px);
+}
+.contatoCampo {
+  width: 70%;
+}
+.infoDireita {
+  display: flex;
+  flex-direction: column;
+}
+.modalInfo {
+  padding: 12px;
+  display: flex;
+  overflow: auto;
+  width: 75%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  background-color: #d4d4dc;
+  text-align: center;
+}
+.btnSalvar {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 50%;
+}
+.btnEditarPencil {
+  border: none;
+  background-color: #d4d4dc;
+}
+.editarCampos {
+  width: 50%;
+  background-color: #ffffff;
+  border: 1px solid black;
+}
+.headerEditarCampos {
+  background-color: #d1cfcf;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
 }
 
-.campos{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    gap: 50px;
-}
-.controleDosCampos{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: center;
-    gap: 12px;
-    }
-    .maisInformacoes{
-        background: #2196f3;
-        color: white;
-        border: none;
-        padding: 6px 14px;
-         border-radius: 6px;
-         cursor: pointer;
-}
-.campo{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 12px;
-    width: 60%;
-    height: 120px;
-    background: url(data:image/jpeg;base64,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) no-repeat center/cover;
-}
-.campoInformacoes{
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.campoNome, .campoPreco{
-    background-color: #222;
-    color: #4caf50;
-    padding: 10px;
-    height: 40px;
-    border-radius: 6px;
-    text-align: center;
+.preco,
+.nomeCampoEditar {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+  padding: 20px;
+  gap: 10px;
+  align-items: center;
 }
 
+.caixaEndereco,
+.caixaDescricao,
+.caixaFoto1,
+.caixaFoto2 {
+  display: flex;
+}
 
-.iconPencil{
-    cursor: pointer;
+.campos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 50px;
 }
-.adicionar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #2196f3;
-    color: white;
-    gap: 12px;
-    border: none;
-    padding: 12px 22px;
-    border-radius: 18px;
-    cursor: pointer;
+.campos h3 {
+  color: white;
+  font-size: 24px;
 }
-.visualizar{
-            background: #2164f3;
-        color: white;
-        border: none;
-        padding: 12px 40px;
-         border-radius: 18px;
-         cursor: pointer;
+.controleDosCampos {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  gap: 24px;
 }
-.divSecundaria{
-    margin: 60px 0 0 100px;
+.maisInformacoes {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 50%;
+  font-size: 18px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
-.divH1{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 100px 0 100px 0;
-    font-size: 30px;
+.campo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  width: 50%;
+  background-color: #0b0c21;
+  max-height: 160px;
+  gap: 24px;
+  border-radius: 10px;
 }
-.footerDiv2{
-    display: flex;
-    flex-direction: row;
-    gap: 24px;
+.parteCimaCampo {
+  display: flex;
+  justify-content: space-between;
+  background-color: #17172e;
+  border-radius: 10px;
+  padding: 6px;
+  font-size: 18px;
 }
-.footerDiv3{
-    display: flex;
-    flex-direction: column;
-}
-.footerHome{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 90%;
-    border-top: 1px solid rgba(194, 194, 194, 0.751);
-    padding-top: 20px;
-}
-.footer{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top:50% ;
-}
-.headerControle{
-    display: flex;
-    justify-content: space-between;
+.parteBaixoCampo {
+  display: flex;
 
-    font-size: 20px;
-    padding: 25px;
-    text-align: center;
-    align-items: center;
-    font-weight: 500;
-    background-color: beige;
 }
-.Linkvoltar{
+.campoInformacoes {
+  display: flex;
+  width: 80%;
+  gap: 16px;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+.campoNome,
+.campoPreco {
+  color: #4caf50;
+  padding: 10px;
+  height: 40px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.load {
+  animation: load 1s ease;
+}
+@keyframes load {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.iconPencil,
+.iconDesativar {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.iconPencil:hover,
+.iconDesativar:hover {
+  transform: translateY(-5px);
+}
+
+.adicionar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2196f3;
+  color: white;
+  gap: 12px;
+  border: none;
+  padding: 12px 22px;
+  font-size: 18px;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.divSecundaria {
+  margin: 60px 0 0 100px;
+}
+.divH1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 100px 0 100px 0;
+  font-size: 30px;
+  color: #fdf6d5;
+}
+
+.footerDiv2 {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+}
+.footerDiv3 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+a{
     text-decoration: none;
-    background-color: black;
-    color: white;
-    padding: 6px;
-    border-radius: 6px; 
+    
+}
+.footerHome {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  color: white;
+  background-color: #0b0c21;
+  padding: 20px;
+}
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 50%;
+}
+.headerControle {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  padding: 25px;
+  text-align: center;
+  align-items: center;
+  font-weight: 500;
+}
+.headerControle p {
+  color: white;
+  background-color: #17142a;
+  padding: 12px;
+  border-radius: 10px;
+}
+.Linkvoltar {
+  text-decoration: none;
+  background-color: #17142a;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
 }
 
-.caixaCampo{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.caixaCampo {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
-.icons{
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+.icons {
+  width: 40%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
 }
-
-
-
-
-
-
-

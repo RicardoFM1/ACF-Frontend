@@ -315,7 +315,9 @@ const ModalAviso = () => {
                 <div className={style.tituloModalVisualizar}>
                     <h2>Meus agendamentos</h2>
                     <div className={style.divBtnFecharModal}>
-                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>X</button>
+                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>
+                        <Iconify icon="ic:baseline-close"/>
+                    </button>
                     </div>
                 </div>
                 <div className={style.modal}>
@@ -574,6 +576,8 @@ useEffect(() => {
     {modalInfoOpen && <OpenModalInfo />}
     {modalAvisoOpen && <ModalAviso />}
 
+    <main className={style.mainAgendamentos}>
+        <div className={style.agendamentoFormularioDiv}>
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
     <div className={style.divPrincipalAgendamento}>
         <div className={style.divOne}> 
@@ -635,9 +639,9 @@ useEffect(() => {
             
     
     </div>
-    
     </div>
-
+</main>
+    </div>
 
 
     

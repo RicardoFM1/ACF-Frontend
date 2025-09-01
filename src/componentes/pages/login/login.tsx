@@ -50,7 +50,8 @@ const navigate = useNavigate();
         toastbar.error(error.response.data.message)
       }
   }
-  return  <>
+  return  <div className={style.load}>
+    
       <header className={style.header}>
         <h1>ACF</h1>
       <div className={style.divLinks}>
@@ -93,7 +94,7 @@ const navigate = useNavigate();
               </div>
         </div>
       
-    </>
+    </div>
   
 };
 

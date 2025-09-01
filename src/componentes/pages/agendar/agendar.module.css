@@ -3,6 +3,9 @@
     box-sizing: border-box;
     padding: 0;
 }
+html {
+  scroll-behavior: smooth;
+}
 .btnVoltar{
     text-decoration: none;
     background-color: black;
@@ -30,6 +33,7 @@ body{
 }
 .h1Agendar{
     font-weight: 400;
+    color: white;
 }
 .divPrincipalAgendamento{
         display: flex;
@@ -38,7 +42,8 @@ body{
         justify-content: space-around;
 }
 .btnEscolhaDoCampo{
-    background-color: #ece6f0;
+    background-color: #0f1a2e;
+    color: white;
     border: none;
     height: 30px;
     border-radius: 15px;
@@ -46,7 +51,21 @@ body{
 }
 .inputAgendar{
    padding: 12px;
-   width: 80%;     
+   width: 92%;
+   border-radius: 10px;     
+   background-color: #0f1a2e;
+   color: white;
+   font-size: 24px;
+}
+.inputCampoNome{
+    border-radius: 10px;
+    background-color: #0f1a2e;
+    color: white;
+    border: none;
+    font-size: 24px;
+}
+.inputCampoNome::placeholder{
+    color: white;
 }
 .divOne{
     width: 100%;
@@ -57,35 +76,42 @@ body{
 .formAgendamento{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 .divCampoForm, .divDataForm{
     display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     margin: 24px;
 }
 .h2Agendamento{
   margin: 90px 0 90px 25px;
+  color: white;
+  font-size: 48px;
 }
 h3{
     font-weight: 500;
+    color: white;
 }
 .divEscolhaCampo {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 80%;
+    width: 60%;
 }
 .divEscolhaData{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 80%;
+    width: 55%;
+    margin-left: 20%;
 }
 .divEscolhaHorario{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 20%;
+    width: 30%;
 }
 .selectInput{
     color: #0088ff;
@@ -204,12 +230,12 @@ button{
 .tituloModalCampos, .tituloModalInfoCampos, .tituloModalVisualizar{
     position: relative;
     display: flex;
-    justify-content: flex-end;
-    gap: 34%;
+    justify-content: space-between;
+    align-items: center;
     background-color: #d1cfcf;
     border-radius: 10px 10px 0 0;
     width: 75%;
-    padding: 6px;
+    padding: 18px;
     z-index: 3;
     text-align: center;
 }
@@ -218,7 +244,7 @@ button{
     border: none;
     background-color: #d1cfcf;
     padding: 12px;
-    color: red
+    color: red;
 }
 .btnPesquisar{
     color: white;
@@ -385,4 +411,21 @@ button{
 }
 .divFiltro p {
     text-align: center;
+}
+.mainAgendamentos{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.agendamentoFormularioDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 50vw;
+    background: linear-gradient(to right, #17172e, #202091);
+    padding: 24px;
+    border-radius: 20px;
 }

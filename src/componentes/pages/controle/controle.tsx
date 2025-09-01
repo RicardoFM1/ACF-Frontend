@@ -1,14 +1,11 @@
 import { Link } from "react-router-dom";
 import style from "./controle.module.css";
 import { Iconify } from "../../iconify/iconify";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiController } from "../../../controller/api.controller";
 import {
   atualizarInfoCampoSchema,
-  createCamposSchema,
   type iAtualizarCampos,
-  type iAtualizarStatus,
-  type iCreateCampo,
 } from "../../../schemas/campo.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -37,6 +34,7 @@ export const Controle = () => {
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
+  const [status, setStatus] = useState("ativo")
 
   const {
     register,
@@ -58,11 +56,28 @@ export const Controle = () => {
   };
 
   const atualizarStatus = async(campoData:iCampos) => {
-    let status="ativo"
-    if(campoData.status==="ativo"){
-      status="inativo"
+    
+    if(status === "ativo"){
+      setStatus("inativo")
+    }else{
+      setStatus("ativo")
     }
-   await apiController.patch(`/campos/${campoData.id}`, {status})
+    console.log(status)
+    try{
+
+      const res = await apiController.patch(`/campos/${campoData.id}`, {status})
+      if(res){
+        if(status === "ativo")
+        toastbar.success("Campo ativado com sucesso!")
+      else{
+        toastbar.success("Campo desativado com sucesso!") 
+      }
+      }
+     
+    }catch(error:any){
+      console.log(error.response.data.message)
+      toastbar.error("Erro ao desativar o campo!")
+    }
   }
 
   const getCampoInfo = async () => {
@@ -77,6 +92,10 @@ export const Controle = () => {
   useEffect(() => {
     getCampos();
   }, []);
+
+  useEffect(() => {
+    getCampos();
+  }, [campos]);
 
   useEffect(() => {
     if (campoId) getCampoInfo();
@@ -162,7 +181,8 @@ export const Controle = () => {
 
     if (!isOpen) return null;
 
-    return (
+    return <div className={style.load}>
+      
       <div className={style.fundoModal}>
         <div className={style.tituloModalInfoCampos}>
           <h2>Informações do campo</h2>
@@ -291,12 +311,13 @@ export const Controle = () => {
           </form>
         </div>
       </div>
-    );
+    </div>
   };
 
   return (
-    <>
-      <header className={style.headerControle}>
+    <div className={style.load}>
+      
+      <header id="introducao" className={style.headerControle}>
         <Link to="/admin" className={style.Linkvoltar}>
           Voltar
         </Link>
@@ -348,9 +369,12 @@ export const Controle = () => {
           {campos.map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
               <div className={style.campo}>
+                <div className={style.parteCimaCampo}>
                 <p className={style.campoNome}>{campo.nome}</p>
-                <div className={style.campoInformacoes}>
                   <p className={style.campoPreco}>R${campo.valor / 100}</p>
+                </div>
+                <div className={style.parteBaixoCampo}>
+                <div className={style.campoInformacoes}>
                   <button
                     onClick={() => clickInformacoes(campo.id)}
                     className={style.maisInformacoes}
@@ -358,14 +382,16 @@ export const Controle = () => {
                     Mais informações
                   </button>
                 </div>
-              </div>
               <div className={style.icons}>
-                <Iconify onClick={() => atualizarStatus(campo )} icon="fe:trash" />
+                <Iconify color={"white"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
                 <Iconify
+                color={"white"}
                   className={style.iconPencil}
                   onClick={() => clickEditarPencil(campo.id)}
                   icon="raphael:pensil"
                 />
+              </div>
+              </div>
               </div>
             </div>
           ))}
@@ -392,12 +418,11 @@ export const Controle = () => {
               <Link to={"/cadastro"}>Cadastro</Link>
               <Link to={"/login"}>Login</Link>
             </div>
-            <h4>introdução</h4>
-            <h4>Amostra</h4>
-            <h4>Etapas</h4>
+            <a href="#introducao">Introdução</a>
+            
           </div>
         </footer>
       </div>
-    </>
+    </div>
   );
 };
