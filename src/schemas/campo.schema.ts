@@ -31,10 +31,15 @@ export const atualizarNomePrecoSchema = z.object({
    valor: z.number().min(1, "Necessário preencher")
 })
 
+export const atualizarStatusSchemas = z.object({
+  status: z.string()
+})
+
 export const returnAllCamposSchema = returnCamposSchema.array() 
 
 export type iCreateCampo = z.infer<typeof createCamposSchema>
 export type iReturnCampo = z.infer<typeof returnCamposSchema>
 export type iReturnAllCampos = z.infer<typeof returnAllCamposSchema>
 export type iAtualizarCampos = z.infer<typeof atualizarInfoCampoSchema>
-export type   iAtualizarNomePrecoCampos = z.infer<typeof atualizarNomePrecoSchema>
+export type iAtualizarStatus = z.infer<typeof atualizarStatusSchemas>
+export type iAtualizarNomePrecoCampos = z.infer<typeof atualizarNomePrecoSchema>

@@ -34,6 +34,9 @@
   font-size: 18px;
   cursor: pointer;
 }
+.btnFecharModal:hover{
+  color: red;
+}
 
 .bodyEditarHorarios {
   display: grid;
@@ -45,10 +48,23 @@
   display: flex;
   flex-direction: column;
 }
+.load {
 
+    animation: load 1s ease ;
+}
+@keyframes load {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
 .caixaDia h3 {
   margin-bottom: 10px;
   font-size: 24px;
+  font-weight: 600;
+  color: black;
 }
 
 .caixaDia label {

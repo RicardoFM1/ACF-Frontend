@@ -43,22 +43,22 @@ export const Agendar=()=>{
         valor: number,
         imagem: string,
     }
-//    agendamentos: [
-// 		{
-// 			id: number,
-// 			campos: {
-// 				id: number,
-// 				nome: string,
-// 				endereco: string,
-// 				descricao: string,
-// 				valor: number,
-// 				imagem: string
-// 			},
-// 			horario: string,
-// 			data: string
-// 		}
+   agendamentos: [
+		{
+			id: number,
+			campos: {
+				id: number,
+				nome: string,
+				endereco: string,
+				descricao: string,
+				valor: number,
+				imagem: string
+			},
+			horario: string,
+			data: string
+		}
 		
-// 	]
+	]
     
    }
 
@@ -66,7 +66,7 @@ export const Agendar=()=>{
     const [campos, setCampos] = useState([] as iCampos[])
     const [horarios, setHorarios] = useState([] as iHorario[])
     const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
-    const [searchAgendamento, setSearchAgendamento] = useState("")
+    // const [searchAgendamento, setSearchAgendamento] = useState("")
     const [searchCampo, setSearchCampo] = useState("")
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
     const [modalInfoOpen, setModalInfoOpen] = useState(false)
@@ -80,7 +80,7 @@ export const Agendar=()=>{
     const [horarioFinal, setHorarioFinal] = useState<number | null>()
     const [listaHorarios, setListaHorarios] = useState<string[]>([])
     const [openCalendar, setOpenCalendar] = useState(false)
-    const [openPreco, setOpenPreco] = useState(false)
+    // const [openPreco, setOpenPreco] = useState(false)
     // const [loadingHorarios, setLoadingHorarios] = useState(false)
     const options= [{
         id:1,name:"Data"},
@@ -93,12 +93,18 @@ export const Agendar=()=>{
         console.log(retrieve,"retrive")
         setRetrieve(retrieve)
         await getAgendamentos(retrieve.id)
-        await getCampos()
+        await getCampos(retrieve)
     } 
 
-    const getCampos = async() => {
-        const campos = await apiController.get("/campos")
-        setCampos(campos)
+    const getCampos = async(retrieve:any) => {
+        if(retrieve?.admin === true){
+
+            const campos = await apiController.get("/campos")
+            setCampos(campos)
+        }else{
+            const campos = await apiController.get("/campos?status=ativo")
+            setCampos(campos)
+        }
     }
 
     const camposFiltrados = campos.filter(c =>
@@ -121,7 +127,7 @@ export const Agendar=()=>{
     // setAgendamentos(agendamentosFiltrados)
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
-        getCampos()
+        getCampos(retrieve)
     }
 
     const fecharModalVisualizar = () => {
@@ -130,7 +136,7 @@ export const Agendar=()=>{
 
     const fecharModal = () => {
         setModalCamposOpen(false)
-        getCampos()
+        getCampos(retrieve)
     }
  
     const getCamposInfo = async() => {
@@ -284,9 +290,9 @@ const ModalAviso = () => {
         console.log(optionChecked)
         if(optionChecked==="1"){
             setOpenCalendar(true)
-            setOpenPreco(false)
+            // setOpenPreco(false)
         }else{
-            setOpenPreco(true)
+            // setOpenPreco(true)
             setOpenCalendar(false)
         }
      
@@ -309,14 +315,16 @@ const ModalAviso = () => {
                 <div className={style.tituloModalVisualizar}>
                     <h2>Meus agendamentos</h2>
                     <div className={style.divBtnFecharModal}>
-                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>X</button>
+                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>
+                        <Iconify icon="ic:baseline-close"/>
+                    </button>
                     </div>
                 </div>
                 <div className={style.modal}>
                 <div className={style.divPesquisa}>
                 <input 
                 id="idPesquisaAgendamento" 
-                value={searchAgendamento} 
+                // value={searchAgendamento} 
                 // onChange={(e:any) => filtrarAgendamentos(e.target.value)}
                 className={style.inputSearch} 
                 placeholder="Pesquise um agendamento" />
@@ -423,12 +431,12 @@ const getHorarios = async () => {
   if (campoId && diaDaSemana) {
     
     try {
-      const horarios = await apiController.get(
-        `/horarios/${campoId}/${diaDaSemana.toLowerCase()}`
-      )
-      
-      setHorarios(horarios)
-      if(horarios.length > 0){
+      const res = await apiController.get(
+        `/horarios/${campoId}/${diaDaSemana}`
+      ) 
+    console.log(res,"horarios api")
+    if(res && res.length){
+          setHorarios(res)
         toastbar.success("Horários disponíveis nesse dia e nesse campo!")
     }else{
         toastbar.error("Nenhum horário disponível neste dia e neste campo!") 
@@ -478,11 +486,21 @@ useEffect(() => {
 
     horarios.forEach((horario) => {
       const inicio = parseInt(horario.horario_inicial)
+      
       setHorarioInicial(inicio)
       const fim = parseInt(horario.horario_final)
       setHorarioFinal(fim)
+      const agendamentos = horario.agendamentos.length ? horario.agendamentos.map((agendamento)=>agendamento.horario):[]
+      console.log(agendamentos,"agendamentos")
       for (let i = inicio; i < fim; i++) {
-          list.push(`${i}:00`)
+        console.log(horario.agendamentos,"agenda")
+        // if(horario.agendamentos.includes({campos: campoId}, diaDaSemana))
+        if(!agendamentos.includes(`${i}:00`)){
+
+            list.push(`${i}:00`)
+        }
+          //agendamentos.includes()
+
         }
     })
     setListaHorarios(list)
@@ -517,6 +535,7 @@ useEffect(() => {
 
     const Agendar = async(agendamentoData:iAgendamento) => {
         try{
+            // if(agendamentoData.camposId === campoId && )
             const dataFormatada = agendamentoData.data.split("-").reverse().join("/")
             const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada}
             const res = await apiController.post("/agendamentos", {...agendamentoDataNovo, status: "ativo"} )
@@ -557,6 +576,8 @@ useEffect(() => {
     {modalInfoOpen && <OpenModalInfo />}
     {modalAvisoOpen && <ModalAviso />}
 
+    <main className={style.mainAgendamentos}>
+        <div className={style.agendamentoFormularioDiv}>
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
     <div className={style.divPrincipalAgendamento}>
         <div className={style.divOne}> 
@@ -618,9 +639,9 @@ useEffect(() => {
             
     
     </div>
-    
     </div>
-
+</main>
+    </div>
 
 
     

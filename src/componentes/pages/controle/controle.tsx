@@ -2,8 +2,12 @@ import { Link } from "react-router-dom";
 import style from "./controle.module.css";
 import { Iconify } from "../../iconify/iconify";
 import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { apiController } from "../../../controller/api.controller";
-import { atualizarInfoCampoSchema, createCamposSchema, type iAtualizarCampos, type iCreateCampo } from "../../../schemas/campo.schema";
+import {
+  atualizarInfoCampoSchema,
+  type iAtualizarCampos,
+} from "../../../schemas/campo.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toastbar } from "../../utility/tokenUtility";
@@ -18,16 +22,19 @@ export const Controle = () => {
     descricao: string;
     valor: number;
     imagem: string;
+    status: "ativo" | "inativo";
   }
 
-  const [campos, setCampos] = useState<iCampos[]>([]);
+  const [campos, setCampos] = useState([] as iCampos[]);
   const [modalInfoOpen, setModalInfoOpen] = useState(false);
   const [campoId, setCampoId] = useState<number | null>(null);
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
   const [isEditingEndereco, setIsEditingEndereco] = useState(false);
   const [isEditingDescricao, setIsEditingDescricao] = useState(false);
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
-  const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false)
+  const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
+  const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
+  const [status, setStatus] = useState("ativo")
 
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAtualizarCampos>({
     resolver: zodResolver(atualizarInfoCampoSchema),
@@ -44,6 +51,31 @@ export const Controle = () => {
     setCampos(campos);
   };
 
+  const atualizarStatus = async(campoData:iCampos) => {
+    
+    if(status === "ativo"){
+      setStatus("inativo")
+    }else{
+      setStatus("ativo")
+    }
+    console.log(status)
+    try{
+
+      const res = await apiController.patch(`/campos/${campoData.id}`, {status})
+      if(res){
+        if(status === "ativo")
+        toastbar.success("Campo ativado com sucesso!")
+      else{
+        toastbar.success("Campo desativado com sucesso!") 
+      }
+      }
+     
+    }catch(error:any){
+      console.log(error.response.data.message)
+      toastbar.error("Erro ao desativar o campo!")
+    }
+  }
+
 
   const getCampoInfo = async () => {
     if (campoId) {
@@ -57,6 +89,10 @@ export const Controle = () => {
   useEffect(() => {
     getCampos();
   }, []);
+
+  // useEffect(() => {
+  //   getCampos();
+  // }, [campos]);
 
   useEffect(() => {
     if (campoId) getCampoInfo();
@@ -144,7 +180,8 @@ const clickInformacoes = async (id: number) => {
 
     if (!isOpen) return null;
 
-    return (
+    return <div className={style.load}>
+      
       <div className={style.fundoModal}>
         <div className={style.tituloModalInfoCampos}>
           <h2>Informações do campo</h2>
@@ -216,13 +253,16 @@ const clickInformacoes = async (id: number) => {
           </form>
         </div>
       </div>
-    );
+    </div>
   };
 
   return (
-    <>
-      <header className={style.headerControle}>
-        <Link to="/admin" className={style.Linkvoltar}>voltar</Link>
+    <div className={style.load}>
+      
+      <header id="introducao" className={style.headerControle}>
+        <Link to="/admin" className={style.Linkvoltar}>
+          Voltar
+        </Link>
         <p>Controle</p>
       </header>
 
@@ -245,26 +285,41 @@ const clickInformacoes = async (id: number) => {
       isOpen={isOpenEditarCampo}
       campoId={campoId}
       />}
-      {isOpenEditarHorarios && <ModalEditarHorarios onClose={() => setIsOpenEditarHorarios(false)} isOpen={isOpenEditarHorarios}/>}
+      {isOpenEditarHorarios && <ModalEditarHorarios campoId={campoId} onClose={() => setIsOpenEditarHorarios(false)} isOpen={isOpenEditarHorarios}/>}
       <div className={style.divH1}>
         <h1>Controle seus campos de futebol</h1>
       </div>
 
       <div className={style.controleDosCampos}>
         <div className={style.campos}>
-          <h3>O que deseja controlar?</h3>
+          <h3 className={style.oqueDeseja}>O que deseja controlar?</h3>
+          {}
           {campos.map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
               <div className={style.campo}>
+                <div className={style.parteCimaCampo}>
                 <p className={style.campoNome}>{campo.nome}</p>
-                <div className={style.campoInformacoes}>
                   <p className={style.campoPreco}>R${campo.valor / 100}</p>
-                  <button onClick={() => clickInformacoes(campo.id)} className={style.maisInformacoes}>Mais informações</button>
                 </div>
-              </div>
+                <div className={style.parteBaixoCampo}>
+                <div className={style.campoInformacoes}>
+                  <button
+                    onClick={() => clickInformacoes(campo.id)}
+                    className={style.maisInformacoes}
+                  >
+                    Mais informações
+                  </button>
+                </div>
               <div className={style.icons}>
-                <Iconify icon="fe:trash" />
-                <Iconify className={style.iconPencil} onClick={() => clickEditarPencil(campo.id)} icon="raphael:pensil" />
+                <Iconify color={"white"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+                <Iconify
+                color={"white"}
+                  className={style.iconPencil}
+                  onClick={() => clickEditarPencil(campo.id)}
+                  icon="raphael:pensil"
+                />
+              </div>
+              </div>
               </div>
             </div>
           ))}
@@ -293,10 +348,32 @@ const clickInformacoes = async (id: number) => {
                 </div>
                 
                     
-</>
+
+</div>
   )
 }
 
+
+
+
+      <div className={style.footer}>
+        <footer className={style.footerHome}>
+          <div className={style.footerDiv1}>
+            <h2>ACF</h2>
+          </div>
+          <div className={style.footerDiv2}>
+            <div className={style.footerDiv3}>
+              <h4>Paginas</h4>
+              <Link to={"/home"}>Home</Link>
+              <Link to={"/agendar"}>Agenda</Link>
+              <Link to={"/cadastro"}>Cadastro</Link>
+              <Link to={"/login"}>Login</Link>
+            </div>
+            <a href="#introducao">Introdução</a>
+            
+          </div>
+        </footer>
+      </div>
 
 
 

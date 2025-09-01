@@ -72,7 +72,8 @@ export const Home=()=>{
 
 const ModalAviso = () => {
         if(modalAvisoOpen){
-    return <>
+    return <div className={style.load}>
+        
         <div className={style.divModalFundo}>
             <div className={style.Modal}>
                 <div className={style.divIconAlerta}>
@@ -94,7 +95,7 @@ const ModalAviso = () => {
             </div>
 
         </div>
-        </>
+        </div>
             
         }else{
             return null
@@ -134,7 +135,7 @@ const ModalAviso = () => {
         <h2 className={style.h2}><strong>Alguns de nossos campos</strong></h2>
 
         <div className={style.imgCamposHome}>
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfzVnThmA-6QW9n7BkUJLfxJfgL7hjJ4JGQw&s" alt="" />
+            <img className={style.imgCampos} src="/images/phil-kiel-W1nYkMU-2Jc-unsplash.jpg" alt="" />
             <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-5iO45ewltlVapzHDel3UGNBg6o8GJCAeXg&s" alt="" />
             <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQav3Wte1eoThXMuXr-RHEaXE1c4sX2alGFTg&s" alt="" />
         </div>
@@ -146,6 +147,7 @@ const ModalAviso = () => {
                     <p>Você confirma o dia da semana, dia do mês, mes do ano e local, assim, podemos ter uma consulta mais detalhada sobre a sua reserva.</p>
                     <p>Nós iremos consultar sua reserva e então analisaremos ela, confirmando se temos uma reserva disponivel de acordo com as especificações solicitadas por você!</p>
                     <p>O acordo de pagamento é feito pessoalmente, possibilitando ser efetuado por: Pix, Cartão, Boleto, Fatura e muito mais.</p>
+                    <Link to={"/agendar"} className={style.btnTestar}>Testar</Link>
                 </div>
                 <img className={style.imgCampo} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBDpjc1mRZ9EVUv5Z-kEG47_zceIDukUtWdA&s" alt="" />
             </div>
@@ -156,14 +158,14 @@ const ModalAviso = () => {
                 <div className={style.footerDiv2}>
                     <div className={style.footerDiv3}>
                         <h4>Paginas</h4>
-                        <p>Home</p>
-                        <p>Agenda</p>
-                        <p>Cadastro</p>
-                        <p>Login</p>
+                        <Link to={"/"}>Home</Link>
+                        <Link to={"/agendar"}>Agendar</Link>
+                        <Link to={"/cadastro"}>Cadastro</Link>
+                        <Link to={"/login"}>Login</Link>
                     </div>
-                    <h4>introdução</h4>
-                    <h4>Amostra</h4>
-                    <h4>Etapas</h4>
+                    <a href="#introducao">Introdução</a>
+                    <a href="#amostra">Amostra</a>
+                    <a href="#etapas">Etapas</a>
                 </div>
             </footer>
         </div>
@@ -186,14 +188,14 @@ const ModalAviso = () => {
  </div>
         </header>
         {modalAvisoOpen && <ModalAviso />}
-        <div className={style.conteudoPrinHome}>
+        <div id="amostra" className={style.conteudoPrinHome}>
             <h1 className={style.h1contP}>Agende agora seu campo de futebol!</h1>
             <p>Aqui nesse site você pode agendar um campo de futebol da sua preferência, com direito a: </p>
             <p>Local: Desvende novas localizações de campos de futebol.
                 Horário: Escolha seu horário de encontro e reserva do campo.
                 Data: Escolha que dia quer agendar o campo.</p>
         </div>
-        <h2 className={style.h2}><strong>Alguns de nossos campos</strong></h2>
+        <h2  id="etapas" className={style.h2}><strong>Alguns de nossos campos</strong></h2>
 
         <div className={style.imgCamposHome}>
             <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfzVnThmA-6QW9n7BkUJLfxJfgL7hjJ4JGQw&s" alt="" />
@@ -204,10 +206,11 @@ const ModalAviso = () => {
             <div className={style.conteudoSecunHome}>
                 <div className={style.txtContSec}>
                     <h1>É simples e fácil</h1>
-                    <p><strong>cadastro</strong></p>
+                    <p><strong>Cadastro</strong></p>
                     <p>Você confirma o dia da semana, dia do mês, mes do ano e local, assim, podemos ter uma consulta mais detalhada sobre a sua reserva.</p>
                     <p>Nós iremos consultar sua reserva e então analisaremos ela, confirmando se temos uma reserva disponivel de acordo com as especificações solicitadas por você!</p>
                     <p>O acordo de pagamento é feito pessoalmente, possibilitando ser efetuado por: Pix, Cartão, Boleto, Fatura e muito mais.</p>
+                    
                 </div>
                 <img className={style.imgCampo} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBDpjc1mRZ9EVUv5Z-kEG47_zceIDukUtWdA&s" alt="" />
             </div>
@@ -218,14 +221,13 @@ const ModalAviso = () => {
                 <div className={style.footerDiv2}>
                     <div className={style.footerDiv3}>
                         <h4>Paginas</h4>
-                        <p>Home</p>
-                        <p>Agenda</p>
-                        <p>Cadastro</p>
-                        <p>Login</p>
+                        <Link to={"/"}>Home</Link>
+                        <Link to={"/cadastro"}>Cadastro</Link>
+                        <Link to={"/login"}>Login</Link>
                     </div>
-                    <h4>introdução</h4>
-                    <h4>Amostra</h4>
-                    <h4>Etapas</h4>
+                    <a href="#introducao">Introdução</a>
+                    <a href="#amostra">Amostra</a>
+                    <a href="#etapas">Etapas</a>
                 </div>
             </footer>
         </div>
