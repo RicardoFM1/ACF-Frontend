@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import style from "./controle.module.css";
 import { Iconify } from "../../iconify/iconify";
 import { useEffect, useState } from "react";
-import { useEffect, useState } from "react";
+
 import { apiController } from "../../../controller/api.controller";
 import {
   atualizarInfoCampoSchema,
