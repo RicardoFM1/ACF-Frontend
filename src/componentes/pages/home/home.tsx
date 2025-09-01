@@ -173,21 +173,21 @@ const ModalAviso = () => {
 }else{
      const token = getLocalStorageItem("token")
         
-    return  <div className={style.load}>
+     return  <div className={style.load}>
+        {modalAvisoOpen && <ModalAviso />}
   <div className={style.fundoHome}>
         <header className={style.header}>
  <h1>ACF</h1>
  <div className={style.btns}>
    {token ?
  <Link to={"/agendar"} className={style.linkAgenda}>Agendar</Link>
-:  <Link onClick={() => setModalAvisoOpen(true)} to={""} className={style.linkAgenda}>Agendar</Link>
+ :  <Link onClick={() => setModalAvisoOpen(true)} to={""} className={style.linkAgenda}>Agendar</Link>
 }
 
     <Link to={"/cadastro"} className={style.linkCadastro}>Cadastro</Link> 
     <Link to={"/login"} className={style.linkLogin}>Login</Link>
  </div>
         </header>
-        {modalAvisoOpen && <ModalAviso />}
         <div id="amostra" className={style.conteudoPrinHome}>
             <h1 className={style.h1contP}>Agende agora seu campo de futebol!</h1>
             <p>Aqui nesse site você pode agendar um campo de futebol da sua preferência, com direito a: </p>

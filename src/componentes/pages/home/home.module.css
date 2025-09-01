@@ -264,7 +264,7 @@ html {
     }
 }
 .load{
-    animation: loading 1s ease ;
+    animation: loading 1s ease;
 }
 @keyframes loading {
     0%{
