@@ -93,9 +93,9 @@ export const Controle = () => {
     getCampos();
   }, []);
 
-  useEffect(() => {
-    getCampos();
-  }, [campos]);
+  // useEffect(() => {
+  //   getCampos();
+  // }, [campos]);
 
   useEffect(() => {
     if (campoId) getCampoInfo();
@@ -364,7 +364,7 @@ export const Controle = () => {
       )}
       <div className={style.controleDosCampos}>
         <div className={style.campos}>
-          <h3>O que deseja controlar?</h3>
+          <h3 className={style.oqueDeseja}>O que deseja controlar?</h3>
           {}
           {campos.map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>

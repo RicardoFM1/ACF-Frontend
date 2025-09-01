@@ -163,10 +163,17 @@ html {
 }
 
 .caixaEndereco,
-.caixaDescricao,
+.caixaDescricao
+{
+  display: flex;
+}
+
 .caixaFoto1,
 .caixaFoto2 {
   display: flex;
+  max-height: 60px;
+  min-width: 60px;
+  
 }
 
 .campos {
@@ -177,9 +184,9 @@ html {
   gap: 50px;
 }
 .campos h3 {
-  color: white;
   font-size: 24px;
 }
+
 .controleDosCampos {
   display: flex;
   flex-direction: column;

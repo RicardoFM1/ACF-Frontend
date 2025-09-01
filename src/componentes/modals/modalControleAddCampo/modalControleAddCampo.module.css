@@ -47,6 +47,9 @@
     max-height: 600px;
     overflow: auto;
 }
+.formAddCampo h3{
+    color: black;
+}
 .btnSalvar:hover {
     background: #43a047;        
 }
