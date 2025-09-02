@@ -208,7 +208,7 @@ export const Controle = () => {
                 <h2>Endereço</h2>
                 <div className={style.caixaEndereco}>
                   {isEditingEndereco ? (
-                    <textarea {...register("endereco")} rows={6} cols={50} />
+                    <textarea maxLength={255} {...register("endereco")} rows={6} cols={50} />
                   ) : (
                     <p className={style.enderecoCampo}>{infoCampo.endereco}</p>
                   )}
@@ -233,7 +233,7 @@ export const Controle = () => {
                 <h2>Descrição</h2>
                 <div className={style.caixaDescricao}>
                   {isEditingDescricao ? (
-                    <textarea {...register("descricao")} rows={6} cols={50} />
+                    <textarea maxLength={255} {...register("descricao")} rows={6} cols={50} />
                   ) : (
                     <p className={style.descricaoCampo}>
                       {infoCampo.descricao}
