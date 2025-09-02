@@ -111,8 +111,12 @@ const ModalAviso = () => {
 
         return  <div className={style.load}>
   <div className={style.fundoHome}>
-        <header className={style.header}>
- <h1>ACF</h1>
+        <header id="introducao" className={style.header}>
+            <div className={style.divLogo}>
+
+             <img src="/images/ImageLogoACF.svg" alt="teste" className={style.imageLogo}/>
+
+            </div>
  <div className={style.btns}>
     {token ?
     <Link viewTransition to={"/agendar"} className={style.linkCadastro}>Agendar</Link>
@@ -125,14 +129,14 @@ const ModalAviso = () => {
  </div>
         </header>
         {modalOpen && <ModalSair />}
-        <div className={style.conteudoPrinHome}>
+        <div id="amostra" className={style.conteudoPrinHome}>
             <h1 className={style.h1contP}>Agende agora seu campo de futebol!</h1>
             <p>Aqui nesse site você pode agendar um campo de futebol da sua preferência, com direito a: </p>
             <p>Local: Desvende novas localizações de campos de futebol.
                 Horário: Escolha seu horário de encontro e reserva do campo.
                 Data: Escolha que dia quer agendar o campo.</p>
         </div>
-        <h2 className={style.h2}><strong>Alguns de nossos campos</strong></h2>
+        <h2 id="etapas" className={style.h2}><strong>Alguns de nossos campos</strong></h2>
 
         <div className={style.imgCamposHome}>
             <img className={style.imgCampos} src="/images/phil-kiel-W1nYkMU-2Jc-unsplash.jpg" alt="" />
@@ -177,7 +181,11 @@ const ModalAviso = () => {
         {modalAvisoOpen && <ModalAviso />}
   <div className={style.fundoHome}>
         <header className={style.header}>
- <h1>ACF</h1>
+           <div className={style.divLogo}>
+
+             <img src="/images/ImageLogoACF.svg" alt="teste" className={style.imageLogo}/>
+
+            </div>
  <div className={style.btns}>
    {token ?
  <Link to={"/agendar"} className={style.linkAgenda}>Agendar</Link>

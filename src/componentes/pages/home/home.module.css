@@ -6,11 +6,20 @@
 html {
   scroll-behavior: smooth;
 }
+.divLogo{
+    display: flex;
+    align-items: center;
+}
+.imageLogo{
+    width: 80px;
+    object-fit: cover;
+    height: 80px;
+}
 .header{
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 32px;
+    padding: 18px;
     color: white;
 }
 .linkCadastro, .linkAgenda{

@@ -136,7 +136,11 @@ const ModalAviso = () => {
             
     <div className={style.fundoHome}>
         <header id="introducao" className={style.header}>
- <h1>ACF</h1>
+<div className={style.divLogo}>
+
+             <img src="/images/ImageLogoACF.svg" alt="teste" className={style.imageLogo}/>
+
+            </div>
  <div className={style.btns}> 
     <Link to={"/agendar"} className={style.linkAgendar}>Agendar</Link>
     
@@ -200,7 +204,11 @@ const ModalAviso = () => {
             
         <div className={style.fundoHome}>
         <header id="introducao" className={style.header}>
- <h1>ACF</h1>
+<div className={style.divLogo}>
+
+             <img src="/images/ImageLogoACF.svg" alt="teste" className={style.imageLogo}/>
+
+            </div>
  <div className={style.btns}>
     {token ?
     <Link to={"/agendar"} className={style.linkControle}>Controle</Link>

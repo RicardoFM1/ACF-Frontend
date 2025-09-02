@@ -59,8 +59,10 @@ export const Controle = () => {
     
     if(status === "ativo"){
       setStatus("inativo")
+      campoData.status = "inativo"
     }else{
       setStatus("ativo")
+         campoData.status = "ativo"
     }
     console.log(status)
     try{
@@ -383,7 +385,23 @@ export const Controle = () => {
                   </button>
                 </div>
               <div className={style.icons}>
-                <Iconify color={"white"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+          
+                {campo.status == "inativo" ? 
+                
+              <>
+              <p>Ativo</p>
+        
+                <Iconify color={"green"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+                  
+              </>
+                
+                :
+                <>
+                <p>Inativo</p>
+                <Iconify color={"red"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+                </>
+                }
+
                 <Iconify
                 color={"white"}
                   className={style.iconPencil}

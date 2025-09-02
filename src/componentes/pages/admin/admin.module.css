@@ -5,8 +5,17 @@ html {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 32px;
+    padding: 18px;
     color: white;
+}
+.divLogo{
+    display: flex;
+    align-items: center;
+}
+.imageLogo{
+    width: 80px;
+    object-fit: cover;
+    height: 80px;
 }
 .linkCadastro{
     color: rgb(0, 0, 0);
