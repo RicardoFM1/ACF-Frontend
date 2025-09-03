@@ -12,6 +12,13 @@ html {
     display: flex;
     justify-content: space-between;
     padding: 32px;
+    color: white;
+    flex-wrap: wrap;
+}
+@media (max-width:405px){
+        .header{
+            justify-content: center;
+        }
 }
 .btnCadastro{
     color: white;
@@ -28,11 +35,12 @@ html {
     height: 75vh;
     display: flex;
     justify-content: center;
+    color:white;
 }
 .Login{
     width: 27%;
     height: 80%;
-    background-color: #eeeaea;
+    background-color: #17172e;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -40,7 +48,12 @@ html {
     gap: 36px;
     border-radius: 10px;
 }
-@media (max-width:700px){
+@media (max-width:1000px){
+    .Login{
+        width: 50%;
+    }
+}
+@media (max-width:600px){
     .Login{
         width: 70%;
     }
@@ -59,6 +72,7 @@ input{
     border-bottom: 1px solid black;
     height: 44px;
     width: 80%;
+    border-radius: 10px;
 }
 input::placeholder{
     padding-left:2px ;

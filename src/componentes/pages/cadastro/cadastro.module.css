@@ -12,6 +12,13 @@ html {
     display: flex;
     justify-content: space-between;
     padding: 32px;
+    color: white;
+    flex-wrap: wrap;
+}
+@media (max-width:379.5px){
+        .header{
+            justify-content: center;
+        }
 }
 .divFundo{
     width: 100%;
@@ -22,7 +29,8 @@ html {
 .Cadastro{
     width: 27%;
     height: 80%;
-    background-color: #eeeaea;
+    background-color: #17172e;
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -30,7 +38,12 @@ html {
     gap: 36px;
     border-radius: 10px;
 }
-@media (max-width:700px){
+@media(max-width:1000px){
+    .Cadastro{
+        width: 50%;
+    }
+}
+@media (max-width:600px){
     .Cadastro{
         width: 70%;
     }
@@ -54,6 +67,7 @@ input{
     height: 44px;
     width: 80%;
     outline: none;
+    border-radius: 10px;
     padding-left: 12px;
 }
 input:focus{
