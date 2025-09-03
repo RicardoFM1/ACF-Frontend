@@ -23,8 +23,9 @@ export const returnCamposSchema = z.object({
 export const atualizarInfoCampoSchema = z.object({
   endereco: z.string().min(1, "Necessário preencher"),
   descricao: z.string().min(1, "Necessário preencher"),
+  imagem: z.string()
 });
-// depois colocar a imagem junto
+
 
 export const atualizarNomePrecoSchema = z.object({
   nome: z.string().min(1, "Necessário preencher"),

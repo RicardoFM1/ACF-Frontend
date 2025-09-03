@@ -162,9 +162,9 @@ const ModalAviso = () => {
         <h2  id="etapas" className={style.h2}><strong>Alguns de nossos campos</strong></h2>
 
         <div className={style.imgCamposHome}>
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfzVnThmA-6QW9n7BkUJLfxJfgL7hjJ4JGQw&s" alt="" />
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-5iO45ewltlVapzHDel3UGNBg6o8GJCAeXg&s" alt="" />
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQav3Wte1eoThXMuXr-RHEaXE1c4sX2alGFTg&s" alt="" />
+            <img className={style.imgCampos} src="/images/phil-kiel-W1nYkMU-2Jc-unsplash.jpg" alt="" />
+            <img className={style.imgCampos} src="/images/imagemCampo2.png" alt="" />
+            <img className={style.imgCampos} src="/images/imagemCampo3.png" alt="" />
         </div>
 
             <div className={style.conteudoSecunHome}>
@@ -229,9 +229,9 @@ const ModalAviso = () => {
         <h2 id="etapas" className={style.h2}><strong>Alguns de nossos campos</strong></h2>
 
         <div className={style.imgCamposHome}>
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfzVnThmA-6QW9n7BkUJLfxJfgL7hjJ4JGQw&s" alt="" />
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-5iO45ewltlVapzHDel3UGNBg6o8GJCAeXg&s" alt="" />
-            <img className={style.imgCampos} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQav3Wte1eoThXMuXr-RHEaXE1c4sX2alGFTg&s" alt="" />
+            <img className={style.imgCampos} src="/images/phil-kiel-W1nYkMU-2Jc-unsplash.jpg" alt="" />
+            <img className={style.imgCampos} src="/images/imagemCampo2.png" alt="" />
+            <img className={style.imgCampos} src="/images/imagemCampo3.png" alt="" />
         </div>
 
             <div  className={style.conteudoSecunHome}>

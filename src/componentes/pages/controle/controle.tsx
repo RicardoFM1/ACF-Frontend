@@ -31,6 +31,8 @@ export const Controle = () => {
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
   const [isEditingEndereco, setIsEditingEndereco] = useState(false);
   const [isEditingDescricao, setIsEditingDescricao] = useState(false);
+  const [isEditingImage, setIsEditingImage] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
@@ -145,6 +147,30 @@ export const Controle = () => {
     }
   };
 
+  
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setValue("imagem", base64); 
+        setPreview(base64); 
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const editImageFalse = () => {
+    setIsEditingImage(false)
+    setPreview(null)
+  }
+
+  const editImageTrue = () => {
+  setIsEditingImage(true)
+  }
+
   interface ModalInfoProps {
     isOpen: boolean;
     infoCampo: iCampos;
@@ -258,26 +284,47 @@ export const Controle = () => {
                 </div>
               </div>
 
-              <div className={style.contatoCampo}>
-                <p>
-                  Caso não tenha encontrado uma informação que deseja aqui,
-                  entre em contato conosco
-                </p>
-              </div>
+              
             </div>
 
             <div className={style.divImagensCampo}>
-              <h2>Fotos do campo</h2>
+              <h2>Foto do campo</h2>
               <div className={style.caixaFoto1}>
-                {infoCampo.imagem && (
+                {isEditingImage ? 
+              
+                <>
+                <div className={style.divImage}>
+                <label className={style.labelImage} htmlFor="inputImage">Escolher uma imagem</label><input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className={style.inputImage}
+                    id="inputImage" />
+                    
+                    {preview && (
+                <img
+                  src={preview}
+                  alt="Pré-visualização"
+                  style={{ marginTop: "10px", maxHeight: "120px" }}
+                />
+                
+              )}
+              </div>
+              </>
+
+              : infoCampo.imagem && (
                   <img
                     src={`${infoCampo.imagem}`}
                     alt="Imagem do campo"
                     className={style.imagemPreview}
                   />
                 )}
+                
+          
+            <span className={style.errorMsg}>{errors.imagem?.message}</span>
+                
                 <div className={style.divIcon}>
-                  <button className={style.btnEditarPencil} type="button">
+                  <button onClick={() => isEditingImage === false ? (setIsEditingImage(true)) : (setIsEditingImage(false),setPreview(null)) } className={style.btnEditarPencil} type="button">
                     <Iconify
                       height={24}
                       width={24}
@@ -286,29 +333,13 @@ export const Controle = () => {
                     />
                   </button>
                 </div>
+                
               </div>
-              <div className={style.caixaFoto2}>
-                {infoCampo.imagem && (
-                  <img
-                    src={`${infoCampo.imagem}`}
-                    alt="Imagem do campo"
-                    className={style.imagemPreview}
-                  />
-                )}
-                <div className={style.divIcon}>
-                  <button className={style.btnEditarPencil} type="button">
-                    <Iconify
-                      height={24}
-                      width={24}
-                      className={style.iconLapis}
-                      icon="raphael:pensil"
-                    />
-                  </button>
-                </div>
-              </div>
+              <div className={style.divBtnSalvar}>
               <button type="submit" className={style.btnSalvar}>
                 Salvar
               </button>
+              </div>
             </div>
           </form>
         </div>
