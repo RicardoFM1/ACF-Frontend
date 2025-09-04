@@ -112,6 +112,9 @@ export const Controle = () => {
     if (campo) {
       setInfoCampo(campo);
       setModalInfoOpen(true);
+      setIsEditingDescricao(false);
+      setIsEditingEndereco(false);
+      setIsEditingImage(false)
     }
   };
 
@@ -123,6 +126,7 @@ export const Controle = () => {
       if (res) {
         toastbar.success("Campo atualizado com sucesso!");
         await getCampos();
+        setModalInfoOpen(false)
       
       }
     } catch (error: any) {
@@ -132,6 +136,7 @@ export const Controle = () => {
       );
     }
     console.log("chamado");
+  
   };
 
   // const desativarCampo = async(id:number) => {
@@ -294,7 +299,9 @@ export const Controle = () => {
               
                 <>
                 <div className={style.divImage}>
-                <label className={style.labelImage} htmlFor="inputImage">Escolher uma imagem</label><input
+                <label className={style.labelImage} htmlFor="inputImage">Escolher uma imagem</label>
+                <input
+                {...register("imagem")}
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}

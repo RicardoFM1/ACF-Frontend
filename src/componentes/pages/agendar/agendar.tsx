@@ -409,8 +409,7 @@ const ModalAviso = () => {
                     </div>
                     </div>
                     <div className={style.divImagensCampo}>
-                        <h2>Fotos do campo</h2>
-                        <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo"/>
+                        <h2>Foto do campo</h2>
                         <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo" />
                     </div>
                     
