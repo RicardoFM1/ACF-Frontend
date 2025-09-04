@@ -565,8 +565,8 @@ useEffect(() => {
             
             <button onClick={() => setmodalVisualizarOpen(true)} className={style.btnVisualizar}>Ver meus Agendamentos</button>
         </div>
-            <h1 className={style.h1Agendar}>Agendamentos</h1>
 
+            <h1 className={style.h1Agendar}>Agendamentos</h1>
             </div>
     </header>
 
