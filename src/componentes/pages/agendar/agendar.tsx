@@ -80,8 +80,6 @@ export const Agendar=()=>{
     const [horarioFinal, setHorarioFinal] = useState<number | null>()
     const [listaHorarios, setListaHorarios] = useState<string[]>([])
     const [openCalendar, setOpenCalendar] = useState(false)
-    // const [openPreco, setOpenPreco] = useState(false)
-    // const [loadingHorarios, setLoadingHorarios] = useState(false)
     const options= [{
         id:1,name:"Data"},
         {
@@ -100,16 +98,16 @@ export const Agendar=()=>{
         if(retrieve?.admin === true){
 
             const campos = await apiController.get("/campos")
-            setCampos(campos)
+            setCampos(campos.data)
         }else{
             const campos = await apiController.get("/campos?status=ativo")
-            setCampos(campos)
+            setCampos(campos.data)
         }
     }
 
-    const camposFiltrados = campos.filter(c =>
-        c.nome.toLowerCase().includes(searchCampo.toLowerCase())
-    )
+    // const camposFiltrados = campos.filter(c =>
+    //     c.nome.toLowerCase().includes(searchCampo.toLowerCase())
+    // )
 
     const getAgendamentos = async(id:string) => {
         const retrieveId = id
@@ -224,7 +222,7 @@ export const Agendar=()=>{
                 </select>
                 </div>
                 </div>
-                {camposFiltrados.map((campo:iCampos) => (
+                {campos.map((campo:iCampos) => (
                     
                     <div key={campo.id} className={style.fundoCampo}>
                     <div className={style.divCimaModal}>
@@ -232,7 +230,7 @@ export const Agendar=()=>{
                         <p><strong>{campo.nome}</strong></p>
                     </div>
                     <div className={style.divPrecoCampo}>
-                        <p><strong>R${campo.valor}</strong> </p>
+                        <p><strong>R${campo.valor / 100}</strong> </p>
                     
                     </div>
                     </div>
@@ -290,9 +288,9 @@ const ModalAviso = () => {
         console.log(optionChecked)
         if(optionChecked==="1"){
             setOpenCalendar(true)
-            // setOpenPreco(false)
+         
         }else{
-            // setOpenPreco(true)
+         
             setOpenCalendar(false)
         }
      
@@ -448,18 +446,6 @@ const getHorarios = async () => {
   }
 }
 
-// useEffect(() => {
-//     if(campoId && diaDaSemana){
-//         let toastId: string | number | undefined
-//         if(loadingHorarios === true){
-//             toastId = toast.loading("Consultando horários...")
-//         }
-//         else{
-//             toast.success("Consultado com sucesso!")
-//         }
-//         if (toastId) toast.dismiss(toastId)
-//     }
-// }, [loadingHorarios])
 
 const diaDaSemanaFormatada=(dia:string)=>{
     const date = new Date(dia)
@@ -493,12 +479,12 @@ useEffect(() => {
       console.log(agendamentos,"agendamentos")
       for (let i = inicio; i < fim; i++) {
         console.log(horario.agendamentos,"agenda")
-        // if(horario.agendamentos.includes({campos: campoId}, diaDaSemana))
+        
         if(!agendamentos.includes(`${i}:00`)){
 
             list.push(`${i}:00`)
         }
-          //agendamentos.includes()
+          
 
         }
     })
@@ -534,7 +520,7 @@ useEffect(() => {
 
     const Agendar = async(agendamentoData:iAgendamento) => {
         try{
-            // if(agendamentoData.camposId === campoId && )
+            
             const dataFormatada = agendamentoData.data.split("-").reverse().join("/")
             const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada}
             const res = await apiController.post("/agendamentos", {...agendamentoDataNovo, status: "ativo"} )
@@ -628,8 +614,9 @@ useEffect(() => {
 )}
         </div>
         </div>
-        <div className={style.divBtnAgendar}>
+        <div className={style.divBtnsForm}>
             <button className={style.btnAgendar} type="submit">Agendar</button>
+            <button className={style.btnLimpar} type="reset">Limpar</button>
             </div>
         </form>
 

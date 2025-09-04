@@ -185,7 +185,7 @@ h3{
     border-radius: 20px;
     color: white;
 }
-.divBtnAgendar{
+.divBtnsForm{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -200,7 +200,14 @@ h3{
     border-radius: 20px;
     color: white;
 }
-
+.btnLimpar{
+    background-color: #0088ff;
+    height: 38px;
+    border: none;
+    width: 40%;
+    border-radius: 20px;
+    color: white;
+}
 .divVisualizar{
     display: flex;
     flex-direction: column;
@@ -251,15 +258,20 @@ button{
     background-color: #d4d4dc;
     text-align: center;
 }
-.modalInfo{
-    padding: 12px;
-    display: flex;
-    width: 75%;
-    border-radius: 0 0 10px 10px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-    background-color: #d4d4dc;
-    text-align: center;
+.modalInfo {
+  padding: 12px;
+  display: flex;
+  overflow: auto;
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+  border-radius: 0 0 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
+    rgba(0, 0, 0, 0.22) 0px 15px 12px;
+  background-color: #d4d4dc;
+  text-align: center;
 }
+
 .modalAviso{
     padding: 12px;
     display: flex;
@@ -286,7 +298,7 @@ button{
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-.tituloModalCampos, .tituloModalInfoCampos, .tituloModalVisualizar{
+.tituloModalCampos, .tituloModalVisualizar{
     position: relative;
     display: flex;
     justify-content: space-between;
@@ -297,6 +309,18 @@ button{
     padding: 18px;
     z-index: 3;
     text-align: center;
+}
+.tituloModalInfoCampos{
+       position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d1cfcf;
+    border-radius: 10px 10px 0 0;
+    width: 50%;
+    padding: 18px;
+    z-index: 3;
+    text-align: center; 
 }
 .btnFecharModal{
     display: flex;
@@ -370,13 +394,13 @@ button{
     border-radius: 10px;    
     padding: 8px;
 }
-.infoEsquerda{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    gap: 20px;
-    text-align: center;
-    align-items: center;
+.infoEsquerda {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 20px;
+  text-align: center;
+  align-items: center;
 }
 .divImagensCampo{
     display: flex;
@@ -390,27 +414,27 @@ button{
 .divImagensCampo img{
     border-radius: 10px;
 }
-.divEnderecoCampo, .divDescricaoCampo{
-    min-height: 20%;
-    min-width: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+.divEnderecoCampo,
+.divDescricaoCampo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
-.divEnderecoCampo h2, .divDescricaoCampo h2{
-    text-align: left;
+.divEnderecoCampo h2,
+.divDescricaoCampo h2 {
+  text-align: left;
 }
 
-
-
-.descricaoCampo, .enderecoCampo{
-    background-color: #333333;
-    color: #348648;
-    height: 100%;
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-    overflow: auto;
+.descricaoCampo,
+.enderecoCampo {
+  background-color: rgba(34, 34, 34, 0.9);
+  color: #348648;    
+  border-radius: 10px;
+  min-width: 300px;
+  padding: 12px;
+  word-wrap: break-word;
+  text-align: center;
+  overflow: auto;
 }
 .contatoCampo{
     width: 50%;
@@ -439,11 +463,37 @@ button{
     gap: 14px;
     margin: 10px 0 0 0
 }
+
+@media(max-width: 1270px){
+    .modalInfo{
+        width: 70%;
+    }
+    .tituloModalInfoCampos{
+        width: 70%;
+    }
+}
+
+@media(max-width: 925px){
+    .modalInfo{
+        width: 70%;
+        flex-direction: column-reverse;
+    }
+    .tituloModalInfoCampos{
+        width: 70%;
+    }
+}
+
+
 @media(max-width: 580px){
-   .modal, .modalAviso, .modalInfo{
+   .modal, .modalAviso{
     height: 50%;
     width: 70%;
    } 
+   .modalInfo{
+    max-height: 70%;
+    max-width: 70%;
+    overflow: auto;
+   }
 }
 @media(max-width: 230px){
     .modal, .modalAviso, .modalInfo{

@@ -37,7 +37,10 @@ export const Controle = () => {
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
   const [status, setStatus] = useState("ativo")
-  const [offset, setOffset] = useState(1)
+  const [offset, setOffset] = useState(0)
+  const [total, setTotal] = useState(0);
+  const [buttonVoltarDisabled, setButtonVoltarDisabled] = useState(false)
+  const [isHiddenBtnVoltar, setIsHiddenBtnVoltar] = useState(false)
 
   const {
     register,
@@ -54,8 +57,9 @@ export const Controle = () => {
   });
 
   const getCampos = async () => {
-    const campos = await apiController.get("/campos");
-    setCampos(campos);
+    const campos = await apiController.get(`/campos?offset=${offset}&limit=5`);
+    setCampos(campos.data);
+    setTotal(campos.total);
   };
 
   const atualizarStatus = async(campoData:iCampos) => {
@@ -98,9 +102,9 @@ export const Controle = () => {
     getCampos();
   }, []);
 
-  // useEffect(() => {
-  //   getCampos();
-  // }, [campos]);
+  useEffect(() => {
+    getCampos();
+  }, [offset]);
 
   useEffect(() => {
     if (campoId) getCampoInfo();
@@ -120,9 +124,9 @@ export const Controle = () => {
   };
 
   const atualizarCampo = async (campoData: iAtualizarCampos) => {
-    console.log(campoData, "cmData", String(offset));
+    console.log(campoData, "cmData");
     try {
-      const res = await apiController.patch(`/campos/${campoId}?offset=${offset}&limit=5`, campoData);
+      const res = await apiController.patch(`/campos/${campoId}`, campoData);
       console.log(res, "res");
       if (res) {
         toastbar.success("Campo atualizado com sucesso!");
@@ -140,10 +144,6 @@ export const Controle = () => {
   
   };
 
-  // const desativarCampo = async(id:number) => {
-  //   setCampoId(id)
-  //   const campo = await apiController.patch(`/campos/${id}`, )
-  // }
   const clickEditarPencil = async (id: number) => {
     setCampoId(id);
     const campo = await apiController.get(`/campos/${id}`);
@@ -169,11 +169,20 @@ export const Controle = () => {
   };
 
  const paginacaoUp = () => {
-  setCampoId(offset+offset * 5)
+   if (offset + 5 < total) {
+  setOffset((offset + 5) )
+  setButtonVoltarDisabled(false)
+  setIsHiddenBtnVoltar(false)
+   }
  }
 
   const paginacaoDown = () => {
-    const offsetDown = offset - offset
+    if(offset > 0){
+      setOffset(Math.max(offset - 5, 0))
+    }else{
+      setButtonVoltarDisabled(true)
+      setIsHiddenBtnVoltar(true)
+    }
   }
 
   interface ModalInfoProps {
@@ -399,7 +408,7 @@ export const Controle = () => {
       {isOpenAddCampo && (
         <OpenModalAddCampo
           isOpen={isOpenAddCampo}
-          onClose={() => setIsOpenAddCampo(false)}
+          onClose={() => (setIsOpenAddCampo(false), getCampos())}
         />
       )}
       <div className={style.controleDosCampos}>
@@ -452,6 +461,12 @@ export const Controle = () => {
             </div>
           ))}
         </div>
+   
+        <div className={style.divButtonsPaginacao}>
+        <button hidden={isHiddenBtnVoltar} className={style.buttonVoltar} disabled={buttonVoltarDisabled} onClick={paginacaoDown}>Voltar</button>
+        <button className={style.buttonAvancar} onClick={paginacaoUp}>Avançar</button>
+        </div>
+   
         <button
           onClick={() => setIsOpenAddCampo(true)}
           className={style.adicionar}

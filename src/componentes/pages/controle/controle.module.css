@@ -265,8 +265,28 @@ html {
   text-align: center;
 }
 
+.divButtonsPaginacao{
+  display: flex;
+  gap: 18px; 
+}
+.buttonVoltar{
+  font-size: 18px; 
+  padding: 6px;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(231, 63, 63);
+  color: white
+}
+.buttonAvancar{
+  font-size: 18px; 
+  padding: 6px;
+  border: none;
+  border-radius: 10px;
+  background-color: #348648;
+  color: white;
+}
 .load {
-  /* animation: load 1s ease; */
+  animation: load 1s ease;
 }
 @keyframes load {
   0% {
