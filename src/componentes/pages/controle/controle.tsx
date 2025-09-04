@@ -37,6 +37,7 @@ export const Controle = () => {
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
   const [status, setStatus] = useState("ativo")
+  const [offset, setOffset] = useState(1)
 
   const {
     register,
@@ -119,9 +120,9 @@ export const Controle = () => {
   };
 
   const atualizarCampo = async (campoData: iAtualizarCampos) => {
-    console.log(campoData, "cmData");
+    console.log(campoData, "cmData", String(offset));
     try {
-      const res = await apiController.patch(`/campos/${campoId}`, campoData);
+      const res = await apiController.patch(`/campos/${campoId}?offset=${offset}&limit=5`, campoData);
       console.log(res, "res");
       if (res) {
         toastbar.success("Campo atualizado com sucesso!");
@@ -167,13 +168,12 @@ export const Controle = () => {
     }
   };
 
-  const editImageFalse = () => {
-    setIsEditingImage(false)
-    setPreview(null)
-  }
+ const paginacaoUp = () => {
+  setCampoId(offset+offset * 5)
+ }
 
-  const editImageTrue = () => {
-  setIsEditingImage(true)
+  const paginacaoDown = () => {
+    const offsetDown = offset - offset
   }
 
   interface ModalInfoProps {
