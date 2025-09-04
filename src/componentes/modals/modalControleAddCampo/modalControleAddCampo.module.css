@@ -47,6 +47,22 @@
     max-height: 600px;
     overflow: auto;
 }
+.inputImage{
+    display: none;
+}
+.labelImage{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.divImagemText{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+ 
+}
+.formAddCampo h3{
+    color: black;
+}
 .btnSalvar:hover {
     background: #43a047;        
 }

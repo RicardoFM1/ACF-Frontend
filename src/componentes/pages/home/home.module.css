@@ -6,11 +6,20 @@
 html {
   scroll-behavior: smooth;
 }
+.divLogo{
+    display: flex;
+    align-items: center;
+}
+.imageLogo{
+    width: 80px;
+    object-fit: cover;
+    height: 80px;
+}
 .header{
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 32px;
+    padding: 18px;
     color: white;
 }
 .linkCadastro, .linkAgenda{
@@ -67,8 +76,14 @@ html {
     backdrop-filter: blur(5px);
     padding: 24px;
     border-radius: 10px;
-
 }
+@media (max-width:900px){
+    .conteudoPrinHome{
+        width: 70%;
+    }
+}
+    
+
 .conteudoPrinHome p{
     color: white;
 }
@@ -116,7 +131,9 @@ html {
     padding: 24px;
     border-radius: 10px;
     background-color: #17172e;
+    flex-wrap: wrap;
 }
+
 .conteudoSecunHome p{
     color: white;
 }
@@ -146,13 +163,19 @@ html {
 }
 .imgCampo{
     height: 400px;
-    width: 30%;
+    min-width: 30%;
     border-radius: 4px;
+}
+@media(max-width:964px){
+    .txtContSec{
+        width: 80%;
+    }
 }
 .footerDiv2{
     display: flex;
     flex-direction: row;
     gap: 24px;
+
 }
 .footerDiv3{
     display: flex;
@@ -264,7 +287,7 @@ html {
     }
 }
 .load{
-    animation: loading 1s ease ;
+    animation: loading 1s ease;
 }
 @keyframes loading {
     0%{

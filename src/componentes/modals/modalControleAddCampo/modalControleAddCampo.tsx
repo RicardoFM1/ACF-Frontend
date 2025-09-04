@@ -108,12 +108,17 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
             <span className={style.errorMsg}>{errors.descricao?.message}</span>
 
             <div className={style.imagemCampoAdd}>
+              <div className={style.divImagemText}>
+
               <h3 className={style.imagemAdd}>Imagem:</h3>
+              <label className={style.labelImage} htmlFor="inputImage">Escolher uma imagem</label>
+              </div>
               <input
                 type="file"
                 accept="image/*"
                 onChange={handleFileChange}
-                className={style.input}
+                className={style.inputImage}
+                id="inputImage"
               />
               {preview && (
                 <img

@@ -31,6 +31,8 @@ export const Controle = () => {
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
   const [isEditingEndereco, setIsEditingEndereco] = useState(false);
   const [isEditingDescricao, setIsEditingDescricao] = useState(false);
+  const [isEditingImage, setIsEditingImage] = useState(false);
+  const [preview, setPreview] = useState<string | null>(null);
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
@@ -59,8 +61,10 @@ export const Controle = () => {
     
     if(status === "ativo"){
       setStatus("inativo")
+      campoData.status = "inativo"
     }else{
       setStatus("ativo")
+         campoData.status = "ativo"
     }
     console.log(status)
     try{
@@ -93,9 +97,9 @@ export const Controle = () => {
     getCampos();
   }, []);
 
-  useEffect(() => {
-    getCampos();
-  }, [campos]);
+  // useEffect(() => {
+  //   getCampos();
+  // }, [campos]);
 
   useEffect(() => {
     if (campoId) getCampoInfo();
@@ -108,6 +112,9 @@ export const Controle = () => {
     if (campo) {
       setInfoCampo(campo);
       setModalInfoOpen(true);
+      setIsEditingDescricao(false);
+      setIsEditingEndereco(false);
+      setIsEditingImage(false)
     }
   };
 
@@ -119,6 +126,7 @@ export const Controle = () => {
       if (res) {
         toastbar.success("Campo atualizado com sucesso!");
         await getCampos();
+        setModalInfoOpen(false)
       
       }
     } catch (error: any) {
@@ -128,6 +136,7 @@ export const Controle = () => {
       );
     }
     console.log("chamado");
+  
   };
 
   // const desativarCampo = async(id:number) => {
@@ -142,6 +151,30 @@ export const Controle = () => {
       setIsOpenEditarCampo(true);
     }
   };
+
+  
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setValue("imagem", base64); 
+        setPreview(base64); 
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const editImageFalse = () => {
+    setIsEditingImage(false)
+    setPreview(null)
+  }
+
+  const editImageTrue = () => {
+  setIsEditingImage(true)
+  }
 
   interface ModalInfoProps {
     isOpen: boolean;
@@ -206,7 +239,7 @@ export const Controle = () => {
                 <h2>Endereço</h2>
                 <div className={style.caixaEndereco}>
                   {isEditingEndereco ? (
-                    <textarea {...register("endereco")} rows={6} cols={50} />
+                    <textarea maxLength={255} {...register("endereco")} rows={6} cols={50} />
                   ) : (
                     <p className={style.enderecoCampo}>{infoCampo.endereco}</p>
                   )}
@@ -231,7 +264,7 @@ export const Controle = () => {
                 <h2>Descrição</h2>
                 <div className={style.caixaDescricao}>
                   {isEditingDescricao ? (
-                    <textarea {...register("descricao")} rows={6} cols={50} />
+                    <textarea maxLength={255} {...register("descricao")} rows={6} cols={50} />
                   ) : (
                     <p className={style.descricaoCampo}>
                       {infoCampo.descricao}
@@ -256,26 +289,49 @@ export const Controle = () => {
                 </div>
               </div>
 
-              <div className={style.contatoCampo}>
-                <p>
-                  Caso não tenha encontrado uma informação que deseja aqui,
-                  entre em contato conosco
-                </p>
-              </div>
+              
             </div>
 
             <div className={style.divImagensCampo}>
-              <h2>Fotos do campo</h2>
+              <h2>Foto do campo</h2>
               <div className={style.caixaFoto1}>
-                {infoCampo.imagem && (
+                {isEditingImage ? 
+              
+                <>
+                <div className={style.divImage}>
+                <label className={style.labelImage} htmlFor="inputImage">Escolher uma imagem</label>
+                <input
+                {...register("imagem")}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className={style.inputImage}
+                    id="inputImage" />
+                    
+                    {preview && (
+                <img
+                  src={preview}
+                  alt="Pré-visualização"
+                  style={{ marginTop: "10px", maxHeight: "120px" }}
+                />
+                
+              )}
+              </div>
+              </>
+
+              : infoCampo.imagem && (
                   <img
                     src={`${infoCampo.imagem}`}
                     alt="Imagem do campo"
                     className={style.imagemPreview}
                   />
                 )}
+                
+          
+            <span className={style.errorMsg}>{errors.imagem?.message}</span>
+                
                 <div className={style.divIcon}>
-                  <button className={style.btnEditarPencil} type="button">
+                  <button onClick={() => isEditingImage === false ? (setIsEditingImage(true)) : (setIsEditingImage(false),setPreview(null)) } className={style.btnEditarPencil} type="button">
                     <Iconify
                       height={24}
                       width={24}
@@ -284,29 +340,13 @@ export const Controle = () => {
                     />
                   </button>
                 </div>
+                
               </div>
-              <div className={style.caixaFoto2}>
-                {infoCampo.imagem && (
-                  <img
-                    src={`${infoCampo.imagem}`}
-                    alt="Imagem do campo"
-                    className={style.imagemPreview}
-                  />
-                )}
-                <div className={style.divIcon}>
-                  <button className={style.btnEditarPencil} type="button">
-                    <Iconify
-                      height={24}
-                      width={24}
-                      className={style.iconLapis}
-                      icon="raphael:pensil"
-                    />
-                  </button>
-                </div>
-              </div>
+              <div className={style.divBtnSalvar}>
               <button type="submit" className={style.btnSalvar}>
                 Salvar
               </button>
+              </div>
             </div>
           </form>
         </div>
@@ -364,7 +404,7 @@ export const Controle = () => {
       )}
       <div className={style.controleDosCampos}>
         <div className={style.campos}>
-          <h3>O que deseja controlar?</h3>
+          <h3 className={style.oqueDeseja}>O que deseja controlar?</h3>
           {}
           {campos.map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
@@ -383,7 +423,23 @@ export const Controle = () => {
                   </button>
                 </div>
               <div className={style.icons}>
-                <Iconify color={"white"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+          
+                {campo.status == "inativo" ? 
+                
+              <>
+              <p>Ativo</p>
+        
+                <Iconify color={"green"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+                  
+              </>
+                
+                :
+                <>
+                <p>Inativo</p>
+                <Iconify color={"red"} className={style.iconDesativar} onClick={() => atualizarStatus(campo)} icon="el:off" />
+                </>
+                }
+
                 <Iconify
                 color={"white"}
                   className={style.iconPencil}
