@@ -47,7 +47,7 @@ body{
     border: none;
     height: 30px;
     border-radius: 15px;
-    width: 80%;
+    width: 92%;
 }
 .inputAgendar{
    padding: 28px;
@@ -64,6 +64,7 @@ body{
     border: none;
     padding: 28px;
     font-size: 14px;
+    width: 92%;
 }
 .inputCampoNome::placeholder{
     color: rgb(0, 0, 0);
@@ -78,6 +79,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 .divCampoForm, .divDataForm{
     display: flex;
@@ -87,10 +89,14 @@ body{
     margin: 24px;
 }
 
+.divDataForm{
+    flex-direction: column;
+    gap:32px
+}
 .h2Agendamento{
-  margin: 90px 0 90px 25px;
+  margin: 12px;
   color: white;
-  font-size: 48px;
+  font-size: 32px;
 }
 h3{
     font-weight: 500;
@@ -99,9 +105,6 @@ h3{
 @media(max-width:866px){
     .divDataForm{
         flex-direction: column;
-    }
-    .divEscolhaHorario{
-        margin-top: 32px;
     }
     .divEscolhaCampo{
         min-width: 100%;
@@ -113,7 +116,7 @@ h3{
         min-width: 100%;
     }
     .inputAgendar{
-        width:80% ;
+        width:92% ;
     }
     .formAgendamento{
         align-items: center;
@@ -156,13 +159,13 @@ h3{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 60%;
+    width: 100%;
 }
 .divEscolhaData{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width: 55%;
+    width: 100%;
 }
 .divEscolhaHorario{
     display: flex;
@@ -174,7 +177,7 @@ h3{
     color: #0088ff;
     width: 65px;
     border: 1px solid black;
-    width: 70%;
+    width: 92%;
     padding: 4px 6px 4px 6px;
     border-radius: 12px;
 }
@@ -191,6 +194,14 @@ h3{
     justify-content: center;
     gap: 8px;
     width: 100%;
+}
+@media(max-width:420px){
+    .divBtnsForm{
+        flex-direction: column-reverse;
+    }
+    .btnLimpar{
+        min-width: 100%;
+    }
 }
 .btnAgendar{
     background-color: #0088ff;
@@ -475,6 +486,8 @@ button{
     width: 100%;
     height: 100%;
     display: flex;
+    gap: 10px;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -487,4 +500,18 @@ button{
     background: #17172e;
     padding: 24px;
     border-radius: 20px;
+}
+.elementoSeparado{
+    width: 50vw;
+    padding: 8px;
+    background-color: #17172e;
+    border-radius:  10px;
+}
+@media(max-width:866px){
+    .elementoSeparado{
+        width: 80%;
+    }
+    .h2Agendamento{
+        font-size: 28px;
+    }
 }
