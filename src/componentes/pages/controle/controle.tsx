@@ -41,6 +41,7 @@ export const Controle = () => {
   const [total, setTotal] = useState(0);
   const [buttonVoltarDisabled, setButtonVoltarDisabled] = useState(false)
   const [isHiddenBtnVoltar, setIsHiddenBtnVoltar] = useState(false)
+  const [search, setSearch] = useState("")
 
   const {
     register,
@@ -413,9 +414,22 @@ export const Controle = () => {
       )}
       <div className={style.controleDosCampos}>
         <div className={style.campos}>
+         
           <h3 className={style.oqueDeseja}>O que deseja controlar?</h3>
+          <div className={style.divPesquisa}>
+          <label className={style.labelInput} htmlFor="pesquisa">Pesquisar:</label>
+          <input className={style.inputPesquisa}
+          id="pesquisa"
+          type="search"
+          placeholder="Pesquise um campo..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)} 
+           />
+          </div>
+         
           {}
-          {campos.map((campo) => (
+          {campos.filter((campo) => campo.nome.toLowerCase().includes(search.toLowerCase()))
+          .map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
               <div className={style.campo}>
                 <div className={style.parteCimaCampo}>

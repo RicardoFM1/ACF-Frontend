@@ -128,7 +128,7 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
                 />
               )}
             </div>
-            <span className={style.errorMsg}>{errors.imagem?.message}</span>
+            
 
             <div className={style.precoCampoAdd}>
               <h3 className={style.precoAdd}>Preço:</h3>

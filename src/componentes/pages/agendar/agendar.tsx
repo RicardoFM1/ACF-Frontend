@@ -1,13 +1,15 @@
-import { Link, useAsyncError, useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import style from "./agendar.module.css"
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { apiController } from "../../../controller/api.controller"
 import { Iconify } from "../../iconify/iconify"
 import { useForm } from "react-hook-form"
 import { createAgendamentoSchema, type iAgendamento, type iReturnAgendamento } from "../../../schemas/agendamento.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toastbar } from "../../utility/tokenUtility"
-import { toast } from "react-toastify"
+import { OpenModalCampos } from "../../modals/modalAgendaCamposDisponiveis/modalCamposDisponiveis"
+import { OpenModalVisualizar } from "../../modals/modalMeusAgendamentos/modalMeusAgendamentos"
+
 
 
 
@@ -65,11 +67,7 @@ export const Agendar=()=>{
 
     const [campos, setCampos] = useState([] as iCampos[])
     const [horarios, setHorarios] = useState([] as iHorario[])
-    const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
-    // const [searchAgendamento, setSearchAgendamento] = useState("")
-    const [searchCampo, setSearchCampo] = useState("")
     const [modalCamposOpen, setModalCamposOpen] = useState(false)
-    const [modalInfoOpen, setModalInfoOpen] = useState(false)
     const [campoId, setCampoId] = useState<number | null>(null)
     const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
@@ -79,18 +77,12 @@ export const Agendar=()=>{
     const [horarioInicial, setHorarioInicial] = useState<number | null>()
     const [horarioFinal, setHorarioFinal] = useState<number | null>()
     const [listaHorarios, setListaHorarios] = useState<string[]>([])
-    const [openCalendar, setOpenCalendar] = useState(false)
-    const options= [{
-        id:1,name:"Data"},
-        {
-        id:2,name:"Preço"
-    }]
-
+    
+    
     const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
         console.log(retrieve,"retrive")
         setRetrieve(retrieve)
-        await getAgendamentos(retrieve.id)
         await getCampos(retrieve)
     } 
 
@@ -105,66 +97,10 @@ export const Agendar=()=>{
         }
     }
 
-    // const camposFiltrados = campos.filter(c =>
-    //     c.nome.toLowerCase().includes(searchCampo.toLowerCase())
-    // )
-
-    const getAgendamentos = async(id:string) => {
-        const retrieveId = id
-        const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
-        setAgendamentos(agendamentos)
-    }
-
-    // const filtrarAgendamentos = () => {
-    //     const agendamentosFiltrados = agendamentos.filter(a =>
-    //         a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
-    //     )
-    //     setAgendamentos(agendamentosFiltrados)
-
-    // }
-    // setAgendamentos(agendamentosFiltrados)
     const fecharModalAviso = () => {
         setModalAvisoOpen(false)
         getCampos(retrieve)
     }
-
-    const fecharModalVisualizar = () => {
-        setmodalVisualizarOpen(false)
-    }
-
-    const fecharModal = () => {
-        setModalCamposOpen(false)
-        getCampos(retrieve)
-    }
- 
-    const getCamposInfo = async() => {
-        if(campoId){
-            const campo = await apiController.get(`/campos/${campoId}`)
-            
-            if(campo){
-                setInfoCampo(campo)
-                console.log(campo)
-                setValue("camposId",campoId)
-            }
-           
-            
-        }
-
-    }
-    const clickInformacoes = (id:number) => {
-        setModalInfoOpen(true)
-        setCampoId(id)
-    }
-
-    const clickSelecionar = (id:number) => {
-        setModalCamposOpen(false)
-        setCampoId(id)
-    }
-    useEffect(() => {
-        console.log(campoId)
-        getCamposInfo()
-    }, [campoId])
-    
     useEffect(() =>{
             const token = localStorage.getItem("token")
             if(!token){
@@ -178,80 +114,6 @@ export const Agendar=()=>{
      useEffect(() => {
         console.log(infoCampo)
     }, [infoCampo])
-
-  
-
-
-//    const filtrarAgendamentos = (search:string) => {
-//     setSearchAgendamento(search)
-//     const agendamentosFiltrados = agendamentos.filter(a =>
-//             a.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
-//         )
-//         setAgendamentos(agendamentosFiltrados)
-//    }
-    
-     const OpenModalCampos = () => {
-        if(modalCamposOpen){
-           
-
-               
-               return <>
-            <div className={style.fundoModal}> 
-                <div className={style.tituloModalCampos}>
-                    <h2>Campos disponíveis</h2>
-                    <div className={style.divBtnFecharModal}>
-                    <button className={style.btnFecharModal} onClick={fecharModal}>X</button>
-                    </div>
-                </div>
-                <div className={style.modal}>
-                <div className={style.divPesquisa}>
-                <input 
-                id="idPesquisaCampo" 
-                value={searchCampo} 
-                onChange={(e) =>setSearchCampo(e.target.value)}
-                className={style.inputSearch} 
-                type="search" 
-                placeholder="Pesquise um campo" />
-                <div className={style.divFiltro}>
-                <p>Filtrar</p>
-                <select className={style.selectFiltro} name="filtroCampoName" id="filtroCampo">
-                    
-                    <option value="">Data</option>
-                    <option value="">Horario</option>
-                    <option value="">Preço</option>
-                </select>
-                </div>
-                </div>
-                {campos.map((campo:iCampos) => (
-                    
-                    <div key={campo.id} className={style.fundoCampo}>
-                    <div className={style.divCimaModal}>
-                    <div className={style.divNomeCampo}>
-                        <p><strong>{campo.nome}</strong></p>
-                    </div>
-                    <div className={style.divPrecoCampo}>
-                        <p><strong>R${campo.valor / 100}</strong> </p>
-                    
-                    </div>
-                    </div>
-                    <div className={style.divBtnsModalCampo}>
-                        <button onClick={() => clickSelecionar(campo.id)}  className={style.selecionar}>Selecionar</button>
-                        <button onClick={() => clickInformacoes(campo.id)}  className={style.maisInformacoes}>Mais informações</button>
-                    </div>
-                </div>
-            ))}
-                </div>
-
-            </div>
-            </>
-        
-    
-    }else{
-        return <></>
-    }
-    
-}
-
 
 const ModalAviso = () => {
         if(modalAvisoOpen){
@@ -283,142 +145,6 @@ const ModalAviso = () => {
         }
     }
 
-
-    const getOptionChecked = (optionChecked:string) => {
-        console.log(optionChecked)
-        if(optionChecked==="1"){
-            setOpenCalendar(true)
-         
-        }else{
-         
-            setOpenCalendar(false)
-        }
-     
-    } 
-
-    const OpenCalendarModal = () => {
-        if(openCalendar){
-            return <>
-            <p>teste</p>
-            </>
-        }
-    }
-
-
-    const OpenModalVisualizar = () => {
-        (openCalendar && <OpenCalendarModal />)
-        if(modalVisualizarOpen){
-    return <>
-        <div className={style.fundoModal}> 
-                <div className={style.tituloModalVisualizar}>
-                    <h2>Meus agendamentos</h2>
-                    <div className={style.divBtnFecharModal}>
-                    <button className={style.btnFecharModal} onClick={fecharModalVisualizar}>
-                        <Iconify icon="ic:baseline-close"/>
-                    </button>
-                    </div>
-                </div>
-                <div className={style.modal}>
-                <div className={style.divPesquisa}>
-                <input 
-                id="idPesquisaAgendamento" 
-                // value={searchAgendamento} 
-                // onChange={(e:any) => filtrarAgendamentos(e.target.value)}
-                className={style.inputSearch} 
-                placeholder="Pesquise um agendamento" />
-                <div className={style.divFiltro}>
-                <p>Filtrar</p>
-                <select  onChange={(e) => getOptionChecked(e.target.value) } className={style.selectFiltro} name="filtroAgendamentoName" id="filtroAgendamento">
-                   {options.map((option)=>{
-                    return <option id={String(option.id)} value={option.id}>
-                            {option.name}
-                    </option>
-                   })} 
-                
-                </select>
-
-                </div>
-                </div>
-                {agendamentos.map((agendamento:iReturnAgendamento) => (
-                    <div key={agendamento.id}>
-                    <div  className={style.fundoAgendamento}>
-                    <div className={style.divCimaModal}>
-                    <div className={style.divNomeCampo}>
-                        <p ><strong>{agendamento.campos.nome}</strong></p>
-                    </div>
-                    
-                    <div className={style.divDateTimeAgendamento}>
-                        
-                    <div className={style.agendamentoData}>
-                    <p><strong>{agendamento.data}</strong></p>
-                    </div>
-                    <div className={style.agendamentoHorario}>
-                    <p><strong>{agendamento.horario ? agendamento.horario : "N/A"}</strong></p>
-                    </div>
-                    </div>
-                    </div>
-                    <div className={style.divBtnsModalCampo}>
-                        <button onClick={() => clickInformacoes(agendamento.campos.id)}  className={style.maisInformacoes}>Mais informações</button>
-                        <div className={style.divPrecoCampo}>
-                        <p ><strong>R${agendamento.campos.valor}</strong></p>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            ))}
-                </div>
-
-            </div>
-            </>
-        
-    
-    }else{
-        return <></>
-    }
-    }
-
-    const OpenModalInfo = () => {
-        
-       
-        if(modalInfoOpen){
-            return <>
-            
-             <div className={style.fundoModal}> 
-            <div className={style.tituloModalInfoCampos}>
-                    <h2>Informações do campo</h2>
-                    <div className={style.divBtnFecharModal}>
-                    <button className={style.btnFecharModal} onClick={() => setModalInfoOpen(false)}>X</button>
-                    </div>
-                </div>
-                <div className={style.modalInfo}>
-                    <div className={style.infoEsquerda}>
-                    <div className={style.divEnderecoCampo}>
-                    <h2>Endereço</h2>
-                    <p className={style.enderecoCampo}>{infoCampo.endereco}</p>
-                    </div>
-                    <div className={style.divDescricaoCampo}>
-                        <h2>Descrição</h2>
-                        <p className={style.descricaoCampo}>{infoCampo.descricao}</p>
-                    </div>
-                    <div className={style.contatoCampo}>
-                        <p>Caso não tenha encontrado uma informação que deseja aqui,
-                            entre em contato conosco
-                        </p>
-                    </div>
-                    </div>
-                    <div className={style.divImagensCampo}>
-                        <h2>Foto do campo</h2>
-                        <img src={"/images/imageCampoFutebol.png"} alt="imagem do campo" />
-                    </div>
-                    
-                </div>
-                </div>
-            </>
-        }else{
-            return <></>
-        }
-    }
-
 const { register, handleSubmit, setValue, formState: { errors } } = useForm<iAgendamento>({
     resolver: zodResolver(createAgendamentoSchema),
     mode: "onBlur"
@@ -432,7 +158,7 @@ const getHorarios = async () => {
         `/horarios/${campoId}/${diaDaSemana}`
       ) 
     console.log(res,"horarios api")
-    if(res && res.length){
+    if(res && res.length > 0){
           setHorarios(res)
         toastbar.success("Horários disponíveis nesse dia e nesse campo!")
     }else{
@@ -464,6 +190,10 @@ const diaDaSemanaFormatada=(dia:string)=>{
 useEffect(() => {
 getHorarios()
 }, [])
+
+useEffect(() => {
+    console.log(campoId)
+}, [campoId])
 
 useEffect(() => {
   if (horarios.length > 0) {
@@ -500,12 +230,6 @@ useEffect(() => {
   
 }, [horarioInicial, horarioFinal])
 
-useEffect(() => {
-    if(infoCampo){
-        if(infoCampo.id) setValue("camposId", infoCampo.id);
-    }
-
-}, [infoCampo, setValue]);
 
 useEffect(() => {
     if(retrieve?.id) setValue("usuariosId", retrieve.id);
@@ -556,9 +280,15 @@ useEffect(() => {
             </div>
     </header>
 
-    {modalCamposOpen && <OpenModalCampos />}
-    {modalVisualizarOpen && <OpenModalVisualizar />}
-    {modalInfoOpen && <OpenModalInfo />}
+    {modalCamposOpen && <OpenModalCampos 
+    isOpen={modalCamposOpen} 
+    onClose={() => setModalCamposOpen(false)}
+    onSelectCampo={(id, infoCampo) => (setValue("camposId", id), setInfoCampo(infoCampo), setCampoId(id))}
+    />}
+    {modalVisualizarOpen && <OpenModalVisualizar 
+    isOpen={modalVisualizarOpen} 
+    onClose={() => setmodalVisualizarOpen(false)}
+    />}
     {modalAvisoOpen && <ModalAviso />}
 
     <main className={style.mainAgendamentos}>
@@ -574,7 +304,7 @@ useEffect(() => {
       <input {...register("camposId")} type="hidden" />
       <input {...register("usuariosId")} type="hidden" />
 
-        <button type="button" onClick={() => campos.length < 1 ? setModalAvisoOpen(true) : setModalCamposOpen(true)} 
+        <button type="button" onClick={() => campos.length > 1 ? setModalCamposOpen(true) : setModalAvisoOpen(true)} 
         className={style.btnEscolhaDoCampo}>Escolher um campo</button>
         {errors.camposId && errors.camposId && (
               <span className={style.errorMsg}>

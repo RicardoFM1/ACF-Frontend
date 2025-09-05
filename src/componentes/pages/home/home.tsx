@@ -147,7 +147,7 @@ const ModalAviso = () => {
             <div className={style.conteudoSecunHome}>
                 <div className={style.txtContSec}>
                     <h1>É simples e fácil</h1>
-                    <p><strong>cadastro</strong></p>
+                    <p><strong>Cadastro</strong></p>
                     <p>Você confirma o dia da semana, dia do mês, mes do ano e local, assim, podemos ter uma consulta mais detalhada sobre a sua reserva.</p>
                     <p>Nós iremos consultar sua reserva e então analisaremos ela, confirmando se temos uma reserva disponivel de acordo com as especificações solicitadas por você!</p>
                     <p>O acordo de pagamento é feito pessoalmente, possibilitando ser efetuado por: Pix, Cartão, Boleto, Fatura e muito mais.</p>

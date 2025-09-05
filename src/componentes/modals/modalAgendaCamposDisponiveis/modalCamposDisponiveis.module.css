@@ -1,0 +1,114 @@
+.fundoModal{
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(243, 243, 243, 0.685);
+    backdrop-filter: blur(5px);  
+}
+.tituloModalCampos{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d1cfcf;
+    border-radius: 10px 10px 0 0;
+    width: 75%;
+    padding: 18px;
+    z-index: 3;
+    text-align: center;
+}
+.btnFecharModal{
+    display: flex;
+    border: none;
+    background-color: #d1cfcf;
+    padding: 12px;
+    color: red;
+}
+.modal{
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto  ;
+    gap: 24px;
+    width: 75%;
+    max-width: 75%;
+    max-height: 60vh;
+    border-radius: 0 0 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    background-color: #d4d4dc;
+    text-align: center;
+}
+.divPesquisa{
+    display: flex;
+    gap: 20px;
+}
+.inputSearch{
+    width: 75%;
+    border-radius: 10px;
+}
+.divFiltro{
+    gap: 12px;
+    text-align: center;
+    justify-content: center;
+}
+.divFiltro p {
+    text-align: center;
+}
+.selectFiltro{
+    border-radius: 10px;
+    height: 25px;
+}
+.fundoCampo{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: url("/images/imageCampoFutebol.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center center;
+    padding: 12px;
+    text-align: center;
+    gap: 12px;
+}
+.divCimaModal{
+    display: flex;
+    justify-content: space-between;
+}
+.divNomeCampo, .agendamentoData, .agendamentoHorario{
+    background-color: #333333; 
+    border-radius: 10px;
+    padding: 4px 4px 0 4px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    height: 30px;
+}
+.divNomeCampo p, .agendamentoData p, .agendamentoHorario p{
+    color: #348648;
+}
+.divPrecoCampo{
+    background-color: #333333;
+    border-radius: 10px;
+    padding: 8px;
+}
+.divPrecoCampo p{
+    color: #348648
+}
+.divBtnsModalCampo{
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+.maisInformacoes, .selecionar{
+    border: none;
+    background-color: #0088ff;
+    color: white;
+    border-radius: 10px;    
+    padding: 8px;
+}
