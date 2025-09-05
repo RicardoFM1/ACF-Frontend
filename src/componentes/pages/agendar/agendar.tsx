@@ -292,8 +292,12 @@ useEffect(() => {
     {modalAvisoOpen && <ModalAviso />}
 
     <main className={style.mainAgendamentos}>
-        <div className={style.agendamentoFormularioDiv}>
+      <div className={style.elementoSeparado}>
     <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
+
+    </div>
+        <div className={style.agendamentoFormularioDiv}>
+    
     <div className={style.divPrincipalAgendamento}>
         <div className={style.divOne}> 
     <form className={style.formAgendamento} onSubmit={handleSubmit(Agendar)}>
