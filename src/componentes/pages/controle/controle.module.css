@@ -287,11 +287,11 @@ html {
   width: 50%;
 }
 .campoInformacoes {
-  display: flex;
-  width: 80%;
-  gap: 16px;
-  justify-content: flex-end;
-  align-items: flex-start;
+    display: flex;
+    width: 70%;
+    gap: 16px;
+    justify-content: flex-end;
+    align-items: flex-start;
 }
 .campoNome,
 .campoPreco {
