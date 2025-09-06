@@ -8,6 +8,18 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+.divHeaderDireita{
+  display: flex;
+  gap: 18px;
+}
+.btnGerenciarAgendamentos{
+    background-color: #0088ff;
+    padding: 12px;
+    border: none;
+    border-radius: 20px;
+    color: white;
+}
 .fundoModal {
   position: fixed;
   top: 0;

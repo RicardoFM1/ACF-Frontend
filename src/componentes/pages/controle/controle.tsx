@@ -13,6 +13,7 @@ import { toastbar } from "../../utility/tokenUtility";
 import { OpenModalEditarCampo } from "../../modals/modalControleEditarCampo/modalControleEditarCampo";
 import { ModalEditarHorarios } from "../../modals/modalControleEditarHorarios/modalControleEditarHorarios";
 import { OpenModalAddCampo } from "../../modals/modalControleAddCampo/modalControleAddCampo";
+import { OpenModalAgendamentos } from "../../modals/modalControleGerenciarAgendamentos/modalControlerGerenciarAgendamentos";
 
 export const Controle = () => {
   interface iCampos {
@@ -40,9 +41,9 @@ export const Controle = () => {
   const [offset, setOffset] = useState(0)
   const [total, setTotal] = useState(0);
   const [buttonVoltarDisabled, setButtonVoltarDisabled] = useState(false)
-  const [isHiddenBtnVoltar, setIsHiddenBtnVoltar] = useState(false)
   const [search, setSearch] = useState("")
   const [optionChecked, setOptionChecked] = useState("")
+  const [isOpenAgendamentos, setIsOpenAgendamentos] = useState(false)
 
   const {
     register,
@@ -175,7 +176,7 @@ export const Controle = () => {
    if (offset + 5 < total) {
   setOffset((offset + 5) )
   setButtonVoltarDisabled(false)
-  setIsHiddenBtnVoltar(false)
+
    }
  }
 
@@ -184,7 +185,7 @@ export const Controle = () => {
       setOffset(Math.max(offset - 5, 0))
     }else{
       setButtonVoltarDisabled(true)
-      setIsHiddenBtnVoltar(true)
+     
     }
   }
 
@@ -373,7 +374,10 @@ export const Controle = () => {
         <Link to="/admin" className={style.Linkvoltar}>
           Voltar
         </Link>
+        <div className={style.divHeaderDireita}>
+          <button onClick={() => setIsOpenAgendamentos(true)} className={style.btnGerenciarAgendamentos}>Gerenciar Agendamentos</button>
         <p>Controle</p>
+        </div>
       </header>
 
       <ModalInfo
@@ -412,6 +416,12 @@ export const Controle = () => {
         <OpenModalAddCampo
           isOpen={isOpenAddCampo}
           onClose={() => (setIsOpenAddCampo(false), getCampos())}
+        />
+      )}
+
+      {isOpenAgendamentos && (
+        <OpenModalAgendamentos isOpen={isOpenAgendamentos}
+        onClose={() => (setIsOpenAgendamentos(false), getCampos())}
         />
       )}
       <div className={style.controleDosCampos}>
