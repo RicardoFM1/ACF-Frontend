@@ -284,6 +284,10 @@ html {
   display: flex;
   gap: 18px; 
 }
+.selectFiltro{
+    border-radius: 10px;
+    height: 25px;
+}
 .buttonVoltar{
   font-size: 18px; 
   padding: 6px;
@@ -291,6 +295,10 @@ html {
   border-radius: 10px;
   background-color: rgb(231, 63, 63);
   color: white
+}
+.buttonVoltar:disabled{
+  background-color: rgb(111, 109, 109);
+  color: rgb(161, 161, 161);
 }
 .buttonAvancar{
   font-size: 18px; 

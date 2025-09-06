@@ -13,12 +13,8 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
     const [retrieve, setRetrieve] = useState<iUser|null>()
     const [modalInfoOpen, setModalInfoOpen] = useState(false);
     const [campoId, setCampoId] = useState<number | null>(null);
+    const [optionChecked, setOptionChecked] = useState("")
        
-const options= [{
-        id:1,name:"Data"},
-        {
-        id:2,name:"Preço"
-    }]
 
         const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
@@ -40,6 +36,7 @@ const options= [{
 
     useEffect(() =>{
         getRetrieve()
+        setOptionChecked("campo")
     }, [])
 
         if(isOpen){
@@ -60,33 +57,66 @@ const options= [{
                 </div>
                 <div className={style.modal}>
                 <div className={style.divPesquisa}>
+                {optionChecked === "campo" ? 
                 <input 
                 id="idPesquisaAgendamento" 
                 value={searchAgendamento} 
                 onChange={(e:any) => setSearchAgendamento(e.target.value)}
                 className={style.inputSearch} 
-                placeholder="Pesquise um agendamento" />
+                placeholder="Pesquise um agendamento (por nome do campo)" />
+                :
+                optionChecked ==="preco" ?
+                <input 
+                id="idPesquisaAgendamento" 
+                value={searchAgendamento} 
+                onChange={(e:any) => setSearchAgendamento(e.target.value)}
+                className={style.inputSearch} 
+                type="text"
+                placeholder="Pesquise um agendamento (por preço)" />
+                :
+                <input 
+                id="idPesquisaAgendamento" 
+                value={searchAgendamento} 
+                onChange={(e:any) => setSearchAgendamento(e.target.value)}
+                className={style.inputSearch} 
+                type="date"
+                placeholder="Pesquise um agendamento (por data)" />
+                }
+                
+
                 <div className={style.divFiltro}>
                 <p>Filtrar</p>
-                <select  className={style.selectFiltro} name="filtroAgendamentoName" id="filtroAgendamento">
-                   {options.map((option)=>{
-                    return <option id={String(option.id)} value={option.id}>
-                            {option.name}
-                    </option>
-                   })} 
-                
+                <select onChange={(e) => setOptionChecked(e.target.value)} 
+                className={style.selectFiltro} 
+                name="filtroAgendamentoName" 
+                id="filtroAgendamento">
+                   <option value="campo">Campo</option>
+                   <option value="data">Data</option>
+                   <option value="preco">Preço</option>
+
                 </select>
 
                 </div>
                 </div>
-                {agendamentos.filter((agendamento) => agendamento.campos.nome.toLowerCase().includes
-                (searchAgendamento.toLowerCase()))
+                {agendamentos.filter((agendamento) =>{
+
+                    if(optionChecked === "campo"){
+                    return agendamento.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
+                    }
+                    if(optionChecked === "data"){
+                        return agendamento.data.toLowerCase().includes(searchAgendamento.toLowerCase())
+                    }
+                    else{
+                        return String(agendamento.campos.valor).includes(searchAgendamento)
+                    }
+                }
+                )
                 .map((agendamento:iReturnAgendamento) => (
                     <div key={agendamento.id}>
                     <div  className={style.fundoAgendamento}>
                     <div className={style.divCimaModal}>
                     <div className={style.divNomeCampo}>
-                        <p ><strong>{agendamento.campos.nome}</strong></p>
+                        <p><strong>{agendamento.campos.nome}</strong></p>
                     </div>
                     
                     <div className={style.divDateTimeAgendamento}>

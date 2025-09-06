@@ -42,6 +42,7 @@ export const Controle = () => {
   const [buttonVoltarDisabled, setButtonVoltarDisabled] = useState(false)
   const [isHiddenBtnVoltar, setIsHiddenBtnVoltar] = useState(false)
   const [search, setSearch] = useState("")
+  const [optionChecked, setOptionChecked] = useState("")
 
   const {
     register,
@@ -101,6 +102,7 @@ export const Controle = () => {
 
   useEffect(() => {
     getCampos();
+    setOptionChecked("")
   }, []);
 
   useEffect(() => {
@@ -418,17 +420,54 @@ export const Controle = () => {
           <h3 className={style.oqueDeseja}>O que deseja controlar?</h3>
           <div className={style.divPesquisa}>
           <label className={style.labelInput} htmlFor="pesquisa">Pesquisar:</label>
-          <input className={style.inputPesquisa}
-          id="pesquisa"
-          type="search"
-          placeholder="Pesquise um campo..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)} 
-           />
+          
+           {optionChecked === "nome" || optionChecked==='' ?
+               <input
+                id="idPesquisaCampo"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className={style.inputPesquisa}
+                type="search"
+                placeholder="Pesquise um campo (por nome)"
+               
+
+              />
+            : <input
+                id="idPesquisaCampo"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className={style.inputPesquisa}
+                type="search"
+                placeholder="Pesquise um campo (por preço)"
+              />
+            }
+             
+              <div className={style.divFiltro}>
+                <p>Filtrar</p>
+            
+                <select
+                  className={style.selectFiltro}
+                  name="filtroCampoName"
+                  id="filtroCampo"
+                  onChange={(e) => setOptionChecked(e.target.value)}
+                >
+                  <option value="nome">Nome</option>
+                  <option value="preco">Preço</option>
+                </select>
+              </div>
           </div>
          
           {}
-          {campos.filter((campo) => campo.nome.toLowerCase().includes(search.toLowerCase()))
+          {campos.filter((campo) =>{
+                if(optionChecked === "nome"){
+                  return campo.nome.toLowerCase().includes(search.toLowerCase())
+
+                }else{
+                   return String(campo.valor).includes(search)
+                }
+              }
+                
+              )
           .map((campo) => (
             <div className={style.caixaCampo} key={campo.id}>
               <div className={style.campo}>
@@ -477,7 +516,7 @@ export const Controle = () => {
         </div>
    
         <div className={style.divButtonsPaginacao}>
-        <button hidden={isHiddenBtnVoltar} className={style.buttonVoltar} disabled={buttonVoltarDisabled} onClick={paginacaoDown}>Voltar</button>
+        <button className={style.buttonVoltar} disabled={buttonVoltarDisabled} onClick={paginacaoDown}>Voltar</button>
         <button className={style.buttonAvancar} onClick={paginacaoUp}>Avançar</button>
         </div>
    

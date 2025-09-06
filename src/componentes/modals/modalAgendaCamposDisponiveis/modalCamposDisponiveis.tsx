@@ -19,6 +19,7 @@ export const OpenModalCampos = ({
   const [modalInfoOpen, setModalInfoOpen] = useState(false);
   const [campoId, setCampoId] = useState<number | null>(null);
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
+  const [optionChecked, setOptionChecked] = useState("")
 
   const getRetrieve = async () => {
     const retrieve = await apiController.get("/usuarios/retrieve");
@@ -64,6 +65,7 @@ export const OpenModalCampos = ({
 
   useEffect(() => {
     getRetrieve();
+    setOptionChecked("nome")
   }, []);
 
   useEffect(() => {
@@ -91,30 +93,54 @@ export const OpenModalCampos = ({
           </div>
           <div className={style.modal}>
             <div className={style.divPesquisa}>
-              <input
+          
+              {optionChecked === "nome" || optionChecked==='' ?
+               <input
                 id="idPesquisaCampo"
                 value={searchCampo}
                 onChange={(e) => setSearchCampo(e.target.value)}
                 className={style.inputSearch}
                 type="search"
-                placeholder="Pesquise um campo"
+                placeholder="Pesquise um campo (por nome)"
+               
+
               />
+            : <input
+                id="idPesquisaCampo"
+                value={searchCampo}
+                onChange={(e) => setSearchCampo(e.target.value)}
+                className={style.inputSearch}
+                type="search"
+                placeholder="Pesquise um campo (por preço)"
+               
+
+              />
+            }
+             
               <div className={style.divFiltro}>
                 <p>Filtrar</p>
+            
                 <select
                   className={style.selectFiltro}
                   name="filtroCampoName"
                   id="filtroCampo"
+                  onChange={(e) => setOptionChecked(e.target.value)}
                 >
-                  <option value="">Data</option>
-                  <option value="">Horario</option>
-                  <option value="">Preço</option>
+                  <option value="nome">Nome</option>
+                  <option value="preco">Preço</option>
                 </select>
               </div>
             </div>
             {campos
-              .filter((campo) =>
-                campo.nome.toLowerCase().includes(searchCampo.toLowerCase())
+              .filter((campo) =>{
+                if(optionChecked === "nome"){
+                  return campo.nome.toLowerCase().includes(searchCampo.toLowerCase())
+
+                }else{
+                   return String(campo.valor).includes(searchCampo)
+                }
+              }
+                
               )
               .map((campo: iCampos) => (
                 <div key={campo.id} className={style.fundoCampo}>
