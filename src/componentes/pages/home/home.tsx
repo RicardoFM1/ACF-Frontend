@@ -183,7 +183,7 @@ const ModalAviso = () => {
         <header className={style.header}>
            <div className={style.divLogo}>
 
-             <img src="/images/ImageLogoACF.svg" alt="teste" className={style.imageLogo}/>
+             <img src="/images/ImageLogoACF.svg" alt="logoSite" className={style.imageLogo}/>
 
             </div>
  <div className={style.btns}>

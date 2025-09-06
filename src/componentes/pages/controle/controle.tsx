@@ -272,7 +272,7 @@ export const Controle = () => {
                     </button>
                   </div>
                   {errors.endereco && (
-                    <p className={style.error}>{errors.endereco.message}</p>
+                    <p className={style.errorMsg}>{errors.endereco.message}</p>
                   )}
                 </div>
               </div>
@@ -301,7 +301,7 @@ export const Controle = () => {
                     </button>
                   </div>
                   {errors.descricao && (
-                    <p className={style.error}>{errors.descricao.message}</p>
+                    <p className={style.errorMsg}>{errors.descricao.message}</p>
                   )}
                 </div>
               </div>
@@ -345,7 +345,6 @@ export const Controle = () => {
                 )}
                 
           
-            <span className={style.errorMsg}>{errors.imagem?.message}</span>
                 
                 <div className={style.divIcon}>
                   <button onClick={() => isEditingImage === false ? (setIsEditingImage(true)) : (setIsEditingImage(false),setPreview(null)) } className={style.btnEditarPencil} type="button">
@@ -359,6 +358,8 @@ export const Controle = () => {
                 </div>
                 
               </div>
+            <span className={style.errorMsg}>{errors.imagem?.message}</span>
+            
               <div className={style.divBtnSalvar}>
               <button type="submit" className={style.btnSalvar}>
                 Salvar

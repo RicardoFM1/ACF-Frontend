@@ -53,7 +53,9 @@ const navigate = useNavigate();
   return  <div className={style.load}>
     
       <header className={style.header}>
-        <h1>ACF</h1>
+       <div className={style.divLogo}>
+    <img src="/images/ImageLogoACF.svg" alt="logoSite" className={style.imageLogo}/>
+    </div>
       <div className={style.divLinks}>
         <Link to={"/"} className={style.link}>
             Voltar à página inicial
@@ -88,7 +90,7 @@ const navigate = useNavigate();
               </span>
             )}
                 </div>
-                
+                <Link to={"/cadastro"}>não tem uma conta?</Link>
             <button type="submit" className={style.btnLogin}>Fazer login</button>
         </form>
               </div>

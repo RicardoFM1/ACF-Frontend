@@ -7,6 +7,17 @@
 html {
   scroll-behavior: smooth;
 }
+.load {
+  animation: load 1s ease;
+}
+@keyframes load {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .header{
     width: 100%;
     display: flex;
@@ -14,6 +25,15 @@ html {
     padding: 32px;
     color: white;
     flex-wrap: wrap;
+}
+.divLogo{
+    display: flex;
+    align-items: center;
+}
+.imageLogo{
+    width: 80px;
+    object-fit: cover;
+    height: 80px;
 }
 @media (max-width:379.5px){
         .header{
@@ -106,6 +126,7 @@ h2{
     color: white;
     background-color: #101010;
     border-radius: 8px;
+    height: 40px;
     padding: 12px;
     text-decoration: none;
     transition: all 0.2s ease;

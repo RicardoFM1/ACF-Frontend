@@ -457,3 +457,6 @@ a{
   justify-content:flex-end;
   gap: 18px;
 }
+.errorMsg{
+  color: rgb(182, 40, 40);
+}

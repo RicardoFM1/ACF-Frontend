@@ -40,7 +40,9 @@ formState:{
   return  <div className={style.load}>
     
    <header className={style.header}>
-    <h1>ACF</h1>
+    <div className={style.divLogo}>
+    <img src="/images/ImageLogoACF.svg" alt="logoSite" className={style.imageLogo}/>
+    </div>
     <div className={style.divLinks}>
         <Link to={"/"} className={style.link}>
             Voltar à página inicial
@@ -69,6 +71,8 @@ formState:{
         </div>
         {errors.password && <span className={style.errorMsg}>{errors.password.message}</span> }
         
+        <Link to={"/login"}>já tem uma conta?</Link>
+
         <button type="submit" className={style.btnCadastro}>Cadastrar</button>
     </form>
         </div>

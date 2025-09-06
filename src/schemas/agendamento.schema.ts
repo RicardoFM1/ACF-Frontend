@@ -1,4 +1,4 @@
-import z, { ZodLazy } from "zod"
+import z from "zod"
 import { returnCamposSchema } from "./campo.schema"
 import { returnUsuarioSchema } from "./usuario.schema"
 

@@ -21,15 +21,15 @@ export const returnCamposSchema = z.object({
 })
 
 export const atualizarInfoCampoSchema = z.object({
-  endereco: z.string().min(1, "Necessário preencher").optional(),
-  descricao: z.string().min(1, "Necessário preencher").optional(),
+  endereco: z.string().min(1, "Necessário preencher"),
+  descricao: z.string().min(1, "Necessário preencher"),
   imagem: z.string().optional()
 });
 
 
 export const atualizarNomePrecoSchema = z.object({
-  nome: z.string().min(1, "Necessário preencher").optional(),
-   valor: z.number().min(1, "Necessário preencher").optional()
+  nome: z.string().min(1, "Necessário preencher"),
+   valor: z.number().min(1, "Necessário preencher")
 })
 
 export const atualizarStatusSchemas = z.object({
