@@ -13,7 +13,8 @@ import { toastbar } from "../../utility/tokenUtility";
 import { OpenModalEditarCampo } from "../../modals/modalControleEditarCampo/modalControleEditarCampo";
 import { ModalEditarHorarios } from "../../modals/modalControleEditarHorarios/modalControleEditarHorarios";
 import { OpenModalAddCampo } from "../../modals/modalControleAddCampo/modalControleAddCampo";
-import { OpenModalAgendamentos } from "../../modals/modalControleGerenciarAgendamentos/modalControlerGerenciarAgendamentos";
+import { OpenModalAgendamentos } from "../../modals/modalControleGerenciarAgendamentos/modalControleGerenciarAgendamentos";
+import type { iReturnAgendamento } from "../../../schemas/agendamento.schema";
 
 export const Controle = () => {
   interface iCampos {
@@ -126,6 +127,9 @@ export const Controle = () => {
       setIsEditingImage(false)
     }
   };
+
+
+
 
   const atualizarCampo = async (campoData: iAtualizarCampos) => {
     console.log(campoData, "cmData");

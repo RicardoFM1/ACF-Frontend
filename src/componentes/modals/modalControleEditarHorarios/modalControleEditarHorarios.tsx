@@ -23,6 +23,7 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
   const [horarios, setHorarios] = useState<iHorario[]>([]);
 
 
+
   const getHorarios = async () => {
     if (!campoId) return;
     console.log(horarios,"state")
@@ -40,6 +41,11 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
     setHorarios(novosHorarios);
   };
 
+  const toMinutes = (hora: string) => {
+  const [h, m] = hora.split(":").map(Number);
+  return h * 60 + m;
+};
+
   useEffect(() => {
     if (isOpen) getHorarios();
   }, [isOpen, campoId]);
@@ -54,14 +60,26 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
   const salvarHorarios = async () => {
     if (!campoId) return;
     try {
+      let horarioAbaixo = false;
+
        horarios.forEach((horario)=>{
               if(horario.horario_final!="00:00"||horario.horario_inicial!="00:00"){
                      horario.status="ativo"
               }
+              if (toMinutes(horario.horario_final) < toMinutes(horario.horario_inicial)) {
+              horarioAbaixo = true;
+            }
        })
-      await apiController.patch(`/horarios/${campoId}`, horarios);
-      toastbar.success("Horários atualizados com sucesso!");
-      onClose();
+
+       if (horarioAbaixo) {
+      toastbar.error("O horário final não pode ser menor que o horário inicial!");
+      return;
+    }
+    
+        await apiController.patch(`/horarios/${campoId}`, horarios);
+        toastbar.success("Horários atualizados com sucesso!");
+        onClose();
+  
     } catch (error: any) {
       toastbar.error(error.response?.data?.message || "Erro ao atualizar horários");
     }

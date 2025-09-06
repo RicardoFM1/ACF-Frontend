@@ -214,6 +214,10 @@ h3{
     border-radius: 20px;
     color: white;
 }
+.btnAgendar:disabled{
+    background-color: #9b9999;
+    color: rgb(105, 105, 105)
+}
 .btnLimpar{
     background-color: #0088ff;
     height: 38px;

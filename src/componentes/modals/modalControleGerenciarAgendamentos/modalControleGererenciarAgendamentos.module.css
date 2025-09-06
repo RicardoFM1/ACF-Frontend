@@ -80,18 +80,29 @@
     display: flex;
     justify-content: space-between;
 }
-.divNomeCampo, .agendamentoData, .agendamentoHorario{
+.divNomeCampo, .agendamentoData, .agendamentoHorario, 
+.divStatus, .divAgendamentoUser{
     background-color: #333333; 
     border-radius: 10px;
-    padding: 4px 4px 0 4px;
+    padding: 8px;
     display: flex;
     justify-content: center;
     text-align: center;
-    height: 30px;
+    align-items: center;
 }
 
-.divNomeCampo p, .agendamentoData p, .agendamentoHorario p{
+.statusAtivo{
     color: #348648;
+}
+.statusInativo{
+    color: rgb(148, 52, 52);
+}
+.divNomeCampo p, .agendamentoData p, .agendamentoHorario p, .divAgendamentoUser p{
+    max-width: 200px;
+    color: #348648;
+    white-space: nowrap;  
+    overflow: hidden;     
+    text-overflow: ellipsis; 
 }
 .divDateTimeAgendamento{
     display: flex;
@@ -110,7 +121,7 @@
     justify-content: flex-end;
     gap: 12px;
 }
-.maisInformacoes, .selecionar{
+.maisInformacoes, .selecionar, .mudarStatus{
     border: none;
     background-color: #0088ff;
     color: white;

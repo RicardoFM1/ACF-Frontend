@@ -2,50 +2,63 @@ import { useState, useEffect } from "react";
 import { apiController } from "../../../controller/api.controller";
 import type { iReturnAgendamento } from "../../../schemas/agendamento.schema";
 import { Iconify } from "../../iconify/iconify";
-import { OpenModalInfo } from "../modalAgendaInfoCampo/modalAgendaInfoCampo";
-import type { modalProps, iUser } from "../modalsInterface/modalInterface";
+import type { modalProps } from "../modalsInterface/modalInterface";
 import style from "./modalControleGererenciarAgendamentos.module.css"
+import { toastbar } from "../../utility/tokenUtility";
+
 
 
 export const OpenModalAgendamentos = ({isOpen, onClose}:modalProps) => {
     const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
-    const [searchAgendamento, setSearchAgendamento] = useState("")
-    const [retrieve, setRetrieve] = useState<iUser|null>()
-    const [modalInfoOpen, setModalInfoOpen] = useState(false);
-    const [campoId, setCampoId] = useState<number | null>(null);
-    const [optionChecked, setOptionChecked] = useState("")
-       
+    const [searchAgendamento, setSearchAgendamento] = useState("");
+    const [optionChecked, setOptionChecked] = useState("");
+      
+    interface iAgendamento{
+        id: number,
+        status: string
+    }
 
-        const getRetrieve = async() => {
-        const retrieve = await apiController.get("/usuarios/retrieve")
-        console.log(retrieve,"retrive")
-        setRetrieve(retrieve)
-        await getAgendamentos(retrieve.id)
-    } 
-
-     const getAgendamentos = async(id:string) => {
-        const retrieveId = id
-        const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
+     const getAgendamentos = async() => {
+        const agendamentos = await apiController.get(`/agendamentos`)
         setAgendamentos(agendamentos)
     }
 
-  const clickInformacoes = (id: number) => {
-    setModalInfoOpen(true);
-    setCampoId(id);
-  };
+    const updateAgendamentos = async (agendamentoData: iAgendamento) => {
+
+  const novoStatus = agendamentoData.status === "ativo" ? "inativo" : "ativo";
+
+  try {
+    const res = await apiController.patch(`/agendamentos/${agendamentoData.id}`, { status: novoStatus });
+
+    if (res) {
+      toastbar.success(
+        novoStatus === "ativo"
+          ? "Agendamento ativado com sucesso!"
+          : "Agendamento desativado com sucesso!"
+      );
+
+      setAgendamentos((prev) =>
+        prev.map((a) =>
+          a.id === agendamentoData.id ? { ...a, status: novoStatus } : a
+        )
+      );
+    }
+  } catch (error: any) {
+    console.log(error.response?.data?.message);
+    toastbar.error("Erro ao atualizar o status do agendamento!");
+  }
+};
+
+
 
     useEffect(() =>{
-        getRetrieve()
+        getAgendamentos()
         setOptionChecked("campo")
     }, [])
 
         if(isOpen){
     return <>
-    {modalInfoOpen && <OpenModalInfo
-          isOpen={modalInfoOpen} 
-          campoId={campoId} 
-          onClose={() => setModalInfoOpen(false)}
-           />}
+    
         <div className={style.fundoModal}> 
                 <div className={style.tituloModalVisualizar}>
                     <h2>Meus agendamentos</h2>
@@ -118,24 +131,37 @@ export const OpenModalAgendamentos = ({isOpen, onClose}:modalProps) => {
                     <div  className={style.fundoAgendamento}>
                     <div className={style.divCimaModal}>
                     <div className={style.divNomeCampo}>
-                        <p><strong>{agendamento.campos.nome}</strong></p>
+                        <p title={agendamento.campos.nome}><strong>{agendamento.campos.nome}</strong></p>
                     </div>
                     
                     <div className={style.divDateTimeAgendamento}>
-                        
+                    
+                    {agendamento.status === "ativo" ?
+                    <div className={style.divStatus}>
+                    <p title={agendamento.status} className={style.statusAtivo}><strong>{agendamento.status}</strong></p>
+                    </div>
+                :
+                 <div className={style.divStatus}>
+                <p title={agendamento.status} className={style.statusInativo}><strong>{agendamento.status}</strong></p>
+                </div>
+                }
+                <div className={style.divAgendamentoUser}>
+                   <p title={agendamento.usuarios.email}><strong>{agendamento.usuarios.email}</strong></p>
+                </div>
                     <div className={style.agendamentoData}>
-                    <p><strong>{agendamento.data}</strong></p>
+                    <p title={agendamento.data}><strong>{agendamento.data}</strong></p>
                     </div>
                     <div className={style.agendamentoHorario}>
-                    <p><strong>{agendamento.horario ? agendamento.horario : "N/A"}</strong></p>
+                    <p title={agendamento.horario ? agendamento.horario : "N/A"}><strong>{agendamento.horario ? agendamento.horario : "N/A"}</strong></p>
                     </div>
                     </div>
                     </div>
                     <div className={style.divBtnsModalCampo}>
-                        <button onClick={() => clickInformacoes(agendamento.campos.id)}  className={style.maisInformacoes}>Mais informações</button>
+                        <button onClick={() => updateAgendamentos(agendamento)} className={style.mudarStatus}>Mudar status</button>
                         <div className={style.divPrecoCampo}>
-                        <p ><strong>R${agendamento.campos.valor/100}</strong></p>
+                        <p title={"R$" + String(agendamento.campos.valor/100)}><strong>R${agendamento.campos.valor/100}</strong></p>
                     </div>
+                    
                     </div>
                 </div>
             </div>

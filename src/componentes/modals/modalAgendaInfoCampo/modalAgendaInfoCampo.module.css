@@ -80,7 +80,7 @@
   background-color: rgba(34, 34, 34, 0.9);
   color: #348648;    
   border-radius: 10px;
-  min-width: 300px;
+  max-width: 300px;
   padding: 12px;
   word-wrap: break-word;
   text-align: center;

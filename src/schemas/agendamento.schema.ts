@@ -1,4 +1,4 @@
-import z from "zod"
+import z, { ZodLazy } from "zod"
 import { returnCamposSchema } from "./campo.schema"
 import { returnUsuarioSchema } from "./usuario.schema"
 
@@ -18,10 +18,12 @@ export const returnAgendamentoSchema = z.object({
     usuarios: returnUsuarioSchema,
     status: z.string()
 })
-    
+
+ 
 export const returnAllAgendamentosSchema = returnAgendamentoSchema.array()
 
 export type iAgendamento = z.infer<typeof createAgendamentoSchema>
 export type iReturnAgendamento = z.infer<typeof returnAgendamentoSchema>
 export type iReturnAllAgendamentos = z.infer<typeof returnAllAgendamentosSchema>
+
 
