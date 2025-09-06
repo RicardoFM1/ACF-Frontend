@@ -70,7 +70,7 @@ export const Agendar = () => {
   };
 
   const getCampos = async (retrieve: any) => {
-    if (retrieve?.admin === true) {
+    if (retrieve.id && retrieve?.admin === true) {
       const campos = await apiController.get("/campos");
       setCampos(campos.data);
     } else {

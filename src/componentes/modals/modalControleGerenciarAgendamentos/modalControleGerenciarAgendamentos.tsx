@@ -21,11 +21,13 @@ export const OpenModalAgendamentos = ({
     camposId: number;
     horario: string;
     data: string;
+    valor: number
   }
 
   const getAgendamentos = async () => {
     const agendamentos = await apiController.get(`/agendamentos`);
     setAgendamentos(agendamentos);
+    console.log(agendamentos)
   };
 
   const updateAgendamentos = async (agendamentoData: iAgendamento) => {
@@ -223,6 +225,7 @@ export const OpenModalAgendamentos = ({
                             camposId: agendamento.campos.id,
                             data: agendamento.data,
                             horario: agendamento.horario,
+                            valor: agendamento.campos.valor
                           })
                         }
                         className={style.mudarStatus}
@@ -233,7 +236,8 @@ export const OpenModalAgendamentos = ({
                         <p
                           title={"R$" + String(agendamento.campos.valor / 100)}
                         >
-                          <strong>R${agendamento.campos.valor / 100}</strong>
+                          
+                          <strong>R${(agendamento.campos.valor /100).toFixed(2).replace(".", ",")}</strong>
                         </p>
                       </div>
                     </div>
