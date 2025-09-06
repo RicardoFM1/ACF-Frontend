@@ -98,6 +98,8 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
 
                 </div>
                 </div>
+                <p>{parseInt(searchAgendamento.split("-")[0])>2025}</p>
+                <p>{searchAgendamento}</p>
                 {agendamentos.filter((agendamento) =>{
 
                     if(optionChecked === "campo"){
@@ -132,7 +134,7 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
                     <div className={style.divBtnsModalCampo}>
                         <button onClick={() => clickInformacoes(agendamento.campos.id)}  className={style.maisInformacoes}>Mais informações</button>
                         <div className={style.divPrecoCampo}>
-                        <p ><strong>R${agendamento.campos.valor}</strong></p>
+                        <p ><strong>R${agendamento.campos.valor/100}</strong></p>
                     </div>
                     </div>
                 </div>
