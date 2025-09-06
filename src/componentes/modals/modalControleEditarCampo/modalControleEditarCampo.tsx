@@ -1,5 +1,5 @@
 import { Controller, useForm } from "react-hook-form"
-import type { modalProps } from "../modalsInterface/modalInterface"
+import type { iCampos, modalProps } from "../modalsInterface/modalInterface"
 import style from "./modalControleEditarCampo.module.css"
 import {atualizarNomePrecoSchema, type iAtualizarNomePrecoCampos } from "../../../schemas/campo.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -7,38 +7,79 @@ import { apiController } from "../../../controller/api.controller"
 import { toastbar } from "../../utility/tokenUtility"
 import CurrencyInput from "react-currency-input-field"
 import { ModalEditarHorarios } from "../modalControleEditarHorarios/modalControleEditarHorarios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { fields } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js"
 
 
 export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
+
   const [showEditarHorarios,setShowEditarHorarios]= useState(false)
+  const [campo, setCampo] = useState({} as iCampos)
+
     const {
         control,
         register,
         handleSubmit,
+        setValue,
         formState: {errors}
     }=useForm<iAtualizarNomePrecoCampos>({
         mode: "onBlur",
         resolver: zodResolver(atualizarNomePrecoSchema),
         defaultValues: {
-        valor: 0
+        valor: 0,
+        nome: campo.nome ? campo.nome : ""
     },
     })
     const openEditarHorarios=()=>{
-      setShowEditarHorarios(true)
+      setShowEditarHorarios(true)      
     }
+
+    const getCampo = async() => {
+      const res = await apiController.get(`/campos/${campoId}`)
+      if(res){
+        setCampo(res)
+        console.log(res)
+      }
+    }
+
+    const colocarValores = () =>{
+      setValue("nome", campo.nome)
+      setValue("valor", campo.valor)
+    } 
+
     const atualizarNomePrecoCampo = async(campoData:iAtualizarNomePrecoCampos) => {
+
+  const nomePreenchido = campoData.nome.trim() !== "";
+  const valorPreenchido = campoData.valor > 0;
+
         try{
+          if(nomePreenchido && valorPreenchido){
             const campoAtualizar = await apiController.patch(`/campos/${campoId}`, campoData)  
             if(campoAtualizar){
                 toastbar.success("Campo atualizado com sucesso!")
+                onClose && onClose()
             }
+          }else{
+            onClose && onClose()
+          }
+           
         }catch(error:any){
             console.log(error.response.data.message)
             toastbar.error("Erro ao atualizar o campo!")
         }
 
     }
+
+    useEffect(() => {
+      if(campoId){
+        getCampo() 
+      }
+    }, [campoId])
+
+    useEffect(() => {
+      colocarValores()
+    }, [campo, setValue])
+    
 
     if(isOpen){
       return <div className={style.fundoModal}>
@@ -74,7 +115,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
       groupSeparator="." 
       prefix="R$ "
       className={style.inputPreco}
-      defaultValue={(field.value ?? 0) / 100} 
+      value={field.value ? field.value / 100 : undefined}
       onValueChange={(value) => {
         const numericValue = value
           ? Math.round(parseFloat(value.replace(',', '.')) * 100)

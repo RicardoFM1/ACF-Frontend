@@ -401,7 +401,7 @@ export const Controle = () => {
       />
       {isOpenEditarCampo && (
         <OpenModalEditarCampo
-          onClose={() => setIsOpenEditarCampo(false)}
+          onClose={() => (setIsOpenEditarCampo(false), getCampos())}
           isOpen={isOpenEditarCampo}
           campoId={campoId}
         />

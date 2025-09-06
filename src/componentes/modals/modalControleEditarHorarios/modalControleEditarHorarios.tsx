@@ -22,24 +22,54 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
 
   const [horarios, setHorarios] = useState<iHorario[]>([]);
 
+const getHorarios = async () => {
+  if (!campoId) return;
 
+  const horariosPadrao: iHorario[] = diasSemana.map(dia => ({
+    dia_da_semana: dia,
+    horario_inicial: "00:00",
+    horario_final: "00:00",
+    camposId: campoId,
+    status: "inativo"
+  }));
 
-  const getHorarios = async () => {
-    if (!campoId) return;
-    console.log(horarios,"state")
-    const novosHorarios: iHorario[] = [];
-    for (const dia of diasSemana) {
-     
-       novosHorarios.push({
-         dia_da_semana: dia.toLowerCase(),
-         horario_inicial: "00:00",
-         horario_final: "00:00",
-         camposId: campoId,
-         status: "inativo"
-       });
-    }
+  try {
+    const horariosApi: iHorario[] = [];
+
+    await Promise.all(diasSemana.map(async (dia) => {
+      try {
+        const res = await apiController.get(`/horarios/${campoId}/${dia}`);
+        if (res.data && res.data.id) {
+          horariosApi.push({
+            dia_da_semana: res.data.dia_da_semana,
+            horario_inicial: res.data.horario_inicial,
+            horario_final: res.data.horario_final,
+            camposId: res.data.campos.id,
+            status: res.data.status
+          });
+        }
+      } catch (err: any) {
+       
+      }
+    }));
+
+  
+    const novosHorarios = diasSemana.map(dia => {
+      const existente = horariosApi.find(h => h.dia_da_semana === dia);
+      return existente ? existente : horariosPadrao.find(h => h.dia_da_semana === dia)!;
+    });
+
     setHorarios(novosHorarios);
-  };
+
+  } catch (error) {
+    console.log("Erro ao carregar horários, usando padrões");
+    setHorarios(horariosPadrao);
+  }
+};
+
+
+
+
 
   const toMinutes = (hora: string) => {
   const [h, m] = hora.split(":").map(Number);

@@ -28,8 +28,8 @@ export const atualizarInfoCampoSchema = z.object({
 
 
 export const atualizarNomePrecoSchema = z.object({
-  nome: z.string().min(1, "Necessário preencher"),
-   valor: z.number().min(1, "Necessário preencher")
+  nome: z.string(),
+  valor: z.number()
 })
 
 export const atualizarStatusSchemas = z.object({
