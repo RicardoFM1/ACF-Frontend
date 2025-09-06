@@ -85,7 +85,7 @@ export const OpenModalAgendamentos = ({
       <>
         <div className={style.fundoModal}>
           <div className={style.tituloModalVisualizar}>
-            <h2>Meus agendamentos</h2>
+            <h2>Gerenciar agendamentos</h2>
             <div className={style.divBtnFecharModal}>
               <button className={style.btnFecharModal} onClick={onClose}>
                 <Iconify icon="ic:baseline-close" />
@@ -116,6 +116,7 @@ export const OpenModalAgendamentos = ({
                   id="idPesquisaAgendamento"
                   value={searchAgendamento}
                   onChange={(e: any) => setSearchAgendamento(e.target.value)}
+                  onKeyDown={(e) => e.preventDefault()}
                   className={style.inputSearch}
                   type="date"
                   placeholder="Pesquise um agendamento (por data)"
@@ -136,8 +137,7 @@ export const OpenModalAgendamentos = ({
                 </select>
               </div>
             </div>
-            <p>{parseInt(searchAgendamento.split("-")[0]) > 2025}</p>
-            <p>{searchAgendamento}</p>
+            
             {agendamentos
               .filter((agendamento) => {
                 if (optionChecked === "campo") {
@@ -146,9 +146,13 @@ export const OpenModalAgendamentos = ({
                     .includes(searchAgendamento.toLowerCase());
                 }
                 if (optionChecked === "data") {
+                  const dataInputFormatada = searchAgendamento
+                    .split("-")
+                    .reverse()
+                    .join("/");
                   return agendamento.data
                     .toLowerCase()
-                    .includes(searchAgendamento.toLowerCase());
+                    .includes(dataInputFormatada.toLowerCase());
                 } else {
                   return String(agendamento.campos.valor).includes(
                     searchAgendamento

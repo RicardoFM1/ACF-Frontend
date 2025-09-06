@@ -83,6 +83,7 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
                 id="idPesquisaAgendamento" 
                 value={searchAgendamento} 
                 onChange={(e:any) => setSearchAgendamento(e.target.value)}
+                onKeyDown={(e) => e.preventDefault()}
                 className={style.inputSearch} 
                 type="date"
                 placeholder="Pesquise um agendamento (por data)" />
@@ -103,15 +104,16 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
 
                 </div>
                 </div>
-                <p>{parseInt(searchAgendamento.split("-")[0])>2025}</p>
-                <p>{searchAgendamento}</p>
+                
+               
                 {agendamentos.filter((agendamento) =>{
 
                     if(optionChecked === "campo"){
                     return agendamento.campos.nome.toLowerCase().includes(searchAgendamento.toLowerCase())
                     }
                     if(optionChecked === "data"){
-                        return agendamento.data.toLowerCase().includes(searchAgendamento.toLowerCase())
+                        const dataFormatada = searchAgendamento.split("-").reverse().join("/")
+                        return agendamento.data.toLowerCase().includes(dataFormatada.toLowerCase())
                     }
                     else{
                         return String(agendamento.campos.valor).includes(searchAgendamento)
