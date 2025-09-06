@@ -8,7 +8,7 @@ interface iHorario {
   horario_inicial: string;
   horario_final: string;
   camposId: number;
-  status: "ativo" | "inativo"
+  status: "ativo" | "inativo";
 }
 
 interface ModalEditarHorariosProps {
@@ -19,97 +19,65 @@ interface ModalEditarHorariosProps {
 
 export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHorariosProps) => {
   const diasSemana = ["segunda-feira", "terca-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sabado", "domingo"];
-
   const [horarios, setHorarios] = useState<iHorario[]>([]);
 
-const getHorarios = async () => {
-  if (!campoId) return;
-
-  const horariosPadrao: iHorario[] = diasSemana.map(dia => ({
-    dia_da_semana: dia,
-    horario_inicial: "00:00",
-    horario_final: "00:00",
-    camposId: campoId,
-    status: "inativo"
-  }));
-
-  try {
-    const horariosApi: iHorario[] = [];
-
-    await Promise.all(diasSemana.map(async (dia) => {
-      try {
-        const res = await apiController.get(`/horarios/${campoId}/${dia}`);
-        if (res.data && res.data.id) {
-          horariosApi.push({
-            dia_da_semana: res.data.dia_da_semana,
-            horario_inicial: res.data.horario_inicial,
-            horario_final: res.data.horario_final,
-            camposId: res.data.campos.id,
-            status: res.data.status
-          });
-        }
-      } catch (err: any) {
-       
-      }
-    }));
-
-  
-    const novosHorarios = diasSemana.map(dia => {
-      const existente = horariosApi.find(h => h.dia_da_semana === dia);
-      return existente ? existente : horariosPadrao.find(h => h.dia_da_semana === dia)!;
-    });
-
+  const getHorarios = async () => {
+    if (!campoId) return;
+    const novosHorarios: iHorario[] = [];
+    for (const dia of diasSemana) {
+     
+       novosHorarios.push({
+         dia_da_semana: dia.toLowerCase(),
+         horario_inicial: "00:00",
+         horario_final: "00:00",
+         camposId: campoId,
+         status: "inativo"
+       });
+    }
     setHorarios(novosHorarios);
-
-  } catch (error) {
-    console.log("Erro ao carregar horários, usando padrões");
-    setHorarios(horariosPadrao);
-  }
-};
-
-
-
+  };
 
 
   const toMinutes = (hora: string) => {
-  const [h, m] = hora.split(":").map(Number);
-  return h * 60 + m;
-};
+    const [h, m] = hora.split(":").map(Number);
+    return h * 60 + m;
+  };
 
   useEffect(() => {
-    if (isOpen) getHorarios();
+    if (isOpen) {
+      setHorarios([]); 
+      getHorarios();
+    }
   }, [isOpen, campoId]);
 
   const handleChangeHorario = (dia: string, tipo: "inicial" | "final", value: string) => {
     setHorarios(prev =>
       prev.map(h => (h.dia_da_semana === dia ? { ...h, [`horario_${tipo}`]: value } : h))
     );
-    console.log("horarios",horarios)
   };
 
   const salvarHorarios = async () => {
     if (!campoId) return;
     try {
-      let horarioAbaixo = false;
+      let horarioInvalido = false;
 
-       horarios.forEach((horario)=>{
-              if(horario.horario_final!="00:00"||horario.horario_inicial!="00:00"){
-                     horario.status="ativo"
-              }
-              if (toMinutes(horario.horario_final) < toMinutes(horario.horario_inicial)) {
-              horarioAbaixo = true;
-            }
-       })
+      const horariosAtualizados = horarios.map(horario => {
+        const status = (horario.horario_final !== "00:00" || horario.horario_inicial !== "00:00") ? "ativo" : "inativo";
+        if (toMinutes(horario.horario_final) < toMinutes(horario.horario_inicial)) {
+          horarioInvalido = true;
+        }
+        return { ...horario, status };
+      });
 
-       if (horarioAbaixo) {
-      toastbar.error("O horário final não pode ser menor que o horário inicial!");
-      return;
-    }
-    
-        await apiController.patch(`/horarios/${campoId}`, horarios);
-        toastbar.success("Horários atualizados com sucesso!");
-        onClose();
-  
+      if (horarioInvalido) {
+        toastbar.error("O horário final não pode ser menor que o horário inicial!");
+        return;
+      }
+
+      await apiController.patch(`/horarios/${campoId}`, horariosAtualizados);
+      toastbar.success("Horários atualizados com sucesso!");
+      onClose();
+
     } catch (error: any) {
       toastbar.error(error.response?.data?.message || "Erro ao atualizar horários");
     }
@@ -117,48 +85,49 @@ const getHorarios = async () => {
 
   if (!isOpen) return null;
 
-  return <div className={style.load}>
-    
-    <div className={style.fundoModal}>
-      <div className={style.editarHorarios}>
-        <div className={style.headerEditarCampos}>
-          <h2>Editar Horários</h2>
-          <button className={style.btnFecharModal} onClick={onClose}>X</button>
-        </div>
-        <div className={style.bodyEditarHorarios}>
-          {horarios.map((h) => (
-            <div key={h.dia_da_semana} className={style.caixaDia}>
-              <h3>{h.dia_da_semana}</h3>
-              <label>Horário Inicial</label>
-              <select
-                value={h.horario_inicial}
-                onChange={(e) => handleChangeHorario(h.dia_da_semana, "inicial", e.target.value)}
-              >
-                {Array.from({ length: 24 }, (_, i) => (
-                  <option key={i} value={`${i.toString().padStart(2, "0")}:00`}>
-                    {i.toString().padStart(2, "0")}:00
-                  </option>
-                ))}
-              </select>
+  return (
+    <div className={style.load}>
+      <div className={style.fundoModal}>
+        <div className={style.editarHorarios}>
+          <div className={style.headerEditarCampos}>
+            <h2>Editar Horários</h2>
+            <button className={style.btnFecharModal} onClick={onClose}>X</button>
+          </div>
+          <div className={style.bodyEditarHorarios}>
+            {horarios.map(h => (
+              <div key={h.dia_da_semana} className={style.caixaDia}>
+                <h3>{h.dia_da_semana}</h3>
+                <label>Horário Inicial</label>
+                <select
+                  value={h.horario_inicial}
+                  onChange={(e) => handleChangeHorario(h.dia_da_semana, "inicial", e.target.value)}
+                >
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i} value={`${i.toString().padStart(2, "0")}:00`}>
+                      {i.toString().padStart(2, "0")}:00
+                    </option>
+                  ))}
+                </select>
 
-              <label>Horário Final</label>
-              <select
-                value={h.horario_final}
-                onChange={(e) => handleChangeHorario(h.dia_da_semana, "final", e.target.value)}
-              >
-                {Array.from({ length: 24 }, (_, i) => (
-                  <option key={i} value={`${i.toString().padStart(2, "0")}:00`}>
-                    {i.toString().padStart(2, "0")}:00
-                  </option>
-                ))}
-              </select>
-            </div>
-          ))}
-          <button className={style.btnSalvar} onClick={salvarHorarios}>
-            Salvar Horários
-          </button>
+                <label>Horário Final</label>
+                <select
+                  value={h.horario_final}
+                  onChange={(e) => handleChangeHorario(h.dia_da_semana, "final", e.target.value)}
+                >
+                  {Array.from({ length: 24 }, (_, i) => (
+                    <option key={i} value={`${i.toString().padStart(2, "0")}:00`}>
+                      {i.toString().padStart(2, "0")}:00
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+            <button className={style.btnSalvar} onClick={salvarHorarios}>
+              Salvar Horários
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  );
 };

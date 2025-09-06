@@ -181,6 +181,11 @@ const ModalAviso = () => {
             <footer className={style.footerHome}>
                 <div className={style.footerDiv1}>
                     <h2>ACF</h2>
+                    <a href="https://www.google.com">Github</a>
+                    <a href="https://instagram.com/ricardofee_">Instagram</a>
+                    <a href="https://wa.me/5551984018587?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20sistema%20ACF">
+                    Whatsapp</a>
+                   
                 </div>
                 <div className={style.footerDiv2}>
                     <div className={style.footerDiv3}>
