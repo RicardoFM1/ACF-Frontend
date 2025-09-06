@@ -418,8 +418,7 @@ export const Controle = () => {
         <div className={style.campos}>
          
           <h3 className={style.oqueDeseja}>O que deseja controlar?</h3>
-          <div className={style.divPesquisa}>
-          <label className={style.labelInput} htmlFor="pesquisa">Pesquisar:</label>
+          <div className={style.divPesquisa}> 
           
            {optionChecked === "nome" || optionChecked==='' ?
                <input
