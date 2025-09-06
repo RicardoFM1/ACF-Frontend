@@ -8,7 +8,7 @@ import { toastbar } from "../../utility/tokenUtility";
 
 
 
-export const OpenModalAgendamentos = ({isOpen, onClose}:modalProps) => {
+export const OpenModalAgendamentos = ({isOpen, onClose, onAtualizarHorarios}:modalProps) => {
     const [agendamentos, setAgendamentos] = useState([] as iReturnAgendamento[])
     const [searchAgendamento, setSearchAgendamento] = useState("");
     const [optionChecked, setOptionChecked] = useState("");
@@ -42,6 +42,7 @@ export const OpenModalAgendamentos = ({isOpen, onClose}:modalProps) => {
           a.id === agendamentoData.id ? { ...a, status: novoStatus } : a
         )
       );
+       if (onAtualizarHorarios) onAtualizarHorarios();
     }
   } catch (error: any) {
     console.log(error.response?.data?.message);
@@ -176,3 +177,5 @@ export const OpenModalAgendamentos = ({isOpen, onClose}:modalProps) => {
         return <></>
     }
     }
+
+

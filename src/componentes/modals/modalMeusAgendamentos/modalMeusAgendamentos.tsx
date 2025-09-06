@@ -25,8 +25,13 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
 
      const getAgendamentos = async(id:string) => {
         const retrieveId = id
-        const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
-        setAgendamentos(agendamentos)
+        if(retrieve?.admin === true){
+            const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}`)
+            setAgendamentos(agendamentos)
+        }else{
+            const agendamentos = await apiController.get(`/agendamentos/usuario/${retrieveId}?status=ativo`)
+            setAgendamentos(agendamentos)
+        }
     }
 
   const clickInformacoes = (id: number) => {

@@ -3,6 +3,7 @@ export interface modalProps {
     campoId?: number|null,
     onClose?: () => void,
     onSelectCampo?: (id:number, infoCampo:iCampos) => void,
+    onAtualizarHorarios?: () => void,
     classname?:string
 }
 

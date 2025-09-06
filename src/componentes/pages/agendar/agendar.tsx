@@ -1,4 +1,4 @@
-import { Link, unstable_getRSCStream, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import style from "./agendar.module.css";
 import { useEffect, useState } from "react";
 import { apiController } from "../../../controller/api.controller";
@@ -24,7 +24,7 @@ export const Agendar = () => {
     descricao: string;
     valor: number;
     imagem: string;
-    status?: string; 
+    status?: string;
   }
 
   interface iUser {
@@ -45,12 +45,13 @@ export const Agendar = () => {
         campos: iCampos;
         horario: string;
         data: string;
+        status: string;
       }
     ];
   }
 
-  const [campos, setCampos] = useState([] as iCampos[]);
-  const [horarios, setHorarios] = useState([] as iHorario[]);
+  const [campos, setCampos] = useState<iCampos[]>([]);
+  const [horarios, setHorarios] = useState<iHorario[]>([]);
   const [modalCamposOpen, setModalCamposOpen] = useState(false);
   const [campoId, setCampoId] = useState<number | null>(null);
   const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
@@ -78,7 +79,12 @@ export const Agendar = () => {
     }
   };
 
-  
+  const atualizarHorarios = () => {
+  if (campoId && diaDaSemana) {
+    getHorarios();
+  }
+};
+
   const limparForm = () => {
     reset({
       camposId: 0,
@@ -88,7 +94,15 @@ export const Agendar = () => {
       horario: "",
     });
 
-    setInfoCampo({ id: 0, nome: "", endereco: "", descricao: "", valor: 0, imagem: "", status: "ativo" });
+    setInfoCampo({
+      id: 0,
+      nome: "",
+      endereco: "",
+      descricao: "",
+      valor: 0,
+      imagem: "",
+      status: "ativo",
+    });
     setCampoId(null);
     setDiaDaSemana("");
     setHorarios([]);
@@ -100,45 +114,30 @@ export const Agendar = () => {
     getCampos(retrieve);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
-    }
-    getRetrieve();
-  }, []);
-
-  useEffect(() => {
-    console.log(infoCampo);
-  }, [infoCampo]);
-
   const ModalAviso = () => {
-    if (modalAvisoOpen) {
-      return (
-        <div className={style.fundoModal}>
-          <div className={style.modalAviso}>
-            <div className={style.divIconAlerta}>
-              <Iconify
-                icon="mingcute:alert-fill"
-                color="#A02525"
-                height={58}
-                width={58}
-                className={style.iconAlerta}
-              />
-            </div>
-            <h2>AVISO!</h2>
-            <p>Não há nenhum campo registrado ainda.</p>
-            <div className={style.divBtnModal}>
-              <button className={style.btnOk} onClick={fecharModalAviso}>
-                Ok
-              </button>
-            </div>
+    if (!modalAvisoOpen) return null;
+    return (
+      <div className={style.fundoModal}>
+        <div className={style.modalAviso}>
+          <div className={style.divIconAlerta}>
+            <Iconify
+              icon="mingcute:alert-fill"
+              color="#A02525"
+              height={58}
+              width={58}
+              className={style.iconAlerta}
+            />
+          </div>
+          <h2>AVISO!</h2>
+          <p>Não há nenhum campo registrado ainda.</p>
+          <div className={style.divBtnModal}>
+            <button className={style.btnOk} onClick={fecharModalAviso}>
+              Ok
+            </button>
           </div>
         </div>
-      );
-    } else {
-      return <></>;
-    }
+      </div>
+    );
   };
 
   const {
@@ -163,6 +162,7 @@ export const Agendar = () => {
           toastbar.success("Horários disponíveis nesse dia e nesse campo!");
         } else {
           toastbar.error("Nenhum horário disponível neste dia e neste campo!");
+          setHorarios([]);
         }
       } catch (error) {
         toastbar.error("Erro ao consultar os horarios!");
@@ -186,7 +186,9 @@ export const Agendar = () => {
   };
 
   useEffect(() => {
-    getHorarios();
+    const token = localStorage.getItem("token");
+    if (!token) navigate("/login");
+    getRetrieve();
   }, []);
 
   useEffect(() => {
@@ -198,16 +200,19 @@ export const Agendar = () => {
         setHorarioInicial(inicio);
         const fim = parseInt(horario.horario_final);
         setHorarioFinal(fim);
-        const agendamentos = horario.agendamentos.length
-          ? horario.agendamentos.map((agendamento) => agendamento.horario)
-          : [];
+
+     
+        const agendamentosAtivos = horario.agendamentos
+          .filter((ag) => ag.status === "ativo")
+          .map((ag) => ag.horario);
 
         for (let i = inicio; i < fim; i++) {
-          if (!agendamentos.includes(`${i}:00`)) {
+          if (!agendamentosAtivos.includes(`${i}:00`)) {
             list.push(`${i}:00`);
           }
         }
       });
+
       setListaHorarios(list);
     } else {
       setListaHorarios([]);
@@ -219,9 +224,7 @@ export const Agendar = () => {
   }, [retrieve, setValue]);
 
   useEffect(() => {
-    if (campoId && diaDaSemana) {
-      getHorarios();
-    }
+    if (campoId && diaDaSemana) getHorarios();
   }, [campoId, diaDaSemana]);
 
   const Agendar = async (agendamentoData: iAgendamento) => {
@@ -230,7 +233,10 @@ export const Agendar = () => {
         toastbar.error("Escolha um campo antes de agendar!");
         return;
       }
-      const dataFormatada = agendamentoData.data.split("-").reverse().join("/");
+      const dataFormatada = agendamentoData.data
+        .split("-")
+        .reverse()
+        .join("/");
       const agendamentoDataNovo = { ...agendamentoData, data: dataFormatada };
       const res = await apiController.post("/agendamentos", {
         ...agendamentoDataNovo,
@@ -239,12 +245,14 @@ export const Agendar = () => {
 
       if (res) {
         toastbar.success("Campo agendado com sucesso!");
-        limparForm()
+        limparForm();
+     
+        getHorarios();
       } else {
         toastbar.error("Não foi possível agendar o campo!");
       }
     } catch (error: any) {
-      toastbar.error(error.response.data.message || "Erro ao agendar o campo!");
+      toastbar.error(error.response?.data?.message || "Erro ao agendar o campo!");
     }
   };
 
@@ -252,15 +260,12 @@ export const Agendar = () => {
     <div className={style.load}>
       <header className={style.headerAgendar}>
         <div className={style.divBtnVoltar}>
-          {retrieve?.admin === true ? (
-            <Link to={"/admin"} className={style.btnVoltar}>
-              Voltar
-            </Link>
-          ) : (
-            <Link to={"/"} className={style.btnVoltar}>
-              Voltar
-            </Link>
-          )}
+          <Link
+            to={retrieve?.admin === true ? "/admin" : "/"}
+            className={style.btnVoltar}
+          >
+            Voltar
+          </Link>
         </div>
 
         <div className={style.divHeaderDireita}>
@@ -286,21 +291,21 @@ export const Agendar = () => {
           )}
         />
       )}
+
       {modalVisualizarOpen && (
         <OpenModalVisualizar
           isOpen={modalVisualizarOpen}
           onClose={() => setmodalVisualizarOpen(false)}
+           onAtualizarHorarios={atualizarHorarios}
         />
       )}
+
       {modalAvisoOpen && <ModalAviso />}
 
       <main className={style.mainAgendamentos}>
         <div className={style.elementoSeparado}>
           <h2 className={style.h2Agendamento}>Agende seu campo de futebol</h2>
         </div>
-
-      
-        
 
         <div className={style.agendamentoFormularioDiv}>
           <div className={style.divPrincipalAgendamento}>
@@ -360,11 +365,8 @@ export const Agendar = () => {
                   </div>
 
                   <div className={style.divEscolhaHorario}>
-                    <h3>Escolha o horario disponivel</h3>
-                    <select
-                      {...register("horario")}
-                      className={style.selectInput}
-                    >
+                    <h3>Escolha o horário disponível</h3>
+                    <select {...register("horario")} className={style.selectInput}>
                       <option value="">-</option>
                       {listaHorarios.map((listaHorario: string) => (
                         <option key={listaHorario} value={listaHorario}>
@@ -373,9 +375,7 @@ export const Agendar = () => {
                       ))}
                     </select>
                     {errors.horario && (
-                      <span className={style.errorMsg}>
-                        {errors.horario.message}
-                      </span>
+                      <span className={style.errorMsg}>{errors.horario.message}</span>
                     )}
                   </div>
                 </div>
