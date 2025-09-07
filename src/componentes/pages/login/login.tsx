@@ -58,7 +58,7 @@ const navigate = useNavigate();
     </div>
       <div className={style.divLinks}>
         <Link to={"/"} className={style.link}>
-            Voltar à página inicial
+           Página inicial
           </Link>
           <Link to={"/cadastro"} className={style.link}>
             Cadastro

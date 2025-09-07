@@ -146,13 +146,17 @@ export const OpenModalCampos = ({
                 <div key={campo.id} className={style.fundoCampo}>
                   <div className={style.divCimaModal}>
                     <div className={style.divNomeCampo}>
-                      <p>
+                        <div className={style.tooltip}>
+                      <p title={campo.nome}>
                         <strong>{campo.nome}</strong>
                       </p>
+                      <span className={style.tooltiptext}>{campo.nome}</span>
+                      </div>
+                      
                     </div>
                     <div className={style.divPrecoCampo}>
-                      <p>
-                        <strong>R${campo.valor / 100}</strong>{" "}
+                      <p title={"R$" + String(campo.valor / 100)}>
+                        <strong>R${campo.valor / 100}</strong>
                       </p>
                     </div>
                   </div>

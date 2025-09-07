@@ -14,7 +14,6 @@ import { OpenModalEditarCampo } from "../../modals/modalControleEditarCampo/moda
 import { ModalEditarHorarios } from "../../modals/modalControleEditarHorarios/modalControleEditarHorarios";
 import { OpenModalAddCampo } from "../../modals/modalControleAddCampo/modalControleAddCampo";
 import { OpenModalAgendamentos } from "../../modals/modalControleGerenciarAgendamentos/modalControleGerenciarAgendamentos";
-import type { iReturnAgendamento } from "../../../schemas/agendamento.schema";
 
 export const Controle = () => {
   interface iCampos {
@@ -38,13 +37,14 @@ export const Controle = () => {
   const [isOpenEditarCampo, setIsOpenEditarCampo] = useState(false);
   const [isOpenEditarHorarios, setIsOpenEditarHorarios] = useState(false);
   const [isOpenAddCampo, setIsOpenAddCampo] = useState(false);
-  const [status, setStatus] = useState("ativo")
+  const [status, setStatus] = useState("")
   const [offset, setOffset] = useState(0)
   const [total, setTotal] = useState(0);
   const [buttonVoltarDisabled, setButtonVoltarDisabled] = useState(false)
   const [search, setSearch] = useState("")
   const [optionChecked, setOptionChecked] = useState("")
   const [isOpenAgendamentos, setIsOpenAgendamentos] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   const {
     register,
@@ -63,6 +63,7 @@ export const Controle = () => {
   const getCampos = async () => {
     const campos = await apiController.get(`/campos?offset=${offset}&limit=5`);
     setCampos(campos.data);
+    setStatus(campos.status)
     setTotal(campos.total);
   };
 
@@ -105,6 +106,19 @@ export const Controle = () => {
   useEffect(() => {
     getCampos();
     setOptionChecked("")
+    const handleScroll = () => {
+      if (window.scrollY > 200) { 
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -336,13 +350,19 @@ export const Controle = () => {
               </div>
               </>
 
-              : infoCampo.imagem && (
+              : 
+              infoCampo.imagem ? 
                   <img
                     src={`${infoCampo.imagem}`}
                     alt="Imagem do campo"
-                    className={style.imagemPreview}
+                    className={style.imagemCampo}
                   />
-                )}
+                  
+                :
+                <p>Não há nenhuma foto deste campo!</p>
+                }
+                   
+                
                 
           
                 
@@ -371,11 +391,17 @@ export const Controle = () => {
       </div>
     </div>
   };
+let header = ""
+ if(isScrolled){
+           header ="header_scrolled"
 
+        }else{
+           header = "header_top"
+        }
   return (
     <div className={style.load}>
       
-      <header id="introducao" className={style.headerControle}>
+      <header id="introducao" className={style[header]}>
         <Link to="/admin" className={style.Linkvoltar}>
           Voltar
         </Link>
@@ -530,8 +556,12 @@ export const Controle = () => {
         </div>
    
         <div className={style.divButtonsPaginacao}>
+          {campos.length > 0 ?
+          <>
         <button className={style.buttonVoltar} disabled={buttonVoltarDisabled} onClick={paginacaoDown}>Voltar</button>
         <button className={style.buttonAvancar} onClick={paginacaoUp}>Avançar</button>
+          </>
+      : <h2 className={style.h1Nenhum}>Nenhum campo cadastrado ainda</h2>}
         </div>
    
         <button
@@ -546,8 +576,36 @@ export const Controle = () => {
       <div className={style.footer}>
         <footer className={style.footerHome}>
           <div className={style.footerDiv1}>
-            <h2>ACF</h2>
-          </div>
+                    <h2>ACF</h2>
+                    <div className={style.colaboradores}>
+                        Colaboradores:
+                    <a href="https://instagram.com/ricardofee_">
+                    <Iconify icon="skill-icons:instagram" />
+                    Ricardo
+                    </a>
+                    <a href="https://instagram.com/william.k2s13">
+                     <Iconify icon="skill-icons:instagram" />
+                    William
+                    </a>
+                    <a href="https://instagram.com/igor_meinhardt">
+                     <Iconify icon="skill-icons:instagram" />
+                    Igor
+                    </a>
+                    <a href="https://instagram.com/lucas.rosax">
+                     <Iconify icon="skill-icons:instagram" />
+                     Lucas
+                     </a>
+                    </div>
+                    <div className={style.saibaMais}>
+                        Saiba Mais:
+                    <a href="https://github.com/RicardoFM1">
+                    <Iconify icon="mdi:github" />
+                    Github</a>
+                    <a href="https://wa.me/5551984018587?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20sistema%20ACF">
+                    <Iconify icon="logos:whatsapp-icon" />
+                    Whatsapp para contato</a>
+                    </div>
+                    </div>
           <div className={style.footerDiv2}>
             <div className={style.footerDiv3}>
               <h4>Paginas</h4>

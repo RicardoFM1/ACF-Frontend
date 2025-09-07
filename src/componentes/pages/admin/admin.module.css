@@ -1,19 +1,33 @@
 html {
   scroll-behavior: smooth;
 }
-.header{
+.header_top {
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding: 18px;
     color: white;
 }
+
+.header_scrolled{
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  background-color: #17172e;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
 .divLogo{
     display: flex;
     align-items: center;
 }
 .imageLogo{
-    width: 80px;
+    max-width: 80px;
     object-fit: cover;
     height: 80px;
 }
@@ -101,8 +115,10 @@ html {
 }
 .imgCampos{
     border-radius: 4px;
-    height: 200px;
-    width: 300px;
+    min-width: 300px;
+    min-height: 200px;
+    max-height: 200px;
+    max-width: 300px;
 }
 .imgCamposHome{
     display: flex;
@@ -113,22 +129,26 @@ html {
     flex-wrap: wrap;
     justify-content: center;
 }
-@media(max-width-1000px){
+@media(max-width: 1000px){
         .imgCamposHome{
            flex-wrap: wrap;
-           width: 100%;
+           min-width: 100%;
+           max-width: 100%;
         }
         .imgCampos{
-            width: 100%;
+            min-width: 100%;
+            max-width: 100%;
         }
 }
 .imgCampos2{
     border-radius: 4px;
+    max-width: 100%;
+    max-height: 100%;
 }
 .conteudoSecunHome{
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     width: 80%;
     gap: 30px;
@@ -142,8 +162,12 @@ html {
     color: white;
 }
 @media(max-width:600px){
+    .conteudoPrinHome{
+        width: 100%;
+    }
     .conteudoSecunHome{
         flex-wrap: wrap;
+        width: 100%;
     }
 }
 .txtContSec{
@@ -166,9 +190,36 @@ html {
   transition: all 0.2s ease-in-out;
 }
 .imgCampo{
-    height: 400px;
-    width: 30%;
+    min-height: 400px;
+    max-height: 400px;
+    max-width: 30%;
+    min-width: 30%;
     border-radius: 4px;
+}
+.colaboradores{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.colaboradores a{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.saibaMais{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.saibaMais a{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.footerDiv1{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 .footerDiv2 {
   display: flex;
@@ -274,6 +325,75 @@ a{
 .divIconAlerta{
     display: flex;
     justify-content: center;
+}
+@media (max-width: 400px) {
+      .header_top,
+  .header_scrolled {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btns {
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .imageLogo {
+    max-width: 60px;
+    height: auto;
+  }
+
+
+  .conteudoPrinHome {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .h1contP {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .conteudoPrinHome p {
+    font-size: 14px;
+    text-align: justify;
+  }
+
+  .conteudoSecunHome {
+   flex-direction: column;
+  }
+  .txtContSec{
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .imgCampo{
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+  .imgCampos {
+    min-width: 100%;
+    max-width: 100%;
+    height: auto;
+  }
+
+  
+  .linkAgendar,
+  .linkControle,
+  .btnSair {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+
+  .footerHome {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
 }
 
 @media(max-width: 580px){

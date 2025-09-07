@@ -7,6 +7,7 @@ import { Iconify } from "../../iconify/iconify"
 import { getLocalStorageItem, removeLocalStorageItem } from "../../utility/tokenUtility"
 import { apiController } from "../../../controller/api.controller"
 
+
 export const Home=()=>{ 
     interface iUser {
         id: number,
@@ -17,6 +18,7 @@ export const Home=()=>{
     const [modalOpen, setModalOpen] = useState(false)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
     const [retrieve, setRetrieve] = useState<iUser | null>()
+    const [isScrolled, setIsScrolled] = useState(false)
     const navigate = useNavigate()
 
     const getRetrieve = async() => {
@@ -35,6 +37,19 @@ export const Home=()=>{
     
         useEffect(() => {
             getRetrieve()
+            const handleScroll = () => {
+      if (window.scrollY > 200) { 
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
         }, [])
 
     const ModalSair = () => {
@@ -105,13 +120,18 @@ const ModalAviso = () => {
 
 
 
-    
+    let header = ""
     const token = getLocalStorageItem("token")
     if(token){
+if(isScrolled){
+           header ="header_scrolled"
 
+        }else{
+           header = "header_top"
+        }
         return  <div className={style.load}>
   <div className={style.fundoHome}>
-        <header id="introducao" className={style.header}>
+        <header id="introducao" className={style[header]}>
             <div className={style.divLogo}>
 
              <img src="/images/ImageLogoACF.svg" alt="teste" className={style.imageLogo}/>
@@ -158,7 +178,35 @@ const ModalAviso = () => {
             <footer className={style.footerHome}>
                 <div className={style.footerDiv1}>
                     <h2>ACF</h2>
-                </div>
+                    <div className={style.colaboradores}>
+                        Colaboradores:
+                    <a href="https://instagram.com/ricardofee_">
+                    <Iconify icon="skill-icons:instagram" />
+                    Ricardo
+                    </a>
+                    <a href="https://instagram.com/william.k2s13">
+                     <Iconify icon="skill-icons:instagram" />
+                    William
+                    </a>
+                    <a href="https://instagram.com/igor_meinhardt">
+                     <Iconify icon="skill-icons:instagram" />
+                    Igor
+                    </a>
+                    <a href="https://instagram.com/lucas.rosax">
+                     <Iconify icon="skill-icons:instagram" />
+                     Lucas
+                     </a>
+                    </div>
+                    <div className={style.saibaMais}>
+                        Saiba Mais:
+                    <a href="https://github.com/RicardoFM1">
+                    <Iconify icon="mdi:github" />
+                    Github</a>
+                    <a href="https://wa.me/5551984018587?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20sistema%20ACF">
+                    <Iconify icon="logos:whatsapp-icon" />
+                    Whatsapp para contato</a>
+                    </div>
+                    </div>
                 <div className={style.footerDiv2}>
                     <div className={style.footerDiv3}>
                         <h4>Paginas</h4>
@@ -175,12 +223,18 @@ const ModalAviso = () => {
         </div>
     </div>
 }else{
+    let header = ""
      const token = getLocalStorageItem("token")
-        
+      if(isScrolled){
+           header ="header_scrolled"
+
+        }else{
+           header = "header_top"
+        }  
      return  <div className={style.load}>
         {modalAvisoOpen && <ModalAviso />}
   <div className={style.fundoHome}>
-        <header className={style.header}>
+        <header className={style[header]}>
            <div className={style.divLogo}>
 
              <img src="/images/ImageLogoACF.svg" alt="logoSite" className={style.imageLogo}/>
@@ -225,7 +279,35 @@ const ModalAviso = () => {
             <footer className={style.footerHome}>
                 <div className={style.footerDiv1}>
                     <h2>ACF</h2>
-                </div>
+                    <div className={style.colaboradores}>
+                        Colaboradores:
+                    <a href="https://instagram.com/ricardofee_">
+                    <Iconify icon="skill-icons:instagram" />
+                    Ricardo
+                    </a>
+                    <a href="https://instagram.com/william.k2s13">
+                     <Iconify icon="skill-icons:instagram" />
+                    William
+                    </a>
+                    <a href="https://instagram.com/igor_meinhardt">
+                     <Iconify icon="skill-icons:instagram" />
+                    Igor
+                    </a>
+                    <a href="https://instagram.com/lucas.rosax">
+                     <Iconify icon="skill-icons:instagram" />
+                     Lucas
+                     </a>
+                    </div>
+                    <div className={style.saibaMais}>
+                        Saiba Mais:
+                    <a href="https://github.com/RicardoFM1">
+                    <Iconify icon="mdi:github" />
+                    Github</a>
+                    <a href="https://wa.me/5551984018587?text=Olá,%20tenho%20uma%20dúvida%20sobre%20o%20sistema%20ACF">
+                    <Iconify icon="logos:whatsapp-icon" />
+                    Whatsapp para contato</a>
+                    </div>
+                    </div>
                 <div className={style.footerDiv2}>
                     <div className={style.footerDiv3}>
                         <h4>Paginas</h4>

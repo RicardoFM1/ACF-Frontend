@@ -102,6 +102,13 @@ h3{
     font-weight: 500;
     color: white;
 }
+
+@media(max-width: 925px){
+    .elementoSeparado{
+        width: 80%;
+    }
+}
+
 @media(max-width:866px){
     .divDataForm{
         flex-direction: column;
@@ -121,6 +128,29 @@ h3{
     .formAgendamento{
         align-items: center;
     }
+    .h2Agendamento{
+        font-size: 28px;
+    }
+}
+@media (max-width: 790px){
+    .elementoSeparado{
+        min-width: 80%;
+    }
+}
+@media(max-width: 580px){
+   .modal, .modalAviso{
+    height: 50%;
+    width: 70%;
+   } 
+}
+@media(max-width:484px){
+    .h1Agendar{display: none;}
+    h3{
+        font-size: 15px;
+    }
+    .elementoSeparado{
+        min-width: 80%;
+    }
 }
 @media(max-width:420px){
     .formAgendamento{
@@ -128,7 +158,6 @@ h3{
         margin: 0;
     }
     .h2Agendamento{
-        font-size: 32px;
         margin: 12px;
     }
     .btnAgendar{
@@ -148,11 +177,23 @@ h3{
     .selectInput{
         min-width: 100%;
     }
+    .divBtnsForm{
+        flex-direction: column-reverse;
+    }
+    .btnLimpar{
+        min-width: 100%;
+    }
+    .elementoSeparado{
+        min-width: 80%;
+    }
 }
-@media(max-width:484px){
-    .h1Agendar{display: none;}
-    h3{
-        font-size: 15px;
+@media(max-width: 230px){
+    .modal{
+    height: 50%;
+    width: 70%;
+    }
+    .elementoSeparado{
+        min-width: 80%;
     }
 }
 .divEscolhaCampo {
@@ -198,14 +239,7 @@ h3{
     gap: 8px;
     width: 100%;
 }
-@media(max-width:420px){
-    .divBtnsForm{
-        flex-direction: column-reverse;
-    }
-    .btnLimpar{
-        min-width: 100%;
-    }
-}
+
 .btnAgendar{
     background-color: #0088ff;
     height: 38px;
@@ -337,43 +371,6 @@ button{
     margin: 10px 0 0 0
 }
 
-@media(max-width: 1270px){
-    .modalInfo{
-        width: 70%;
-    }
-    .tituloModalInfoCampos{
-        width: 70%;
-    }
-}
-
-@media(max-width: 925px){
-    .modalInfo{
-        width: 70%;
-        flex-direction: column-reverse;
-    }
-    .tituloModalInfoCampos{
-        width: 70%;
-    }
-}
-
-
-@media(max-width: 580px){
-   .modal, .modalAviso{
-    height: 50%;
-    width: 70%;
-   } 
-   .modalInfo{
-    max-height: 70%;
-    max-width: 70%;
-    overflow: auto;
-   }
-}
-@media(max-width: 230px){
-    .modal, .modalAviso, .modalInfo{
-        height: 50%;
-    width: 70%;
-    }
-}
 .errorMsg{
     color: rgb(247, 74, 74)
 }
@@ -410,16 +407,8 @@ button{
     border-radius: 20px;
 }
 .elementoSeparado{
-    width: 50vw;
+    min-width: 50%;
     padding: 8px;
     background-color: #17172e;
     border-radius:  10px;
-}
-@media(max-width:866px){
-    .elementoSeparado{
-        width: 80%;
-    }
-    .h2Agendamento{
-        font-size: 28px;
-    }
 }

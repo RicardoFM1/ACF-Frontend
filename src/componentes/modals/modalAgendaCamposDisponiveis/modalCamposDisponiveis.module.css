@@ -11,6 +11,7 @@
     background-color: rgba(243, 243, 243, 0.685);
     backdrop-filter: blur(5px);  
 }
+
 .tituloModalCampos{
     position: relative;
     display: flex;
@@ -76,6 +77,7 @@
     text-align: center;
     gap: 12px;
 }
+
 .divCimaModal{
     display: flex;
     justify-content: space-between;
@@ -111,4 +113,105 @@
     color: white;
     border-radius: 10px;    
     padding: 8px;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 6px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 125%; 
+  left: 100%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 10;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:active .tooltiptext,
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+@media (max-width: 425px){
+    .tituloModalCampos h2{
+        font-size: 24px;
+    }
+    .selecionar{
+        min-width: 100%;
+        max-width: 100%;
+        padding: 6px;
+        max-height: 50%;
+    }
+    .maisInformacoes{
+        min-width: 100%;
+        max-width: 100%;
+        padding: 6px;
+        max-height: 90%;
+        font-size: 12px;
+    }
+    .divBtnsModalCampo{
+        width: 100%;
+        justify-content: center;
+        flex-direction: column;
+    }
+     .divPesquisa{
+        flex-direction: column;
+    }
+    .inputSearch{
+        font-size:10px;
+        width: 100%;
+    }
+    .selectFiltro{
+        width: 100%;
+    }
+    .fundoCampo p{
+        width: 100px;
+    }
+}
+@media (max-width: 375px){
+    .divCimaModal{
+        font-size: 12px;
+        padding: 0;
+        justify-content: center;
+    }
+}
+@media (max-width: 320px){
+    .tituloModalCampos h2{
+        font-size: 18px;
+    }
+    .divPesquisa{
+        flex-direction: column;
+    }
+    .inputSearch{
+        font-size:10px;
+        width: 100%;
+    }
+    .selectFiltro{
+        width: 100%;
+    }
+    p{
+    font-size: 12px;
+    }
+    .divNomeCampo{
+        width: 50%;
+        height: 80%;
+    }
+    .divPrecoCampo{
+        width: 50%;
+        height: 80%;
+    }
+    .divPrecoCampo p{
+        width: 50%;
+    }
 }

@@ -45,7 +45,7 @@ formState:{
     </div>
     <div className={style.divLinks}>
         <Link to={"/"} className={style.link}>
-            Voltar à página inicial
+            Página inicial
           </Link>
         <Link to={"/login"} className={style.link}>Login</Link>
 

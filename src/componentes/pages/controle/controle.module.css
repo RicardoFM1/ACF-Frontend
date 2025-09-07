@@ -8,10 +8,36 @@ body {
 html {
   scroll-behavior: smooth;
 }
+.header_top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 18px;
+    color: white;
+}
 
+.header_scrolled{
+  position: sticky;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  width: 100%;
+  background-color: #17172e;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+  transition: all 0.3s ease-in-out;
+}
 .divHeaderDireita{
   display: flex;
   gap: 18px;
+}
+.divHeaderDireita p{
+  color: white;
+  background-color: #171333;
+  padding: 12px;
+  border-radius: 10px;
 }
 .btnGerenciarAgendamentos{
     background-color: #0088ff;
@@ -32,6 +58,12 @@ html {
   width: 100vw;
   background-color: rgba(243, 243, 243, 0.685);
   backdrop-filter: blur(5px);
+}
+.h1Nenhum{
+  color: white;
+  background-color: #17172e;
+  padding: 8px;
+  border-radius: 10px;
 }
 .tituloModalCampos,
 .tituloModalInfoCampos,
@@ -354,14 +386,15 @@ html {
   }
 }
 .iconPencil,
-.iconDesativar {
+.iconDesativar, .iconAtivar {
   cursor: pointer;
   min-height: 24px;
   min-width: 24px;
   transition: all 0.2s ease-in-out;
 }
 .iconPencil:hover,
-.iconDesativar:hover {
+.iconDesativar:hover,
+.iconAtivar:hover {
   transform: translateY(-5px);
 }
 
@@ -392,7 +425,31 @@ html {
  margin: 16px;
   color: #fdf6d5;
 }
-
+.colaboradores{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.colaboradores a{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.saibaMais{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.saibaMais a{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.footerDiv1{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 .footerDiv2 {
   display: flex;
   flex-direction: row;
@@ -422,24 +479,10 @@ a{
   justify-content: center;
   margin-top: 50%;
 }
-.headerControle {
-  display: flex;
-  justify-content: space-between;
-  font-size: 20px;
-  padding: 25px;
-  text-align: center;
-  align-items: center;
-  font-weight: 500;
-}
-.headerControle p {
-  color: white;
-  background-color: #17142a;
-  padding: 12px;
-  border-radius: 10px;
-}
+
 .Linkvoltar {
   text-decoration: none;
-  background-color: #17142a;
+  background-color: #171333;
   color: white;
   padding: 12px;
   border-radius: 10px;

@@ -94,3 +94,19 @@
   width: 150px;
   height: 150px;
 }
+@media (max-width: 768px){
+  .modalInfo{
+    flex-direction: column;
+  }
+}
+@media (max-width: 425px){
+  .fundoModal{
+    width: 100vw;
+  }
+  .tituloModalInfoCampos{
+    width: 100%;
+  }
+  .modalInfo{
+    width: 100%;
+  }
+}

@@ -117,3 +117,24 @@
     border-radius: 10px;    
     padding: 8px;
 }
+@media(max-width: 425px){
+    .tituloModalVisualizar h2{
+        font-size: 20px;
+    }
+    .divPesquisa{
+        flex-direction: column;
+    }
+    .inputSearch{
+        width: 100%;
+        font-size: 11px;
+    }
+    .selectFiltro{
+        width: 100%;
+        margin: 0 0 10px 0
+    }
+}
+@media (max-width: 375px){
+    .inputSearch{
+        font-size: 10px;
+    }
+}

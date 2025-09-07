@@ -35,11 +35,7 @@ html {
     object-fit: cover;
     height: 80px;
 }
-@media (max-width:405px){
-        .header{
-            justify-content: center;
-        }
-}
+
 .btnCadastro{
     color: white;
     background-color: black;
@@ -78,6 +74,15 @@ html {
         width: 70%;
     }
 }
+@media (max-width:405px){
+        .header{
+            justify-content: center;
+        }
+        .link{
+            height: 60%;
+        }
+}
+
 .formulario{
     width: 100%;
     display: flex;

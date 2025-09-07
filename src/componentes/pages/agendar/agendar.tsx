@@ -186,10 +186,13 @@ export const Agendar = () => {
   };
 
   useEffect(() => {
+
     const token = localStorage.getItem("token");
     if (!token) navigate("/login");
     getRetrieve();
   }, []);
+
+   
 
   useEffect(() => {
     if (horarios.length > 0) {
@@ -218,6 +221,8 @@ export const Agendar = () => {
       setListaHorarios([]);
     }
   }, [horarios]);
+
+
 
   useEffect(() => {
     if (retrieve?.id) setValue("usuariosId", retrieve.id);
@@ -255,6 +260,7 @@ export const Agendar = () => {
       toastbar.error(error.response?.data?.message || "Erro ao agendar o campo!");
     }
   };
+
 
   return (
     <div className={style.load}>
