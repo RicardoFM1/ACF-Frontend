@@ -454,6 +454,7 @@ html {
 .footerDiv3 {
   display: flex;
   flex-direction: column;
+  padding: 0 24px 0 0;
   gap: 6px;
 }
 a{
