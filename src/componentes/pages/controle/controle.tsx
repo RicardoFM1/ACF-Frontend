@@ -614,7 +614,7 @@ let header = ""
               <Link to={"/cadastro"}>Cadastro</Link>
               <Link to={"/login"}>Login</Link>
             </div>
-            <a href="#introducao">Introdução</a>
+           
             
           </div>
         </footer>

@@ -88,9 +88,9 @@ html {
     min-width: 80%;
     padding: 40px;
   }
-  h1{
-
-  }
+}
+@media (max-width: 425px){
+  
 }
 .formCampo {
   display: flex;
@@ -114,9 +114,14 @@ html {
 
 }
 .divImagensCampo img {
+.divImagensCampo img {
   border-radius: 10px;
-  width: 150px;
-  height: 150px;
+  width: 100%;
+  max-width: 250px; 
+  height: auto; 
+  object-fit: cover; 
+}
+
 }
 .divEnderecoCampo,
 .divDescricaoCampo {
@@ -303,16 +308,7 @@ html {
 .parteBaixoCampo {
   display: flex;
 }
-@media(max-width:425px){
-  .parteBaixoCampo{
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .inputPesquisa::placeholder{
-    font-size: 8px;
-  }
-}
+
 
 .labelInput{
   color: white
