@@ -40,7 +40,7 @@
 
 .bodyEditarHorarios {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colunas por linha */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
 }
 
@@ -87,5 +87,15 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  grid-column: span 4; /* botão ocupa a linha inteira */
+  grid-column: span 4; 
+}
+@media (max-width: 425px){
+  .editarHorarios{
+    overflow: auto;
+    max-height: 90vh;
+  }
+  .bodyEditarHorarios{
+    display: flex;
+    flex-direction: column;
+  }
 }

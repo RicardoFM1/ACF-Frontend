@@ -80,18 +80,7 @@ html {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-@media(max-width:800px){
-  .divPesquisa{
-    min-width: 80%;
-  }
-  .campo{
-    min-width: 80%;
-    padding: 40px;
-  }
-}
-@media (max-width: 425px){
-  
-}
+
 .formCampo {
   display: flex;
   gap: 32px
@@ -179,7 +168,6 @@ html {
 }
 .modalInfo {
   padding: 12px;
-  display: flex;
   overflow: auto;
   display: flex;
   justify-content: space-around;
@@ -293,7 +281,6 @@ html {
   padding: 24px;
   width: 50%;
   background-color: #0b0c21;
-  height: 160px;
   gap: 24px;
   border-radius: 10px;
 }
@@ -416,10 +403,10 @@ html {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 100px 0 100px 0;
+  margin: 24px 0 24px 0 ;
   font-size: 24px;
- margin: 16px;
   color: #fdf6d5;
+  background-color: #17172e;
 }
 .colaboradores{
     display: flex;
@@ -496,7 +483,131 @@ a{
   display: flex;
   justify-content:flex-end;
   gap: 18px;
+  align-items: center;
+  text-align: center;
 }
 .errorMsg{
   color: rgb(182, 40, 40);
+}
+@media(max-width:800px){
+  .divPesquisa{
+    min-width: 80%;
+  }
+  .campo{
+    min-width: 80%;
+  }
+}
+@media (max-width: 425px){
+  .divPesquisa{
+    flex-direction: column;
+  }
+  .divPesquisa p{
+    font-size: 18px;
+  }
+  .inputPesquisa{
+    min-width: 100%;
+  }
+  .divFiltro{
+    width: 100%;
+    text-align: center;
+  }
+  .selectFiltro{
+    width: 100%;
+  }
+  .parteCimaCampo p{
+    font-size: 14px;
+  }
+  .campoInformacoes{
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .parteBaixoCampo{
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .fundoModal{
+    width: 100%;
+  }
+  .tituloModalInfoCampos{
+    width: 100%;
+    gap: 80px;
+  }
+  .tituloModalInfoCampos h2{
+    font-size: 24px;
+  }
+  .modalInfo{
+    flex-direction: column;
+    width: 100%;
+  }
+  textarea{
+    margin: 0 0 0 12px;
+  }
+  .formCampo{
+    flex-direction: column;
+    padding: 12px;
+  }
+  .infoEsquerda{
+    flex-direction: column;
+  }
+  .divBtnSalvar{
+    width: 100%;
+    justify-content: center;
+  }
+}
+@media (max-width: 375px){
+  .header_top{
+    height: 80px;
+    gap: 12px;
+  }
+  .btnGerenciarAgendamentos{
+   text-align: center;
+   padding: 4px;
+  }
+}
+@media (max-width: 320px){
+  .saibaMais{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .saibaMais a{
+  width: 100%;
+  }
+  .formCampo{
+    width: 90%;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .modalInfo{
+    overflow: hidden;
+    justify-content: center;
+  }
+  .divEnderecoCampo{
+    width: 90%;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .divEnderecoCampo h2{
+    font-size: 14px;
+  }
+ .divDescricaoCampo{
+    width: 90%;
+    justify-content: center;
+    font-size: 12px;
+  }
+  .divDescricaoCampo h2{
+    font-size: 14px;
+  }
+  .enderecoCampo{
+    min-width: 60%;
+  }
+  .descricaoCampo{
+   min-width: 60%;
+  }
 }
