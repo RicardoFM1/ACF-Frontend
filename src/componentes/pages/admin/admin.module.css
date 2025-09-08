@@ -326,7 +326,7 @@ a{
     display: flex;
     justify-content: center;
 }
-@media (max-width: 400px) {
+@media (max-width: 425px) {
       .header_top,
   .header_scrolled {
     flex-direction: column;
