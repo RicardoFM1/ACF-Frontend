@@ -31,7 +31,7 @@ export const ForgotPassword = () => {
 
   return (
     <div className={style.container}>
-      <h2>Esqueci minha senha</h2>
+      <h2 className={style.h2Esqueci}>Esqueci minha senha</h2>
       <form onSubmit={handleSubmit} className={style.form}>
         <label className={style.labelEmailResetSenha}>Email</label>
         <input 

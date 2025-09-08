@@ -27,7 +27,7 @@ export const ResetPassword = () => {
 
   return (
     <div className={style.container}>
-      <h2>Redefinir senha</h2>
+      <h2 className={style.h2Redefinir}>Redefinir senha</h2>
       <form onSubmit={handleSubmit} className={style.form}>
         <label className={style.labelEmailResetSenha}>Nova senha</label>
         <input
