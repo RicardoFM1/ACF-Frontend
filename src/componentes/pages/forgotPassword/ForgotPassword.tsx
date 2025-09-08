@@ -12,11 +12,15 @@ export const ForgotPassword = () => {
     setLoading(true);
     try {
       const res = await apiController.post("/auth/forgot-password", { email });
-    const message = res.data?.message || "Link de redefinição enviado por email.";
+
+      const message = res.data?.message || "Link de redefinição enviado por email.";
       toastbar.success(message);
-      setEmail(""); 
+      setEmail("");
     } catch (err: any) {
-      toastbar.error(err.response?.data?.message || "Erro ao enviar email");
+      const errorMsg = err.response?.data?.message || "Erro ao enviar email";
+      toastbar.error(errorMsg);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -30,8 +34,12 @@ export const ForgotPassword = () => {
           placeholder="Digite seu email..."
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+          disabled={loading}
         />
-        <button type="submit">Enviar link</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Enviando..." : "Enviar link"}
+        </button>
       </form>
     </div>
   );
