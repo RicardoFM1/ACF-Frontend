@@ -6,8 +6,7 @@ import { Iconify } from "../../iconify/iconify";
 import { useForm } from "react-hook-form";
 import {
   createAgendamentoSchema,
-  type iAgendamento,
-  type iReturnAgendamento,
+  type iAgendamento
 } from "../../../schemas/agendamento.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toastbar } from "../../utility/tokenUtility";
@@ -59,8 +58,6 @@ export const Agendar = () => {
   const [retrieve, setRetrieve] = useState<iUser | null>();
   const [modalVisualizarOpen, setmodalVisualizarOpen] = useState(false);
   const [diaDaSemana, setDiaDaSemana] = useState("");
-  const [horarioInicial, setHorarioInicial] = useState<number | null>();
-  const [horarioFinal, setHorarioFinal] = useState<number | null>();
   const [listaHorarios, setListaHorarios] = useState<string[]>([]);
 
   const getRetrieve = async () => {
@@ -200,9 +197,9 @@ export const Agendar = () => {
 
       horarios.forEach((horario) => {
         const inicio = parseInt(horario.horario_inicial);
-        setHorarioInicial(inicio);
+        
         const fim = parseInt(horario.horario_final);
-        setHorarioFinal(fim);
+       
 
      
         const agendamentosAtivos = horario.agendamentos

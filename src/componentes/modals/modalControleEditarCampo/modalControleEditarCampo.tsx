@@ -8,7 +8,6 @@ import { toastbar } from "../../utility/tokenUtility"
 import CurrencyInput from "react-currency-input-field"
 import { ModalEditarHorarios } from "../modalControleEditarHorarios/modalControleEditarHorarios"
 import { useEffect, useState } from "react"
-import { fields } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js"
 
 
 export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {

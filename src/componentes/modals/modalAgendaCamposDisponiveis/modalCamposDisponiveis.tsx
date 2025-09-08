@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import type {
   iCampos,
-  iUser,
   modalProps,
 } from "../modalsInterface/modalInterface";
 import style from "./modalCamposDisponiveis.module.css";
@@ -15,15 +14,13 @@ export const OpenModalCampos = ({
 }: modalProps) => {
   const [searchCampo, setSearchCampo] = useState("");
   const [campos, setCampos] = useState([] as iCampos[]);
-  const [retrieve, setRetrieve] = useState<iUser | null>();
   const [modalInfoOpen, setModalInfoOpen] = useState(false);
   const [campoId, setCampoId] = useState<number | null>(null);
-  const [infoCampo, setInfoCampo] = useState<iCampos>({} as iCampos);
   const [optionChecked, setOptionChecked] = useState("")
 
   const getRetrieve = async () => {
     const retrieve = await apiController.get("/usuarios/retrieve");
-    setRetrieve(retrieve);
+   
     await getCampos(retrieve);
   };
 
@@ -42,7 +39,7 @@ export const OpenModalCampos = ({
       const campo = await apiController.get(`/campos/${campoId}`);
 
       if (campo) {
-        setInfoCampo(campo);
+        
       }
     }
   };

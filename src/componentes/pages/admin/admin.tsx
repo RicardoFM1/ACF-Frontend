@@ -3,21 +3,16 @@ import style from "./admin.module.css"
 import { apiController } from "../../../controller/api.controller"
 import { Link, useNavigate } from "react-router-dom"
 import { Iconify } from "../../iconify/iconify"
-import { getLocalStorageItem, removeLocalStorageItem, toastbar } from "../../utility/tokenUtility"
+import { getLocalStorageItem, removeLocalStorageItem } from "../../utility/tokenUtility"
 import { toast } from "react-toastify"
 
 
 
 export const Admin = () => {
 
-    interface iUser {
-        id: number,
-        email: string,
-        admin: boolean
-    }
+   
 
     const [admin, setAdmin] = useState(false)
-    const [retrieve, setRetrieve] = useState<iUser|null>()
     const [modalOpen, setModalOpen] = useState(false)
     const [modalAvisoOpen, setModalAvisoOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
@@ -44,7 +39,7 @@ export const Admin = () => {
     const getRetrieve = async() => {
         try{
             const retrieve = await apiController.get("usuarios/retrieve")
-            setRetrieve(retrieve)
+            
          
             if(retrieve.admin === true){
                 setAdmin(true)
