@@ -27,7 +27,7 @@ export const OpenModalAgendamentos = ({
   const getAgendamentos = async () => {
     const agendamentos = await apiController.get(`/agendamentos`);
     setAgendamentos(agendamentos);
-    console.log(agendamentos)
+
   };
 
   const updateAgendamentos = async (agendamentoData: iAgendamento) => {
@@ -72,7 +72,7 @@ export const OpenModalAgendamentos = ({
         if (onAtualizarHorarios) onAtualizarHorarios();
       }
     } catch (error: any) {
-      console.log(error.response?.data?.message);
+  
       toastbar.error("Erro ao atualizar o status do agendamento!");
     }
   };

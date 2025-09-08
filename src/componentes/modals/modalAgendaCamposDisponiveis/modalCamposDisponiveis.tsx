@@ -23,7 +23,6 @@ export const OpenModalCampos = ({
 
   const getRetrieve = async () => {
     const retrieve = await apiController.get("/usuarios/retrieve");
-    console.log(retrieve, "retrive");
     setRetrieve(retrieve);
     await getCampos(retrieve);
   };
@@ -44,7 +43,6 @@ export const OpenModalCampos = ({
 
       if (campo) {
         setInfoCampo(campo);
-        console.log(campo);
       }
     }
   };
@@ -69,7 +67,6 @@ export const OpenModalCampos = ({
   }, []);
 
   useEffect(() => {
-    console.log(campoId);
     getCamposInfo();
   }, [campoId]);
 

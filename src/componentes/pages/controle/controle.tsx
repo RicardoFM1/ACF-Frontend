@@ -76,7 +76,7 @@ export const Controle = () => {
       setStatus("ativo")
          campoData.status = "ativo"
     }
-    console.log(status)
+   
     try{
 
       const res = await apiController.patch(`/campos/${campoData.id}`, {status})
@@ -89,7 +89,7 @@ export const Controle = () => {
       }
      
     }catch(error:any){
-      console.log(error.response.data.message)
+    
       toastbar.error("Erro ao desativar o campo!")
     }
   }
@@ -127,7 +127,7 @@ export const Controle = () => {
 
   useEffect(() => {
     if (campoId) getCampoInfo();
-    console.log(campoId);
+  
   }, [campoId]);
 
   const clickInformacoes = async (id: number) => {
@@ -146,10 +146,10 @@ export const Controle = () => {
 
 
   const atualizarCampo = async (campoData: iAtualizarCampos) => {
-    console.log(campoData, "cmData");
+ 
     try {
       const res = await apiController.patch(`/campos/${campoId}`, campoData);
-      console.log(res, "res");
+     
       if (res) {
         toastbar.success("Campo atualizado com sucesso!");
         await getCampos();
@@ -157,12 +157,12 @@ export const Controle = () => {
       
       }
     } catch (error: any) {
-      console.log(error);
+      
       toastbar.error(
         error.response?.data?.message || "Erro ao atualizar campo"
       );
     }
-    console.log("chamado");
+   
   
   };
 

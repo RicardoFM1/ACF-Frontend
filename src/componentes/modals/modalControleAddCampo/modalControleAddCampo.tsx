@@ -44,7 +44,7 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
   };
 
   const adicionarCampo = async (campoData: iCreateCampo) => {
-    console.log("submit")
+   
     try {
        
       const campoAdicionar = await apiController.post(`/campos`, campoData);
@@ -52,7 +52,6 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
         toastbar.success("Campo adicionado com sucesso!");
       }
     } catch (error: any) {
-      console.log(error.response.data.message);
       toastbar.error("Erro ao adicionar o campo!");
     }
   };

@@ -25,7 +25,7 @@ const navigate = useNavigate();
    try {
 
      const res = await apiController.post("/login", loginData);
-     console.log(res, "res do axios");
+    
      if (res) {
        toastbar.success("Login realizado com sucesso!");
        setLocalStorageToken(res.token)
@@ -46,7 +46,7 @@ const navigate = useNavigate();
         } 
       }
     }catch(error:any){
-        console.log(error, "erro")
+    
         toastbar.error(error.response.data.message)
       }
   }

@@ -18,7 +18,7 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
 
         const getRetrieve = async() => {
         const retrieve = await apiController.get("/usuarios/retrieve")
-        console.log(retrieve,"retrive")
+       
         setRetrieve(retrieve)
         await getAgendamentos(retrieve.id)
     } 
@@ -60,6 +60,7 @@ export const OpenModalVisualizar = ({isOpen, onClose}:modalProps) => {
                     </button>
                     </div>
                 </div>
+
                 <div className={style.modal}>
                 <div className={style.divPesquisa}>
                 {optionChecked === "campo" ? 

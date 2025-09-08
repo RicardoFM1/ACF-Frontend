@@ -1,4 +1,4 @@
-import z, { maxLength } from "zod"
+import z from "zod"
 
 export const createCamposSchema = z.object({
     nome: z.string().min(1, "Necessário preencher").toLowerCase().max(10, "Nome muito longo!"),
@@ -8,8 +8,6 @@ export const createCamposSchema = z.object({
     valor: z.number().min(1, "Necessário preencher"),
     status: z.string()
 })
-
-// tentar limitar depois o valor.
 
 export const returnCamposSchema = z.object({
         id: z.number(),

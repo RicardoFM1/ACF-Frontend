@@ -38,7 +38,6 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
       const res = await apiController.get(`/campos/${campoId}`)
       if(res){
         setCampo(res)
-        console.log(res)
       }
     }
 
@@ -64,7 +63,6 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
           }
            
         }catch(error:any){
-            console.log(error.response.data.message)
             toastbar.error("Erro ao atualizar o campo!")
         }
 

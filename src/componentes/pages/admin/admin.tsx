@@ -3,7 +3,7 @@ import style from "./admin.module.css"
 import { apiController } from "../../../controller/api.controller"
 import { Link, useNavigate } from "react-router-dom"
 import { Iconify } from "../../iconify/iconify"
-import { getLocalStorageItem, removeLocalStorageItem } from "../../utility/tokenUtility"
+import { getLocalStorageItem, removeLocalStorageItem, toastbar } from "../../utility/tokenUtility"
 import { toast } from "react-toastify"
 
 
@@ -45,7 +45,7 @@ export const Admin = () => {
         try{
             const retrieve = await apiController.get("usuarios/retrieve")
             setRetrieve(retrieve)
-            console.log(retrieve,"retrieve")
+         
             if(retrieve.admin === true){
                 setAdmin(true)
             }else{
@@ -54,7 +54,8 @@ export const Admin = () => {
             }
 
         }catch(error){
-            console.log("Erro ao buscar o usuario:", error)
+            toastbar.error("Erro ao buscar o usuario")
+           
         }
     }
     
@@ -67,14 +68,6 @@ export const Admin = () => {
             navigate("/login")
         }
     }, [])
-
-      useEffect(() => {
-    console.log("retrieve atualizado:", retrieve)
-  }, [retrieve])
-
-  useEffect(() => {
-    console.log("admin atualizado:", admin)
-  }, [admin])
 
    const logout = () => {
               removeLocalStorageItem("token")

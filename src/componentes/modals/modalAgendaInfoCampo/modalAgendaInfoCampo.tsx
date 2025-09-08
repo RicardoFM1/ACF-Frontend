@@ -12,7 +12,6 @@ export const OpenModalInfo = ({isOpen, onClose, campoId}:modalProps) => {
     
           if (campo) {
             setInfoCampo(campo);
-            console.log(campo);
           }
         }
       };   

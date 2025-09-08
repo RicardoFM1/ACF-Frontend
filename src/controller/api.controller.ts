@@ -30,7 +30,7 @@ export const apiController = {
                 return res.data
             }
          } catch (error) {
-            console.log(error,"error")
+           
          }
     },
     async post(url:string,body:any){
@@ -42,7 +42,7 @@ export const apiController = {
                 return res.data
             }
          } catch (error:any) {
-            console.log(error,"error")
+        
             toast.error(error.response.data.message);
          }
     },
@@ -56,7 +56,7 @@ export const apiController = {
             }
 
         }catch(error:any){
-            console.log(error, "error")
+          
             toast.error(error.response.data.message)
         }
     },
@@ -66,7 +66,7 @@ export const apiController = {
                 headers: this.getHeaders()
             })
         }catch(error:any){
-        console.log(error, "error")
+       
         toast.error(error.response.data.message)
     }
     }

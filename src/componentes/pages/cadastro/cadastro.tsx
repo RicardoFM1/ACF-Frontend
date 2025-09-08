@@ -23,7 +23,7 @@ formState:{
         try{
 
             const res = await apiController.post("/usuarios", userData)
-            console.log(res)
+           
             if(res){
                 toast.success("Cadastro realizado com sucesso! Redirecionando para o login")
                 setTimeout(() => {
@@ -31,7 +31,7 @@ formState:{
                 }, 3000);
             }
         }catch(error:any){
-        console.log(error, "erro")
+       
         toast.error(error.response.data.message)
       }
             
