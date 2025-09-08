@@ -76,7 +76,6 @@ button{
     width: 100%;
     display: flex;
     flex-direction: column;
-    margin-left:20%;
     gap: 24px;
     margin-bottom: 32px;
 }
@@ -121,6 +120,7 @@ p{
 h2{
     font-size: 32px;
     font-weight: 400;
+    color: white;
 }
 .link{
     color: white;

@@ -29,14 +29,15 @@ export const ResetPassword = () => {
     <div className={style.container}>
       <h2>Redefinir senha</h2>
       <form onSubmit={handleSubmit} className={style.form}>
-        <label>Nova senha</label>
+        <label className={style.labelEmailResetSenha}>Nova senha</label>
         <input
+        className={style.inputEmailResetSenha}
           type="password"
           placeholder="Digite a nova senha..."
           value={novaSenha}
           onChange={(e) => setNovaSenha(e.target.value)}
         />
-        <button type="submit">Redefinir</button>
+        <button className={style.btnResetSenha} type="submit">Redefinir</button>
       </form>
     </div>
   );

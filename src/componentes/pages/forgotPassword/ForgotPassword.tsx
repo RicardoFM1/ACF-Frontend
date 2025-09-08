@@ -33,8 +33,9 @@ export const ForgotPassword = () => {
     <div className={style.container}>
       <h2>Esqueci minha senha</h2>
       <form onSubmit={handleSubmit} className={style.form}>
-        <label>Email</label>
-        <input
+        <label className={style.labelEmailResetSenha}>Email</label>
+        <input 
+            className={style.inputEmailResetSenha}
           type="email"
           placeholder="Digite seu email..."
           value={email}
@@ -42,7 +43,7 @@ export const ForgotPassword = () => {
           required
           disabled={loading}
         />
-        <button type="submit" disabled={loading}>
+        <button className={style.btnSendLink} type="submit" disabled={loading}>
           {loading ? "Enviando..." : "Enviar link"}
         </button>
       </form>
