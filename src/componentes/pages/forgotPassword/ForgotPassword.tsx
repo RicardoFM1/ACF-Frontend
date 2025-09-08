@@ -5,12 +5,16 @@ import { toastbar } from "../../utility/tokenUtility";
 
 export const ForgotPassword = () => {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await apiController.post("/auth/forgot-password", { email });
-      toastbar.success(res.data.message);
+    const message = res.data?.message || "Link de redefinição enviado por email.";
+      toastbar.success(message);
+      setEmail(""); 
     } catch (err: any) {
       toastbar.error(err.response?.data?.message || "Erro ao enviar email");
     }
