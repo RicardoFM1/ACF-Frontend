@@ -67,7 +67,7 @@ formState:{
         
         <div className={style.inputs}>
         <label>Senha</label>
-        <input {...register("password")}type="text" placeholder="digite uma senha..." />
+        <input {...register("password")}type="password" placeholder="digite uma senha..." />
         </div>
         {errors.password && <span className={style.errorMsg}>{errors.password.message}</span> }
         

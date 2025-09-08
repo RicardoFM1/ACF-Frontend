@@ -94,7 +94,7 @@ export const Login = () => {
               <label>Senha</label>
               <input
                 {...register("password")}
-                type="text"
+                type="password"
                 placeholder="digite sua senha..."
               />
               {errors.password && errors.password && (
