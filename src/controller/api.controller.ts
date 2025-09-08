@@ -2,7 +2,7 @@ import axios from "axios"
 import { toast } from "react-toastify"
 
 export const a = axios.create({
-    baseURL:"http://localhost:3001",
+    baseURL: "https://acf-backend-5.onrender.com", 
     timeout: 2000
 })
 
