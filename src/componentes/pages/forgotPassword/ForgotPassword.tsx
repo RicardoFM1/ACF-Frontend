@@ -10,7 +10,7 @@ export const ForgotPassword = () => {
     e.preventDefault();
     try {
       const res = await apiController.post("/auth/forgot-password", { email });
-      toastbar.success(res.message);
+      toastbar.success(res.data.message);
     } catch (err: any) {
       toastbar.error(err.response?.data?.message || "Erro ao enviar email");
     }
