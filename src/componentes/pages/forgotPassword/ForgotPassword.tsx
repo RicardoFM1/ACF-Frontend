@@ -10,20 +10,24 @@ export const ForgotPassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       const res = await apiController.post("/auth/forgot-password", { email });
-        if(res){
-            toastbar.success("Link de redefinição enviado por email!");
-            setEmail("");
-        }
+
+    
+      const message = res.data?.message || "Link de redefinição enviado por email!";
+      toastbar.success(message);
+
+      setEmail("");
     } catch (err: any) {
-      const errorMsg = err.response?.data || "Erro ao enviar email";
+     
+      const errorMsg = err.response?.data?.message || "Erro ao enviar email";
       toastbar.error(errorMsg);
     } finally {
       setLoading(false);
     }
-  };    
-    
+  };
+
   return (
     <div className={style.container}>
       <h2>Esqueci minha senha</h2>
