@@ -21,7 +21,7 @@ export const ForgotPassword = () => {
       setEmail("");
     } catch (err: any) {
      
-      const errorMsg = err.response?.data?.message || "Erro ao enviar email";
+      const errorMsg = err.response?.data?.message;
       toastbar.error(errorMsg);
     } finally {
       setLoading(false);
