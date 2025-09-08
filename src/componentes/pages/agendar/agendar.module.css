@@ -187,6 +187,11 @@ h3{
         min-width: 80%;
     }
 }
+@media (max-width: 320px){
+    .modalAviso{
+        width: 90%;
+    }
+}
 @media(max-width: 230px){
     .modal{
     height: 50%;
