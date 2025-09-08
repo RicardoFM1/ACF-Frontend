@@ -13,7 +13,7 @@ export const ForgotPassword = () => {
 
     try {
       const res = await apiController.post("/auth/forgot-password", { email });
-      if(res.data.message){
+      if(res.status === 200){
 
           toastbar.success("Link de redefinição enviado por email!");
         }

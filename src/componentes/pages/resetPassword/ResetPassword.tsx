@@ -14,11 +14,11 @@ export const ResetPassword = () => {
     if (!token) return toastbar.error("Token inválido");
 
     try {
-      const res = await apiController.post("/auth/reset-password", {
+      await apiController.post("/auth/reset-password", {
         token,
         novaSenha,
       });
-      toastbar.success(res.message);
+      toastbar.success("Senha redefinida com sucesso!");
       setTimeout(() => navigate("/login"), 2000);
     } catch (err: any) {
       toastbar.error(err.response?.data?.message || "Erro ao redefinir senha");
