@@ -12,12 +12,12 @@ export const ForgotPassword = () => {
     setLoading(true);
     try {
       const res = await apiController.post("/auth/forgot-password", { email });
-
-      const message = res.data?.message || "Link de redefinição enviado por email.";
-      toastbar.success(message);
-      setEmail("");
+        if(res){
+            toastbar.success("Link de redefinição enviado por email.");
+            setEmail("");
+        }
     } catch (err: any) {
-      const errorMsg = err.response?.data?.message || "Erro ao enviar email";
+      const errorMsg = err.response?.data || "Erro ao enviar email";
       toastbar.error(errorMsg);
     } finally {
       setLoading(false);
