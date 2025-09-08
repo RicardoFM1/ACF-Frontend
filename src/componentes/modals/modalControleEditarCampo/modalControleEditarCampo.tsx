@@ -4,10 +4,10 @@ import style from "./modalControleEditarCampo.module.css"
 import {atualizarNomePrecoSchema, type iAtualizarNomePrecoCampos } from "../../../schemas/campo.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { apiController } from "../../../controller/api.controller"
-import { toastbar } from "../../utility/tokenUtility"
 import CurrencyInput from "react-currency-input-field"
 import { ModalEditarHorarios } from "../modalControleEditarHorarios/modalControleEditarHorarios"
 import { useEffect, useState } from "react"
+import { toast } from "react-toastify"
 
 
 export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
@@ -54,7 +54,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
           if(nomePreenchido && valorPreenchido){
             const campoAtualizar = await apiController.patch(`/campos/${campoId}`, campoData)  
             if(campoAtualizar){
-                toastbar.success("Campo atualizado com sucesso!")
+                toast.success("Campo atualizado com sucesso!")
                 onClose && onClose()
             }
           }else{
@@ -62,7 +62,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
           }
            
         }catch(error:any){
-            toastbar.error("Erro ao atualizar o campo!")
+            toast.error("Erro ao atualizar o campo!")
         }
 
     }

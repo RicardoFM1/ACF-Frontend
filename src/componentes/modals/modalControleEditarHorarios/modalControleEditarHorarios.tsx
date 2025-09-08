@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import style from "./modalControleEditarHorarios.module.css";
 import { apiController } from "../../../controller/api.controller";
-import { toastbar } from "../../utility/tokenUtility";
+import { toast } from "react-toastify";
 
 interface iHorario {
   dia_da_semana: string;
@@ -70,16 +70,16 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
       });
 
       if (horarioInvalido) {
-        toastbar.error("O horário final não pode ser menor que o horário inicial!");
+        toast.error("O horário final não pode ser menor que o horário inicial!");
         return;
       }
 
       await apiController.patch(`/horarios/${campoId}`, horariosAtualizados);
-      toastbar.success("Horários atualizados com sucesso!");
+      toast.success("Horários atualizados com sucesso!");
       onClose();
 
     } catch (error: any) {
-      toastbar.error(error.response?.data?.message || "Erro ao atualizar horários");
+      toast.error(error.response?.data?.message || "Erro ao atualizar horários");
     }
   };
 

@@ -4,7 +4,7 @@ import type { iReturnAgendamento } from "../../../schemas/agendamento.schema";
 import { Iconify } from "../../iconify/iconify";
 import type { modalProps } from "../modalsInterface/modalInterface";
 import style from "./modalControleGererenciarAgendamentos.module.css";
-import { toastbar } from "../../utility/tokenUtility";
+import { toast } from "react-toastify";
 
 export const OpenModalAgendamentos = ({
   isOpen,
@@ -43,7 +43,7 @@ export const OpenModalAgendamentos = ({
       );
 
       if (conflito) {
-        toastbar.error(
+        toast.error(
           "Não é possível ativar este agendamento: já existe outro ativo no mesmo horário e campo!"
         );
         return;
@@ -57,7 +57,7 @@ export const OpenModalAgendamentos = ({
       );
 
       if (res) {
-        toastbar.success(
+        toast.success(
           novoStatus === "ativo"
             ? "Agendamento ativado com sucesso!"
             : "Agendamento desativado com sucesso!"
@@ -73,7 +73,7 @@ export const OpenModalAgendamentos = ({
       }
     } catch (error: any) {
   
-      toastbar.error("Erro ao atualizar o status do agendamento!");
+      toast.error("Erro ao atualizar o status do agendamento!");
     }
   };
 

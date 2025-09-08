@@ -7,9 +7,9 @@ import {
 } from "../../../schemas/campo.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiController } from "../../../controller/api.controller";
-import { toastbar } from "../../utility/tokenUtility";
 import CurrencyInput from "react-currency-input-field";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
   const {
@@ -49,10 +49,10 @@ export const OpenModalAddCampo = ({ isOpen, onClose }: modalProps) => {
        
       const campoAdicionar = await apiController.post(`/campos`, campoData);
       if (campoAdicionar) {
-        toastbar.success("Campo adicionado com sucesso!");
+        toast.success("Campo adicionado com sucesso!");
       }
     } catch (error: any) {
-      toastbar.error("Erro ao adicionar o campo!");
+      toast.error("Erro ao adicionar o campo!");
     }
   };
 
