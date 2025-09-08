@@ -7,96 +7,113 @@ import {
 } from "../../../schemas/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { apiController } from "../../../controller/api.controller";
-import { getLocalStorageItem, setLocalStorageToken, toastbar } from "../../utility/tokenUtility";
+import {
+  getLocalStorageItem,
+  setLocalStorageToken,
+  toastbar,
+} from "../../utility/tokenUtility";
 
 export const Login = () => {
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<iCreateLogin>({
     resolver: zodResolver(createLoginSchema),
-    mode: "onBlur"
+    mode: "onBlur",
   });
 
   const fazerLogin = async (loginData: iCreateLogin) => {
-    
-   try {
+    try {
+      const res = await apiController.post("/login", loginData);
 
-     const res = await apiController.post("/login", loginData);
-    
-     if (res) {
-       toastbar.success("Login realizado com sucesso!");
-       setLocalStorageToken(res.token)
-       
-       const token = getLocalStorageItem("token")
-       if(token){
-         const retrieve = await apiController.get("usuarios/retrieve")
-         if(retrieve.admin === true){
-           setTimeout(() => {
-             navigate("/admin");
+      if (res) {
+        toastbar.success("Login realizado com sucesso!");
+        setLocalStorageToken(res.token);
+
+        const token = getLocalStorageItem("token");
+        if (token) {
+          const retrieve = await apiController.get("usuarios/retrieve");
+          if (retrieve.admin === true) {
+            setTimeout(() => {
+              navigate("/admin");
             }, 3000);
-          }
-          else{
+          } else {
             setTimeout(() => {
               navigate("/");
             }, 3000);
           }
-        } 
+        }
       }
-    }catch(error:any){
-    
-        toastbar.error(error.response.data.message)
-      }
-  }
-  return  <div className={style.load}>
-    
+    } catch (error: any) {
+      toastbar.error(error.response.data.message);
+    }
+  };
+  return (
+    <div className={style.load}>
       <header className={style.header}>
-       <div className={style.divLogo}>
-    <img src="/images/ImageLogoACF.svg" alt="logoSite" className={style.imageLogo}/>
-    </div>
-      <div className={style.divLinks}>
-        <Link to={"/"} className={style.link}>
-           Página inicial
+        <div className={style.divLogo}>
+          <img
+            src="/images/ImageLogoACF.svg"
+            alt="logoSite"
+            className={style.imageLogo}
+          />
+        </div>
+        <div className={style.divLinks}>
+          <Link to={"/"} className={style.link}>
+            Página inicial
           </Link>
           <Link to={"/cadastro"} className={style.link}>
             Cadastro
           </Link>
-       </div>
-      </header>
-      
-          <div className={style.divFundo}>
-            <div className={style.Login}>
-              <h2>Login</h2>
-              
-        <form className={style.formulario} onSubmit={handleSubmit(fazerLogin)}>
-                <div className={style.inputs}>
-                  <label>Email</label>
-                  <input {...register("email")} type="text" placeholder="digite seu email..." />
-                  {errors.email && errors.email && (
-              <span className={style.errorMsg}>
-                {errors.email?.message}
-              </span>
-            )}
-                </div>
-                
-                <div className={style.inputs}>
-                  <label>Senha</label>
-                  <input {...register("password")}type="text" placeholder="digite sua senha..." />
-                  {errors.password && errors.password && (
-              <span className={style.errorMsg}>
-                {errors.password?.message}
-              </span>
-            )}
-                </div>
-                <Link to={"/cadastro"}>não tem uma conta?</Link>
-            <button type="submit" className={style.btnLogin}>Fazer login</button>
-        </form>
-              </div>
         </div>
-      
-    </div>
-  
-};
+      </header>
 
+      <div className={style.divFundo}>
+        <div className={style.Login}>
+          <h2>Login</h2>
+
+          <form
+            className={style.formulario}
+            onSubmit={handleSubmit(fazerLogin)}
+          >
+            <div className={style.inputs}>
+              <label>Email</label>
+              <input
+                {...register("email")}
+                type="text"
+                placeholder="digite seu email..."
+              />
+              {errors.email && errors.email && (
+                <span className={style.errorMsg}>{errors.email?.message}</span>
+              )}
+            </div>
+
+            <div className={style.inputs}>
+              <label>Senha</label>
+              <input
+                {...register("password")}
+                type="text"
+                placeholder="digite sua senha..."
+              />
+              {errors.password && errors.password && (
+                <span className={style.errorMsg}>
+                  {errors.password?.message}
+                </span>
+              )}
+            </div>
+            <Link to={"/cadastro"}>não tem uma conta?</Link>
+            <Link to="/forgot-password">
+              Esqueci minha senha
+            </Link>
+
+            <button type="submit" className={style.btnLogin}>
+              Fazer login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};

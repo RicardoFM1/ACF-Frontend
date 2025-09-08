@@ -8,9 +8,9 @@ export const a = axios.create({
 
 export const apiController = {
     getHeaders(){
-       let headers:any = {
-            "Content-Type":"	application/json; charset=utf-8"
-        }
+      let headers:any = {
+  "Content-Type": "application/json; charset=utf-8"
+};
         const token = localStorage.getItem("token")
         if(token){
 

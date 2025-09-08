@@ -54,7 +54,7 @@ export const Admin = () => {
             }
 
         }catch(error){
-            toastbar.error("Erro ao buscar o usuario")
+            console.log("erro", error)
            
         }
     }
