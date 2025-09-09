@@ -335,9 +335,9 @@ export const Agendar = () => {
                     <button
                       type="button"
                       onClick={() =>
-                        campos.length > 0
-                          ? setModalCamposOpen(true)
-                          : setModalAvisoOpen(true)
+                        campos.length < 1
+                        ? setModalAvisoOpen(true)
+                        : setModalCamposOpen(true)
                       }
                       className={style.btnEscolhaDoCampo}
                     >
