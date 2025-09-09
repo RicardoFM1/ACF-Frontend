@@ -50,7 +50,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
   const nomePreenchido = campoData.nome.trim() !== "";
   const valorPreenchido = campoData.valor > 0;
 
-        try{
+        
           if(nomePreenchido && valorPreenchido){
             const campoAtualizar = await apiController.patch(`/campos/${campoId}`, campoData)  
             if(campoAtualizar){
@@ -61,9 +61,7 @@ export const OpenModalEditarCampo = ({campoId, isOpen, onClose}:modalProps) => {
             onClose && onClose()
           }
            
-        }catch(error:any){
-            toast.error("Erro ao atualizar o campo!")
-        }
+      
 
     }
 

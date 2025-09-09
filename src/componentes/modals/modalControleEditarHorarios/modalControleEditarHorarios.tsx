@@ -58,7 +58,7 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
 
   const salvarHorarios = async () => {
     if (!campoId) return;
-    try {
+  
       let horarioInvalido = false;
 
       const horariosAtualizados = horarios.map(horario => {
@@ -78,9 +78,7 @@ export const ModalEditarHorarios = ({ isOpen, onClose, campoId }: ModalEditarHor
       toast.success("Horários atualizados com sucesso!");
       onClose();
 
-    } catch (error: any) {
-      toast.error(error.response?.data?.message || "Erro ao atualizar horários");
-    }
+    
   };
 
   if (!isOpen) return null;

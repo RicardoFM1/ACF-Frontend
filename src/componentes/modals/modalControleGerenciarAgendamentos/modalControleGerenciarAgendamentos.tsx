@@ -50,7 +50,7 @@ export const OpenModalAgendamentos = ({
       }
     }
 
-    try {
+    
       const res = await apiController.patch(
         `/agendamentos/${agendamentoData.id}`,
         { status: novoStatus }
@@ -71,10 +71,7 @@ export const OpenModalAgendamentos = ({
 
         if (onAtualizarHorarios) onAtualizarHorarios();
       }
-    } catch (error: any) {
-  
-      toast.error("Erro ao atualizar o status do agendamento!");
-    }
+    
   };
 
   useEffect(() => {
