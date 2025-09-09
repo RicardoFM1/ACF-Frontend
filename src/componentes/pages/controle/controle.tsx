@@ -77,8 +77,6 @@ export const Controle = () => {
          campoData.status = "ativo"
     }
    
-    try{
-
       const res = await apiController.patch(`/campos/${campoData.id}`, {status})
       if(res){
         if(status === "ativo")
@@ -87,11 +85,6 @@ export const Controle = () => {
         toastbar.success("Campo desativado com sucesso!") 
       }
       }
-     
-    }catch(error:any){
-    
-      toastbar.error("Erro ao desativar o campo!")
-    }
   }
 
   const getCampoInfo = async () => {
@@ -146,24 +139,13 @@ export const Controle = () => {
 
 
   const atualizarCampo = async (campoData: iAtualizarCampos) => {
- 
-    try {
-      const res = await apiController.patch(`/campos/${campoId}`, campoData);
-     
-      if (res) {
-        toastbar.success("Campo atualizado com sucesso!");
-        await getCampos();
-        setModalInfoOpen(false)
-      
-      }
-    } catch (error: any) {
-      
-      toastbar.error(
-        error.response?.data?.message || "Erro ao atualizar campo"
-      );
-    }
-   
-  
+
+       const res = await apiController.patch(`/campos/${campoId}`, campoData);
+       if(res){
+         toastbar.success("Campo atualizado com sucesso!");
+         await getCampos();
+         setModalInfoOpen(false)
+        }
   };
 
   const clickEditarPencil = async (id: number) => {
